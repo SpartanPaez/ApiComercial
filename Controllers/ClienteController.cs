@@ -13,7 +13,7 @@ namespace ApiComercial.Controllers
     [ApiController]
     [Route("api/[controller]")]
 
-    public class ClienteController : ControllerBase
+    public class ClienteController : BaseApiController
     {
         private readonly ILogger<ClienteController> _Logger;
         private readonly IMapper _mapper;
@@ -37,12 +37,11 @@ namespace ApiComercial.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<ResponseClientes> GetCliente(string ClienteId)
+        public async Task<ActionResult> GetCliente(string ClienteId)
         {
-            //var resultado = await _service.GetDatoCliente();
-            //var respuesta = "";
-            //eturn Respon;
-            throw new NotImplementedException();
+            var resultado = await _service.GetDatoCliente();
+            var respuesta = Mapper.Map<ResponseClientes>(resultado);
+            return Ok(respuesta);
         }
         [HttpGet]
         public async Task<List<ResponseClientes>> GetClientes()
