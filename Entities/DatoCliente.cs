@@ -1,4 +1,5 @@
-namespace ApiComercial.Models;
+using ApiComercial.Entities;
+namespace ApiComercial.Entities;
 
 public class DatoCliente
 {

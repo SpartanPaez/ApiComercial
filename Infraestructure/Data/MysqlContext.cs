@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-
-namespace ApiComercial.Models
+using ApiComercial.Models;
+namespace ApiComercial.Infraestructure.Data
 {
     public class MysqlContext : DbContext
     {

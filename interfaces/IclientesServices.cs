@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ApiComercial.interfaces;
 using ApiComercial.Models;
+using ApiComercial.Entities;
 
-namespace ApiComercial.Models
+namespace ApiComercial.interfaces
 {
     public interface IclientesServices
     {

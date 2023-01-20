@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using ApiComercial.Models;
+using ApiComercial.Enums;
 
 namespace ApiComercial.Models
 {

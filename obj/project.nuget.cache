@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "tBOETFNArK/2b63vnDicsOm+k8RtabQafEpzxOvAS0uqJCrNYNy07Sb0fHSDFOqMMYMsUV9dHK9Nncgc7WcTlQ==",
+  "dgSpecHash": "+NenDWrbspsljQ0JZlkOrc0egaTONrBdl8A2qN8wPMFP4oi8KERqjQoMgORwWXuCk1PovTJ81VeObGeDsYLUVw==",
   "success": true,
   "projectFilePath": "/Users/spartanpaez/Documents/Desarollo/ApiComercial/ApiComercial.csproj",
   "expectedPackageFiles": [
     "/Users/spartanpaez/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
+    "/Users/spartanpaez/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.0/automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "/Users/spartanpaez/.nuget/packages/fluentvalidation/11.2.1/fluentvalidation.11.2.1.nupkg.sha512",
     "/Users/spartanpaez/.nuget/packages/fluentvalidation.aspnetcore/11.2.2/fluentvalidation.aspnetcore.11.2.2.nupkg.sha512",
     "/Users/spartanpaez/.nuget/packages/fluentvalidation.dependencyinjectionextensions/11.2.1/fluentvalidation.dependencyinjectionextensions.11.2.1.nupkg.sha512",

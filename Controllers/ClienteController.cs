@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ApiComercial.Models;
 using AutoMapper;
+using ApiComercial.interfaces;
+using ApiComercial.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
@@ -22,7 +24,7 @@ namespace ApiComercial.Controllers
         {
             _Logger = logger;
             _mapper = mapper;
-            -service = service;
+            _service = service;
         }
         [HttpGet("{id}")]
         /// <summary>
@@ -37,9 +39,10 @@ namespace ApiComercial.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
         public async Task<ResponseClientes> GetCliente(string ClienteId)
         {
-            var resultado = await _service.GetDatoCliente();
-            var respuesta = Mapper.Map<ResponseClientes>(resultado);
-            return Ok(respuesta);
+            //var resultado = await _service.GetDatoCliente();
+            //var respuesta = "";
+            //eturn Respon;
+            throw new NotImplementedException();
         }
         [HttpGet]
         public async Task<List<ResponseClientes>> GetClientes()

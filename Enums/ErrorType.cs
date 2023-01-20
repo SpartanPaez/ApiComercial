@@ -1,4 +1,5 @@
-namespace ApiComercial.Models
+
+namespace ApiComercial.Enums
 {
     public enum ErrorType
     {
