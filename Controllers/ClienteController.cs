@@ -26,7 +26,8 @@ namespace ApiComercial.Controllers
             _mapper = mapper;
             _service = service;
         }
-        [HttpGet("{id}")]
+        //[HttpGet("{id}")]
+        [HttpGet()]
         /// <summary>
         /// </summary>
         /// <param name="ClienteId">Recibe el codigo del cliente a ser consultado</param>
@@ -37,17 +38,31 @@ namespace ApiComercial.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> GetCliente(string ClienteId)
+        public async Task<ActionResult> GetCliente()
         {
             var resultado = await _service.GetDatoCliente();
             var respuesta = Mapper.Map<ResponseClientes>(resultado);
             return Ok(respuesta);
         }
-        [HttpGet]
-        public async Task<List<ResponseClientes>> GetClientes()
+
+        [HttpGet("{Id}")]
+        /// <summary>
+        /// </summary>
+        /// <param name="ClienteId">Recibe el codigo del cliente a ser consultado</param>
+        /// <returns></returns>
+        /// 
+        [ProducesResponseType(typeof(ResponseClientes), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetClientePorId(int Id)
         {
-            throw new NotImplementedException();
+            var resultado = await _service.GetClientePorId(Id);
+            var respuesta = Mapper.Map<ResponseClientes>(resultado);
+            return Ok(respuesta);
         }
+
         [HttpDelete("{id}")]
         public async Task<bool> DeleteCliente()
         {

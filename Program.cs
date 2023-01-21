@@ -1,4 +1,7 @@
+using ApiComercial;
 using ApiComercial.Depedencies;
+using ApiComercial.Infraestructure.Repositories;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +12,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AgregarAutoMapper();
+builder.Services.AgregarServicio();
+builder.Services.AgregarRepository();
+var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
 
+           
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

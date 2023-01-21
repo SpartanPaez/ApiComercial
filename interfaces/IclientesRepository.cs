@@ -4,6 +4,7 @@ namespace ApiComercial.Infraestructure.interfaces
 {
     public interface IclientesRepository
     {
-        Task<DatoCliente> GetDatoCliente();
+        Task<Cliente> GetDatoCliente();
+        Task<Cliente> GetClientePorId(int Id);
     }
 }

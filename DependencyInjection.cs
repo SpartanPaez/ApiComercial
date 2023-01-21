@@ -5,7 +5,7 @@ namespace ApiComercial
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection Agregar(this IServiceCollection services)
+        public static IServiceCollection AgregarServicio(this IServiceCollection services)
         {
             services.AddTransient<IclientesServices, ClienteService>();
             return services;

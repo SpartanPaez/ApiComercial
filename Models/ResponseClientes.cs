@@ -10,7 +10,7 @@ namespace ApiComercial.Models
         /// Codigo 
         /// </summary>
         /// <value></value>
-        public string? ClienteId { get; set; }
+        public int? ClienteId { get; set; }
         /// <summary>
         /// Cedula del cliente
         /// </summary>
@@ -35,17 +35,32 @@ namespace ApiComercial.Models
         /// Indica la ciudad del cliente
         /// </summary>
         /// <value></value>
-        public string? ClienteCiudad { get; set; }
+        public int? ClienteCiudad { get; set; }
         /// <summary>
         /// Indica el barrio del cliente
         /// </summary>
         /// <value></value>
-        public string? ClienteBarrio { get; set; }
+        public int? ClienteBarrio { get; set; }
         /// <summary>
         /// indica el numero de telefono celular del cliente
         /// </summary>
         /// <value></value>
         public string? ClienteCelular { get; set; }
+        /// <summary>
+        /// Correo electronico del cliente
+        /// </summary>
+        /// <value></value>
+        public string? ClienteCorreo { get; set; }
+        /// <summary>
+        /// Estado civil del cliente
+        /// </summary>
+        /// <value></value>
+        public string? ClienteEstadoCivil { get; set; }
+        /// <summary>
+        /// Estado del cleinte(Activo o no)
+        /// </summary>
+        /// <value></value>
+        public string? ClienteEstado { get; set; }
         
     }
 }

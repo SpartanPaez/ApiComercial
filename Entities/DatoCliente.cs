@@ -1,13 +1,13 @@
 using ApiComercial.Entities;
 namespace ApiComercial.Entities;
 
-public class DatoCliente
+public class Cliente
 {
         /// <summary>
         /// Codigo 
         /// </summary>
         /// <value></value>
-        public string? ClienteId { get; set; }
+        public int? ClienteId { get; set; }
         /// <summary>
         /// Cedula del cliente
         /// </summary>
@@ -27,12 +27,12 @@ public class DatoCliente
         /// Nacionalidad del cliente
         /// </summary>
         /// <value></value>
-        public string? ClientePais { get; set; }
+        public int? ClientePais { get; set; }
         /// <summary>
         /// Indica la ciudad del cliente
         /// </summary>
         /// <value></value>
-        public string? ClienteCiudad { get; set; }
+        public int? ClienteCiudad { get; set; }
         /// <summary>
         /// Indica el barrio del cliente
         /// </summary>
@@ -43,4 +43,19 @@ public class DatoCliente
         /// </summary>
         /// <value></value>
         public string? ClienteCelular { get; set; }
+        /// <summary>
+        /// Correo electronico del cliente
+        /// </summary>
+        /// <value></value>
+        public string? ClienteCorreo { get; set; }
+        /// <summary>
+        /// Estado civil del cliente
+        /// </summary>
+        /// <value></value>
+        public string? ClienteEstadoCivil { get; set; }
+        /// <summary>
+        /// Estado del cleinte(Activo o no)
+        /// </summary>
+        /// <value></value>
+        public string? ClienteEstado { get; set; }
 }
