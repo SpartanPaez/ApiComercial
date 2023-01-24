@@ -63,6 +63,16 @@ namespace ApiComercial.Controllers
             return Ok(respuesta);
         }
 
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created )]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<Clientes> InsertClientes(Clientes clientes)
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpDelete("{id}")]
         public async Task<bool> DeleteCliente()
         {
@@ -73,11 +83,7 @@ namespace ApiComercial.Controllers
         {
             throw new NotImplementedException();
         }
-        [HttpPut]
-        public async Task<Clientes> InsertClientes(Clientes clientes)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 
 }
