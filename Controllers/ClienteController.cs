@@ -40,9 +40,23 @@ namespace ApiComercial.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> GetCliente()
         {
-            var resultado = await _service.GetDatoCliente();
-            var respuesta = Mapper.Map<ResponseClientes>(resultado);
-            return Ok(respuesta);
+            try
+            {
+                var resultado = await _service.GetDatoCliente();
+                var respuesta = Mapper.Map<ResponseClientes>(resultado);
+                return Ok(respuesta);
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al consultar los datos del cliente");
+                return StatusCode(500, new ErrorResponse
+                {
+                  ErrorType = Enums.ErrorType.error_interno_servidor,
+                  ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos"
+                });
+                
+            }
+
         }
 
         [HttpGet("{Id}")]
@@ -58,13 +72,25 @@ namespace ApiComercial.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> GetClientePorId(int Id)
         {
-            var resultado = await _service.GetClientePorId(Id);
-            var respuesta = Mapper.Map<ResponseClientes>(resultado);
-            return Ok(respuesta);
+            try
+            {
+                var resultado = await _service.GetClientePorId(Id);
+                var respuesta = Mapper.Map<ResponseClientes>(resultado);
+                return Ok(respuesta);
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrión un error de consulta de datos.");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error de consulta de datos."
+                });
+            }
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created )]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
@@ -83,7 +109,7 @@ namespace ApiComercial.Controllers
         {
             throw new NotImplementedException();
         }
-        
+
     }
 
 }
