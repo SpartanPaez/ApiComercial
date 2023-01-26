@@ -26,15 +26,28 @@ namespace ApiComercial.Infraestructure.Data
                 //optionsBuilder.UseMySQL(_mysqlconnection);
             }
         }
-        public DbSet<Cliente> CLIENTES { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Cliente>(entity =>
             {
+                entity.ToTable("CLIENTES","ventas");
                 entity.HasKey(e => new {e.ClienteCedula});
                 entity.Property(e => e.ClienteCedula);
+                entity.Property(e => e.ClienteId).HasColumnName("ClienteId");
+                entity.Property(e => e.ClienteCedula).HasColumnName("ClienteCedula");
+                entity.Property(e => e.ClienteNombre).HasColumnName("ClienteNombre");
+                entity.Property(e => e.ClienteDireccion).HasColumnName("ClienteDireccion");
+                entity.Property(e => e.ClientePais).HasColumnName("ClientePais");
+                entity.Property(e => e.ClienteCiudad).HasColumnName("ClienteCiudad");
+                entity.Property(e => e.ClienteBarrio).HasColumnName("ClienteBarrio");
+                entity.Property(e => e.ClienteCelular).HasColumnName("ClienteCelular");
+                entity.Property(e => e.ClienteCorreo).HasColumnName("ClienteCorreo");
+                entity.Property(e => e.ClienteEstadoCivil).HasColumnName("ClienteEstadoCivil");
+                entity.Property(e => e.ClienteEstado).HasColumnName("ClienteEstado");
+                
             });
         }
     }

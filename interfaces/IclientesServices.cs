@@ -11,5 +11,6 @@ namespace ApiComercial.interfaces
     {
         Task <Cliente> GetDatoCliente();
         Task <Cliente> GetClientePorId(int Id);
+        Task <Cliente> InsertCliente(Cliente parametros);
     }
 }

@@ -14,7 +14,6 @@ namespace ApiComercial.Infraestructure.Repositories
             
             services.AddDbContext<MysqlContext>(o => 
                 o.UseMySQL("server=localhost;port=3301;database=ventas;user=root;password=a.12345678"));
-                //server=localhost;database=library;user=user;password=password
             
             services.AddTransient<IclientesRepository, EFClientesRepository>();
             return services;

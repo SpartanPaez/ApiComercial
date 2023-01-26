@@ -7,11 +7,6 @@ namespace ApiComercial.Models
     public class ResponseClientes 
     {  
         /// <summary>
-        /// Codigo 
-        /// </summary>
-        /// <value></value>
-        public int? ClienteId { get; set; }
-        /// <summary>
         /// Cedula del cliente
         /// </summary>
         /// <value></value>
@@ -30,7 +25,7 @@ namespace ApiComercial.Models
         /// Nacionalidad del cliente
         /// </summary>
         /// <value></value>
-        public string? ClientePais { get; set; }
+        public int? ClientePais { get; set; }
         /// <summary>
         /// Indica la ciudad del cliente
         /// </summary>
@@ -40,7 +35,7 @@ namespace ApiComercial.Models
         /// Indica el barrio del cliente
         /// </summary>
         /// <value></value>
-        public int? ClienteBarrio { get; set; }
+        public string? ClienteBarrio { get; set; }
         /// <summary>
         /// indica el numero de telefono celular del cliente
         /// </summary>

@@ -17,10 +17,17 @@ namespace ApiComercial.Infraestructure.Repositories
             _mysqlconnection = configuration.GetConnectionString("Default");
         }
         public async Task <Cliente> GetDatoCliente()
-        =>  await _my.CLIENTES.FirstOrDefaultAsync();
+        =>  await _my.Clientes.FirstOrDefaultAsync();
         public async Task <Cliente> GetClientePorId(int Id)
-        => await _my.CLIENTES
-                 .Where(c => c.ClienteId
-                 == Id).FirstOrDefaultAsync();
+        => await _my.Clientes
+                 .Where(c => c.ClienteId== Id)
+                 .FirstOrDefaultAsync();
+
+        public async Task<Cliente> InsertCliente(Cliente parametros)
+        {
+            await _my.Clientes.AddAsync(parametros);
+            await _my.SaveChangesAsync();
+            return parametros;
+        }
     }
 }

@@ -25,6 +25,7 @@ namespace ApiComercial.Depedencies
             //CreateMap<Core.Entities.DiaHabil, DiaHabil>().ReverseMap();
             //CreateMap<DateTime, string>().ConvertUsing(s => s.Date.ToString("dd/MM/yyyy"));
             CreateMap  <Cliente, ResponseClientes>().ReverseMap();
+            CreateMap  <Cliente, RequestDatoCliente>().ReverseMap();
             
         }
     }

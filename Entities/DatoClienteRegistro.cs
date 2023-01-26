@@ -1,16 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+using ApiComercial.Entities;
+namespace ApiComercial.Entities;
 
-namespace ApiComercial.Models
+public class DatoClienteRegistro
 {
-    public class RequestDatoCliente 
-    {  
-        /// <summary>
-        /// Codigo 
-        /// </summary>
-        /// <value></value>
-        public int? ClienteId { get; set; }
+        public int ClienteId { get; set; }
         /// <summary>
         /// Cedula del cliente
         /// </summary>
@@ -30,7 +23,7 @@ namespace ApiComercial.Models
         /// Nacionalidad del cliente
         /// </summary>
         /// <value></value>
-        public int? ClientePais { get; set; }
+        public string? ClientePais { get; set; }
         /// <summary>
         /// Indica la ciudad del cliente
         /// </summary>
@@ -40,7 +33,7 @@ namespace ApiComercial.Models
         /// Indica el barrio del cliente
         /// </summary>
         /// <value></value>
-        public int? ClienteBarrio { get; set; }
+        public string? ClienteBarrio { get; set; }
         /// <summary>
         /// indica el numero de telefono celular del cliente
         /// </summary>
@@ -61,6 +54,4 @@ namespace ApiComercial.Models
         /// </summary>
         /// <value></value>
         public string? ClienteEstado { get; set; }
-        
-    }
 }

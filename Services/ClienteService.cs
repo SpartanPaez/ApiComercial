@@ -24,5 +24,10 @@ namespace ApiComercial.Services
         {
            return await _clientesRepository.GetDatoCliente();
         }
+
+        public async Task<Cliente> InsertCliente(Cliente parametros)
+        {
+           return await _clientesRepository.InsertCliente(parametros);
+        }
     }
 }
