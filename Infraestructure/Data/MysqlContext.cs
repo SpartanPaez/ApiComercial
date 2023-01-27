@@ -53,12 +53,21 @@ namespace ApiComercial.Infraestructure.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Ciudad>(entity =>
             {
-                entity.ToTable("CIUDADES","ventas");
-                entity.HasKey(e => new {e.CiudadId});
+                entity.ToTable("CIUDADES", "ventas");
+                entity.HasKey(e => new { e.CiudadId });
                 entity.Property(e => e.CiudadId).HasColumnName("CiudadId");
                 entity.Property(e => e.DepartamentoId).HasColumnName("DepartamentoId");
                 entity.Property(e => e.CiudadDesc).HasColumnName("CiudadDesc");
 
+            });
+
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Categoria>(entity =>
+            {
+                entity.ToTable("CATEGOIRAS", "ventas");
+                entity.HasKey(e => new {e.CategoriaId});
+                entity.Property(e => e.CategoriaId).HasColumnName("CategoriaId");
+                entity.Property(e => e.CategoriaDesc).HasColumnName("CategoriaDesc");
             });
         }
     }
