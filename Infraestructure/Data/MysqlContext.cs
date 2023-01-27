@@ -27,15 +27,16 @@ namespace ApiComercial.Infraestructure.Data
             }
         }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Ciudad> Ciudades { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Cliente>(entity =>
             {
-                entity.ToTable("CLIENTES","ventas");
-                entity.HasKey(e => new {e.ClienteCedula});
-                entity.Property(e => e.ClienteCedula);
+                entity.ToTable("CLIENTES", "ventas");
+                entity.HasKey(e => new { e.ClienteId });
+                entity.Property(e => e.ClienteId);
                 entity.Property(e => e.ClienteId).HasColumnName("ClienteId");
                 entity.Property(e => e.ClienteCedula).HasColumnName("ClienteCedula");
                 entity.Property(e => e.ClienteNombre).HasColumnName("ClienteNombre");
@@ -47,7 +48,17 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.ClienteCorreo).HasColumnName("ClienteCorreo");
                 entity.Property(e => e.ClienteEstadoCivil).HasColumnName("ClienteEstadoCivil");
                 entity.Property(e => e.ClienteEstado).HasColumnName("ClienteEstado");
-                
+            });
+
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Ciudad>(entity =>
+            {
+                entity.ToTable("CIUDADES","ventas");
+                entity.HasKey(e => new {e.CiudadId});
+                entity.Property(e => e.CiudadId).HasColumnName("CiudadId");
+                entity.Property(e => e.DepartamentoId).HasColumnName("DepartamentoId");
+                entity.Property(e => e.CiudadDesc).HasColumnName("CiudadDesc");
+
             });
         }
     }

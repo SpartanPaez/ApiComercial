@@ -1,7 +1,7 @@
 using ApiComercial.Entities;
 namespace ApiComercial.Entities;
 
-public class ciudad
+public class Ciudad
 {
     /// <summary>
     /// Codigo de la ciudad

@@ -10,7 +10,7 @@ namespace ApiComercial.Models
         /// Codigo 
         /// </summary>
         /// <value></value>
-        public int? ClienteId { get; set; }
+        public int ClienteId { get; set; }
         /// <summary>
         /// Cedula del cliente
         /// </summary>

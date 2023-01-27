@@ -100,7 +100,7 @@ namespace ApiComercial.Controllers
         {
             var resquest = Mapper.Map<Cliente>(parametros);
             var resultado = await _service.InsertCliente(resquest);
-            return Created(string.Empty, resultado);
+            return CreatedAtAction(nameof(GetClientePorId), new { Id = resultado.ClienteId}, resultado);
         }
 
         [HttpDelete("{id}")]
