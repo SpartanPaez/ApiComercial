@@ -14,8 +14,16 @@ namespace ApiComercial.interfaces.Repositories
             _my = my;
             _mysqlconnection = configuration.GetConnectionString("Default");
         }
+        public async Task<Ciudad> GetCiudadPorId(int departamentoId)
+         => await _my.Ciudades
+            .Where(c => c.DepartamentoId == departamentoId)
+            .FirstOrDefaultAsync();
 
-        public async Task <Ciudad> GetCiudad()
-        
+        public async Task<Ciudad> InsertCiudad(Ciudad parametros)
+        {
+            await _my.Ciudades.AddAsync(parametros);
+            await _my.SaveChangesAsync();
+            return parametros;
+        }
     }
 }
