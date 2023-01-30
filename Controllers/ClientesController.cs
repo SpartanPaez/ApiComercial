@@ -15,12 +15,12 @@ namespace ApiComercial.Controllers
     [ApiController]
     [Route("api/[controller]")]
 
-    public class ClienteController : BaseApiController
+    public class ClientesController : BaseApiController
     {
-        private readonly ILogger<ClienteController> _Logger;
+        private readonly ILogger<ClientesController> _Logger;
         private readonly IMapper _mapper;
         private readonly IclientesServices _service;
-        public ClienteController(ILogger<ClienteController> logger,
+        public ClientesController(ILogger<ClientesController> logger,
                                 IMapper mapper,
                                 IclientesServices service)
         {

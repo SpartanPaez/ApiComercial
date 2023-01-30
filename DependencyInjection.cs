@@ -8,6 +8,7 @@ namespace ApiComercial
         public static IServiceCollection AgregarServicio(this IServiceCollection services)
         {
             services.AddTransient<IclientesServices, ClienteService>();
+            services.AddTransient<IreferencialesService, ReferencialesService>();
             return services;
         }
     }

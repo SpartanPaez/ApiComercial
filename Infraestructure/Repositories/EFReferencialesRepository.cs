@@ -3,7 +3,7 @@ using ApiComercial.Infraestructure.Data;
 using ApiComercial.Infraestructure.interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace ApiComercial.interfaces.Repositories
+namespace ApiComercial.Infraestructure.Repositories
 {
     public class EFReferencialesRepository : IreferencialesRepository
     {

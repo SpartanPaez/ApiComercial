@@ -16,6 +16,7 @@ namespace ApiComercial.Infraestructure.Repositories
                 o.UseMySQL("server=localhost;port=3301;database=ventas;user=root;password=a.12345678"));
             
             services.AddTransient<IclientesRepository, EFClientesRepository>();
+            services.AddTransient<IreferencialesRepository, EFReferencialesRepository>();
             return services;
         }
     }
