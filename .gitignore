@@ -6,3 +6,5 @@ bin/Debug/net7.0/ApiComercial.dll
 bin/Debug/net7.0/ApiComercial.pdb
 obj/Debug/net7.0/ApiComercial.pdb
 obj/Debug/net7.0/ref/ApiComercial.dll
+bin/
+obj/
