@@ -59,5 +59,18 @@ namespace ApiComercial.Controllers
             var resultado = await _service.InsertCiudad(request);
             return Ok();
         }
+
+        [HttpPost("departamentos")]
+        [ProducesResponseType(typeof(DepartamentoResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult>InsertDepartamento(RequestDepartamento parametros)
+        {
+            var resquet = Mapper.Map<Departamento>(parametros);
+            var resultado = await _service.InsertDepartamento(resquet);
+            return Ok();
+        }
     }
 }

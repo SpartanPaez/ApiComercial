@@ -16,9 +16,19 @@ namespace ApiComercial.Services
             return await _referenciaRepository.GetCiudadPorId(ciudadId);
         }
 
+        public Task<Departamento> GetDepartamentoPorId(int departamento)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Ciudad> InsertCiudad(Ciudad parametros)
         {
             return await _referenciaRepository.InsertCiudad(parametros);
+        }
+
+        public async Task<Departamento> InsertDepartamento(Departamento parametros)
+        {
+            return await _referenciaRepository.InsertDepartamento(parametros);
         }
     }
 }
