@@ -23,7 +23,10 @@ namespace ApiComercial.Infraestructure.Repositories
            => await _my.Departamentos
                     .Where(c => c.DepartamentoId == departamentoId)
                     .FirstOrDefaultAsync();
-                    
+
+        public async Task<Pais> GetPais()
+        => await _my.Paises.FirstOrDefaultAsync();
+
         public async Task<Ciudad> InsertCiudad(Ciudad parametros)
         {
             await _my.Ciudades.AddAsync(parametros);
@@ -34,6 +37,13 @@ namespace ApiComercial.Infraestructure.Repositories
         public async Task<Departamento> InsertDepartamento(Departamento parametros)
         {
             await _my.Departamentos.AddAsync(parametros);
+            await _my.SaveChangesAsync();
+            return parametros;
+        }
+
+        public async Task<Pais> InsertPais(Pais parametros)
+        {
+            await _my.Paises.AddAsync(parametros);
             await _my.SaveChangesAsync();
             return parametros;
         }

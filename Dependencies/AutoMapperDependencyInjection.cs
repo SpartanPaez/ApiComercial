@@ -30,6 +30,8 @@ namespace ApiComercial.Depedencies
             CreateMap<Ciudad, CiudadResponse>().ReverseMap();
             CreateMap<Departamento, RequestDepartamento>().ReverseMap();
             CreateMap<Departamento, DepartamentoResponse>().ReverseMap();
+            CreateMap<Pais, RequestPais>().ReverseMap();
+            CreateMap<Pais, PaisResponse>().ReverseMap();
         }
     }
 }

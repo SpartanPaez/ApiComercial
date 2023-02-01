@@ -11,5 +11,9 @@ namespace ApiComercial.interfaces
         Task<Departamento> GetDepartamentoPorId(int departamento);
 
         Task<Departamento> InsertDepartamento(Departamento parametros);
+        
+        Task<Pais> GetPais();
+
+        Task<Pais> InsertPais(Pais parametros);
     }
 }

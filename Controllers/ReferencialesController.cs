@@ -94,5 +94,39 @@ namespace ApiComercial.Controllers
             var resultado = await _service.InsertDepartamento(resquet);
             return Ok();
         }
+
+        [HttpGet("paises")]
+        [ProducesResponseType(typeof(PaisResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetPais()
+        {
+            try
+            {
+                var resultado =  await _service.GetPais();
+                var respuesta = Mapper.Map<PaisResponse>(resultado);
+                return Ok(respuesta);
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost("pais")]
+        [ProducesResponseType(typeof(PaisResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult>InsertPais(RequestPais parametros)
+        {
+            var resquet = Mapper.Map<Pais>(parametros);
+            var resultado = await _service.InsertPais(resquet);
+            return Ok();
+        }
     }
 }
