@@ -60,6 +60,28 @@ namespace ApiComercial.Controllers
             return Ok();
         }
 
+
+        [HttpGet("departamentos/{Id}")]
+        [ProducesResponseType(typeof(DepartamentoResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GeDepartamentoPorId(int Id)
+        {
+            try
+            {
+                var resultado =  await _service.GetDepartamentoPorId(Id);
+                var respuesta = Mapper.Map<DepartamentoResponse>(resultado);
+                return Ok(respuesta);
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+
         [HttpPost("departamentos")]
         [ProducesResponseType(typeof(DepartamentoResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
