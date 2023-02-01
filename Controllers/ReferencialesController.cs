@@ -32,14 +32,18 @@ namespace ApiComercial.Controllers
         {
             try
             {
-                var resultado =  await _service.GetCiudadPorId(Id);
+                var resultado = await _service.GetCiudadPorId(Id);
                 var respuesta = Mapper.Map<CiudadResponse>(resultado);
                 return Ok(respuesta);
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
-
-                throw;
+                _Logger.LogError(e, "Ocurrió un error al obtener los datos de la ciudad por ID");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al obtener los datos de la ciudad por ID"
+                });
             }
         }
         /// <summary>
@@ -55,9 +59,22 @@ namespace ApiComercial.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> InsertCiudad(RequestCiudad parametros)
         {
-            var request = Mapper.Map<Ciudad>(parametros);
-            var resultado = await _service.InsertCiudad(request);
-            return Ok();
+            try
+            {
+                var request = Mapper.Map<Ciudad>(parametros);
+                var resultado = await _service.InsertCiudad(request);
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al insertar los registros de la ciudad");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al insertar los registros de la ciudad"
+                });
+            }
+
         }
 
 
@@ -71,14 +88,18 @@ namespace ApiComercial.Controllers
         {
             try
             {
-                var resultado =  await _service.GetDepartamentoPorId(Id);
+                var resultado = await _service.GetDepartamentoPorId(Id);
                 var respuesta = Mapper.Map<DepartamentoResponse>(resultado);
                 return Ok(respuesta);
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
-
-                throw;
+                _Logger.LogError(e, "Ocurrió un error al consultar el departamento por Id");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al consultar el departamento por Id"
+                });
             }
         }
 
@@ -88,11 +109,24 @@ namespace ApiComercial.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult>InsertDepartamento(RequestDepartamento parametros)
+        public async Task<ActionResult> InsertDepartamento(RequestDepartamento parametros)
         {
-            var resquet = Mapper.Map<Departamento>(parametros);
-            var resultado = await _service.InsertDepartamento(resquet);
-            return Ok();
+            try
+            {
+                var resquet = Mapper.Map<Departamento>(parametros);
+                var resultado = await _service.InsertDepartamento(resquet);
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al momento de intentar insertar los datos del departamento");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al momento de intentar insertar los datos del departamento"
+                });
+            }
+
         }
 
         [HttpGet("paises")]
@@ -105,28 +139,45 @@ namespace ApiComercial.Controllers
         {
             try
             {
-                var resultado =  await _service.GetPais();
+                var resultado = await _service.GetPais();
                 var respuesta = Mapper.Map<PaisResponse>(resultado);
                 return Ok(respuesta);
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
-
-                throw;
+                _Logger.LogError(e, "Ocurrió un error al momento de consultar los datos");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.validacion_negocio,
+                    ErrorDescripcion = "Ocurrió un error al momento de consultar los datos"
+                });
             }
         }
 
-        [HttpPost("pais")]
+        [HttpPost("paises")]
         [ProducesResponseType(typeof(PaisResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult>InsertPais(RequestPais parametros)
+        public async Task<ActionResult> InsertPais(RequestPais parametros)
         {
-            var resquet = Mapper.Map<Pais>(parametros);
-            var resultado = await _service.InsertPais(resquet);
-            return Ok();
+            try
+            {
+                var resquet = Mapper.Map<Pais>(parametros);
+                var resultado = await _service.InsertPais(resquet);
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al intentar insertar los datos de paises");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al intentar insertar los datos de paises"
+                });
+            }
+
         }
     }
 }
