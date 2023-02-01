@@ -8,12 +8,6 @@ namespace ApiComercial.Infraestructure.Data
 {
     public class MysqlContext : DbContext
     {
-        /*private string? _mysqlconnection;
-        public MysqlContext(string mysqlconnection)
-        {
-            _mysqlconnection = mysqlconnection;
-        }
-        */
         public MysqlContext(DbContextOptions<MysqlContext> options) : base(options)
         {
 
@@ -79,6 +73,16 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.DepartamentoId).HasColumnName("DepartamentoId");
                 entity.Property(e => e.PaisId).HasColumnName("PaisId");
                 entity.Property(e => e.DepartamentoDesc).HasColumnName("DepartamentoDesc");
+            });
+
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Pais>(entity =>
+            {
+                entity.ToTable("PAIS","ventas");
+                entity.HasKey(e => new {e.PaisId});
+                entity.Property(e => e.PaisId).HasColumnName("PaisId");
+                entity.Property(e => e.PaisDescripcion).HasColumnName("PaisDescripcion");
+                entity.Property(e => e.PaisNacionalidad).HasColumnName("PaisNacionalidad");
             });
         }
     }
