@@ -7,5 +7,9 @@ namespace ApiComercial.Infraestructure.interfaces
         Task<Ciudad> GetCiudadPorId(int departamentoId);
 
         Task<Ciudad> InsertCiudad(Ciudad parametros);
+
+        Task<Departamento> GetDepartamentoPorId(int departamento);
+
+        Task<Departamento> InsertDepartamento(Departamento parametros);
     }
 }

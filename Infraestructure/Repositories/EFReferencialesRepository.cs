@@ -19,9 +19,21 @@ namespace ApiComercial.Infraestructure.Repositories
             .Where(c => c.DepartamentoId == departamentoId)
             .FirstOrDefaultAsync();
 
+        public async Task<Departamento> GetDepartamentoPorId(int departamentoId)
+           => await _my.Departamentos
+                    .Where(c => c.DepartamentoId == departamentoId)
+                    .FirstOrDefaultAsync();
+                    
         public async Task<Ciudad> InsertCiudad(Ciudad parametros)
         {
             await _my.Ciudades.AddAsync(parametros);
+            await _my.SaveChangesAsync();
+            return parametros;
+        }
+
+        public async Task<Departamento> InsertDepartamento(Departamento parametros)
+        {
+            await _my.Departamentos.AddAsync(parametros);
             await _my.SaveChangesAsync();
             return parametros;
         }
