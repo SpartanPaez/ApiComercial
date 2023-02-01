@@ -28,6 +28,7 @@ namespace ApiComercial.Infraestructure.Data
         }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Ciudad> Ciudades { get; set; }
+        public DbSet<Departamento> Departamentos{get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -68,6 +69,16 @@ namespace ApiComercial.Infraestructure.Data
                 entity.HasKey(e => new {e.CategoriaId});
                 entity.Property(e => e.CategoriaId).HasColumnName("CategoriaId");
                 entity.Property(e => e.CategoriaDesc).HasColumnName("CategoriaDesc");
+            });
+
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Departamento>(entity =>
+            {
+                entity.ToTable("DEPARTAMENTOS","ventas");
+                entity.HasKey(e => new {e.DepartamentoId});
+                entity.Property(e => e.DepartamentoId).HasColumnName("DepartamentoId");
+                entity.Property(e => e.PaisId).HasColumnName("PaisId");
+                entity.Property(e => e.DepartamentoDesc).HasColumnName("DepartamentoDesc");
             });
         }
     }
