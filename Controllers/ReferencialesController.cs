@@ -177,6 +177,56 @@ namespace ApiComercial.Controllers
                     ErrorDescripcion = "Ocurrió un error al intentar insertar los datos de paises"
                 });
             }
+        }
+
+        [HttpGet("usuarios")]
+        [ProducesResponseType(typeof(UsuarioResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetUsuarios()
+        {
+            try
+            {
+                var resultado = await _service.GetUsuarios();
+                var respuesta = Mapper.Map<UsuarioResponse>(resultado);
+                return Ok(respuesta);
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al momento de consultar los datos");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.validacion_negocio,
+                    ErrorDescripcion = "Ocurrió un error al momento de consultar los datos"
+                });
+            }
+        }
+
+        [HttpPost("usuarios")]
+        [ProducesResponseType(typeof(UsuarioResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> InsertUsuarios(RequestUsuario parametros)
+        {
+            try
+            {
+                var resquet = Mapper.Map<Usuario>(parametros);
+                var resultado = await _service.InsertUsuario(resquet);
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al intentar insertar los datos de paises");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al intentar insertar los datos de paises"
+                });
+            }
 
         }
     }

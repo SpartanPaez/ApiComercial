@@ -15,5 +15,9 @@ namespace ApiComercial.interfaces
         Task<Pais> GetPais();
 
         Task<Pais> InsertPais(Pais parametros);
+
+        Task<Usuario>GetUsuarios();
+        
+        Task<Usuario>InsertUsuario(Usuario parametros);
     }
 }

@@ -26,6 +26,11 @@ namespace ApiComercial.Services
             return await _referenciaRepository.GetPais();
         }
 
+        public async Task<Usuario> GetUsuarios()
+        {
+            return await _referenciaRepository.GetUsuarios();
+        }
+
         public async Task<Ciudad> InsertCiudad(Ciudad parametros)
         {
             return await _referenciaRepository.InsertCiudad(parametros);
@@ -39,6 +44,11 @@ namespace ApiComercial.Services
         public async Task<Pais> InsertPais(Pais parametros)
         {
             return await _referenciaRepository.InsertPais(parametros);
+        }
+
+        public async Task<Usuario> InsertUsuario(Usuario parametros)
+        {
+            return await _referenciaRepository.InsertUsuario(parametros);
         }
     }
 }

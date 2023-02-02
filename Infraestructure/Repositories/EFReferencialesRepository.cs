@@ -27,6 +27,9 @@ namespace ApiComercial.Infraestructure.Repositories
         public async Task<Pais> GetPais()
         => await _my.Paises.FirstOrDefaultAsync();
 
+        public async Task<Usuario> GetUsuarios()
+        => await _my.Usuarios.FirstOrDefaultAsync();
+
         public async Task<Ciudad> InsertCiudad(Ciudad parametros)
         {
             await _my.Ciudades.AddAsync(parametros);
@@ -44,6 +47,13 @@ namespace ApiComercial.Infraestructure.Repositories
         public async Task<Pais> InsertPais(Pais parametros)
         {
             await _my.Paises.AddAsync(parametros);
+            await _my.SaveChangesAsync();
+            return parametros;
+        }
+
+        public async Task<Usuario> InsertUsuario(Usuario parametros)
+        {
+            await _my.Usuarios.AddRangeAsync(parametros);
             await _my.SaveChangesAsync();
             return parametros;
         }

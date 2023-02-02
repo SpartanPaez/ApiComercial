@@ -13,8 +13,11 @@ namespace ApiComercial.Infraestructure.interfaces
         Task<Departamento> InsertDepartamento(Departamento parametros);
 
         Task<Pais> GetPais ();
-        
-        Task<Pais> InsertPais(Pais parametros);
 
+        Task<Pais> InsertPais(Pais parametros);
+        
+        Task<Usuario>GetUsuarios();
+        
+        Task<Usuario>InsertUsuario(Usuario parametros);
     }
 }
