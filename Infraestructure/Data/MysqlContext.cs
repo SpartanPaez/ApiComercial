@@ -22,8 +22,8 @@ namespace ApiComercial.Infraestructure.Data
         }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Ciudad> Ciudades { get; set; }
-        public DbSet<Departamento> Departamentos{get; set;}
-        public DbSet<Pais> Paises{get; set;}
+        public DbSet<Departamento> Departamentos { get; set; }
+        public DbSet<Pais> Paises { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,19 @@ namespace ApiComercial.Infraestructure.Data
             });
 
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Usuario>(entity =>
+            {
+                entity.ToTable("USUARIOS", "ventas");
+                entity.HasKey(e => new { e.UsuarioId });
+                entity.Property(e => e.UsuarioId).HasColumnName("UsuarioId");
+                entity.Property(e => e.ClienteId).HasColumnName("ClienteId");
+                entity.Property(e => e.UsuarioEstado).HasColumnName("UsuarioEstado");
+                entity.Property(e => e.UsuarioNic).HasColumnName("UsuarioNic");
+                entity.Property(e => e.UsuarioPass).HasColumnName("UsuarioPass");
+                entity.Property(e => e.UsuarioFecha).HasColumnName("UsuarioFecha");
+            });
+
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Ciudad>(entity =>
             {
                 entity.ToTable("CIUDADES", "ventas");
@@ -61,7 +74,7 @@ namespace ApiComercial.Infraestructure.Data
             modelBuilder.Entity<Categoria>(entity =>
             {
                 entity.ToTable("CATEGOIRAS", "ventas");
-                entity.HasKey(e => new {e.CategoriaId});
+                entity.HasKey(e => new { e.CategoriaId });
                 entity.Property(e => e.CategoriaId).HasColumnName("CategoriaId");
                 entity.Property(e => e.CategoriaDesc).HasColumnName("CategoriaDesc");
             });
@@ -69,8 +82,8 @@ namespace ApiComercial.Infraestructure.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Departamento>(entity =>
             {
-                entity.ToTable("DEPARTAMENTOS","ventas");
-                entity.HasKey(e => new {e.DepartamentoId});
+                entity.ToTable("DEPARTAMENTOS", "ventas");
+                entity.HasKey(e => new { e.DepartamentoId });
                 entity.Property(e => e.DepartamentoId).HasColumnName("DepartamentoId");
                 entity.Property(e => e.PaisId).HasColumnName("PaisId");
                 entity.Property(e => e.DepartamentoDesc).HasColumnName("DepartamentoDesc");
@@ -79,8 +92,8 @@ namespace ApiComercial.Infraestructure.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Pais>(entity =>
             {
-                entity.ToTable("PAIS","ventas");
-                entity.HasKey(e => new {e.PaisId});
+                entity.ToTable("PAIS", "ventas");
+                entity.HasKey(e => new { e.PaisId });
                 entity.Property(e => e.PaisId).HasColumnName("PaisId");
                 entity.Property(e => e.PaisDescripcion).HasColumnName("PaisDescripcion");
                 entity.Property(e => e.PaisNacionalidad).HasColumnName("PaisNacionalidad");
