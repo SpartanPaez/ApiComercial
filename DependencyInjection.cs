@@ -9,6 +9,7 @@ namespace ApiComercial
         {
             services.AddTransient<IclientesServices, ClienteService>();
             services.AddTransient<IreferencialesService, ReferencialesService>();
+            services.AddTransient<IproductosService, ProductoService>();
             return services;
         }
     }

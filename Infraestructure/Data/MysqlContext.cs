@@ -25,6 +25,7 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Pais> Paises { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Producto> Productos{get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

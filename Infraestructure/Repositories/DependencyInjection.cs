@@ -17,6 +17,7 @@ namespace ApiComercial.Infraestructure.Repositories
             
             services.AddTransient<IclientesRepository, EFClientesRepository>();
             services.AddTransient<IreferencialesRepository, EFReferencialesRepository>();
+            services.AddTransient<IproductoRepository, EFProductoRepository>();
             return services;
         }
     }

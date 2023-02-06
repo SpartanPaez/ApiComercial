@@ -34,6 +34,7 @@ namespace ApiComercial.Depedencies
             CreateMap<Pais, PaisResponse>().ReverseMap();
             CreateMap<Usuario, UsuarioResponse>().ReverseMap();
             CreateMap<Usuario, RequestUsuario>().ReverseMap();
+            CreateMap<Producto, ResponseProducto>().ReverseMap();
         }
     }
 }
