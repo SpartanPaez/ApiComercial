@@ -24,7 +24,7 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<Ciudad> Ciudades { get; set; }
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Pais> Paises { get; set; }
-        public DbSet<Usuario> Usuarios{get; set;}
+        public DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -98,6 +98,25 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.PaisId).HasColumnName("PaisId");
                 entity.Property(e => e.PaisDescripcion).HasColumnName("PaisDescripcion");
                 entity.Property(e => e.PaisNacionalidad).HasColumnName("PaisNacionalidad");
+            });
+
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Producto>(entity =>
+            {
+                entity.ToTable("PRODUCTOS","ventas");
+                entity.HasKey(e => new { e.ProductoId});
+                entity.Property(e => e.ProductoId).HasColumnName("ProductoId");
+                entity.Property(e => e.ProductoLote).HasColumnName("ProductoLote");
+                entity.Property(e => e.ProductoCodigoBarra).HasColumnName("ProductoCodigoBarra");
+                entity.Property(e => e.ProductoNombre).HasColumnName("ProductoNombre");
+                entity.Property(e => e.ProductoDescripcion).HasColumnName("ProductoDescripcion");
+                entity.Property(e => e.ProductoCosto).HasColumnName("ProductoCosto");
+                entity.Property(e => e.ProductoPrecio).HasColumnName("ProductoPrecio");
+                entity.Property(e => e.ProductoExistencia).HasColumnName("ProductoExistencia");
+                entity.Property(e => e.DepositoId).HasColumnName("DepositoId");
+                entity.Property(e => e.ProductoFechaVencimiento).HasColumnName("ProductoFechaVencimiento");
+                entity.Property(e => e.ProductoFechaAlta).HasColumnName("ProductoFechaAlta");
+                entity.Property(e => e.UsuarioId).HasColumnName("UsuarioId");
             });
         }
     }
