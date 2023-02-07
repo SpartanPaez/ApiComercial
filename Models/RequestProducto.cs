@@ -4,13 +4,8 @@ using System.Text;
 
 namespace ApiComercial.Models
 {
-    public class ResquesProducto
+    public class RequestProducto
     {
-        /// <summary>
-        /// Codigo identificador del producto
-        /// </summary>
-        /// <value></value>
-        public int ProductoId { get; set; }
         /// <summary>
         /// Numero de lote del producto
         /// </summary>

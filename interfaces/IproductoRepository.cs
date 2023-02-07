@@ -4,8 +4,8 @@ namespace ApiComercial.Infraestructure.interfaces
 {
     public interface IproductoRepository
     {
-        Task<Producto> GetProductos();
+        Task<IEnumerable<Producto>> GetProductos();
         Task<Producto> GetProductoPorId(string codigoBarra);
-
+        Task<Producto> InsertProducto(Producto parametros);
     }
 }

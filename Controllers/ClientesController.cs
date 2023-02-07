@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
 using ApiComercial.Entities;
 
 namespace ApiComercial.Controllers

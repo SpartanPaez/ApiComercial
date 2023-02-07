@@ -7,6 +7,11 @@ namespace ApiComercial.Models
     public class ResponseProducto
     {
         /// <summary>
+        /// Codigo identificador del producto
+        /// </summary>
+        /// <value></value>
+        public int ProductoId { get; set; }
+        /// <summary>
         /// Numero de lote del producto
         /// </summary>
         /// <value></value>

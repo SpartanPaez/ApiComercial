@@ -16,9 +16,14 @@ namespace ApiComercial.Services
             throw new NotImplementedException();
         }
 
-        public async Task<Producto> GetProductos()
+        public async Task <IEnumerable<Producto>> GetProductos()
         {
            return await this._productoRepository.GetProductos();
+        }
+
+        public async Task<Producto> InsertProducto(Producto parametros)
+        {
+            return await this._productoRepository.InsertProducto(parametros);
         }
     }
 }

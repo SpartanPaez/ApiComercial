@@ -27,12 +27,12 @@ namespace ApiComercial.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> GetCliente()
+        public async Task<ActionResult> GetProducto()
         {
             try
             {
                 var resultado = await _service.GetProductos();
-                var respuesta = Mapper.Map<ResponseClientes>(resultado);
+                var respuesta = Mapper.Map<IEnumerable<ResponseProducto>>(resultado);
                 return Ok(respuesta);
             }
             catch (System.Exception e)
@@ -44,6 +44,30 @@ namespace ApiComercial.Controllers
                   ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos del producto"
                 });
                 
+            }
+        }
+        [HttpPost("productos")]
+        [ProducesResponseType(typeof(ResponseProducto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> InsertUsuarios(RequestProducto parametros)
+        {
+            try
+            {
+                var resquet = Mapper.Map<Producto>(parametros);
+                var resultado = await _service.InsertProducto(resquet);
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+                _logger.LogError(e, "Ocurrió un error al intentar insertar los datos del producto.");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al intentar insertar los datos del producto."
+                });
             }
 
         }

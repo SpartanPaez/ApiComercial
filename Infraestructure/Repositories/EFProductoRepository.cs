@@ -22,7 +22,14 @@ namespace ApiComercial.Infraestructure.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<Producto> GetProductos()
-         => await _my.Productos.FirstOrDefaultAsync();
+        public async Task <IEnumerable<Producto>> GetProductos()
+         => await _my.Productos.ToListAsync();
+
+        public async Task<Producto> InsertProducto(Producto parametros)
+        {
+           await _my.AddAsync(parametros);
+           await _my.SaveChangesAsync();
+           return parametros;
+        }
     }
 }
