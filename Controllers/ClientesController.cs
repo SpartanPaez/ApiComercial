@@ -44,7 +44,7 @@ namespace ApiComercial.Controllers
             try
             {
                 var resultado = await _service.GetDatoCliente();
-                var respuesta = Mapper.Map<ResponseClientes>(resultado);
+                var respuesta = Mapper.Map<IEnumerable<ResponseClientes>>(resultado);
                 return Ok(respuesta);
             }
             catch (System.Exception e)

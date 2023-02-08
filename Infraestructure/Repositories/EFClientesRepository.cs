@@ -16,8 +16,8 @@ namespace ApiComercial.Infraestructure.Repositories
             _my = my;
             _mysqlconnection = configuration.GetConnectionString("Default");
         }
-        public async Task <Cliente> GetDatoCliente()
-        =>  await _my.Clientes.FirstOrDefaultAsync();
+        public async Task <IEnumerable<Cliente>> GetDatoCliente()
+        =>  await _my.Clientes.ToListAsync();
         public async Task <Cliente> GetClientePorId(int Id)
         => await _my.Clientes
                  .Where(c => c.ClienteId== Id)

@@ -4,7 +4,7 @@ namespace ApiComercial.Infraestructure.interfaces
 {
     public interface IclientesRepository
     {
-        Task<Cliente> GetDatoCliente();
+        Task <IEnumerable<Cliente>> GetDatoCliente();
         Task<Cliente> GetClientePorId(int Id);
         Task <Cliente> InsertCliente(Cliente parametros);
 

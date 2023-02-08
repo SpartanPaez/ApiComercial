@@ -9,7 +9,7 @@ namespace ApiComercial.interfaces
 {
     public interface IclientesServices
     {
-        Task <Cliente> GetDatoCliente();
+        Task <IEnumerable<Cliente>> GetDatoCliente();
         Task <Cliente> GetClientePorId(int Id);
         Task <Cliente> InsertCliente(Cliente parametros);
     }

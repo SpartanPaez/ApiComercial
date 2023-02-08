@@ -20,7 +20,7 @@ namespace ApiComercial.Services
             return await _clientesRepository.GetClientePorId(Id);
         }
 
-        public async Task <Cliente> GetDatoCliente()
+        public async Task <IEnumerable<Cliente>> GetDatoCliente()
         {
            return await _clientesRepository.GetDatoCliente();
         }
