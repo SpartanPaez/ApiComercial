@@ -24,8 +24,8 @@ namespace ApiComercial.Infraestructure.Repositories
                     .Where(c => c.DepartamentoId == departamentoId)
                     .FirstOrDefaultAsync();
 
-        public async Task<Pais> GetPais()
-        => await _my.Paises.FirstOrDefaultAsync();
+        public async Task <IEnumerable<Pais>> GetPais()
+        => await _my.Paises.ToListAsync();
 
         public async Task<Usuario> GetUsuarios()
         => await _my.Usuarios.FirstOrDefaultAsync();

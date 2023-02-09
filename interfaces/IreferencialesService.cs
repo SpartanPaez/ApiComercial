@@ -12,7 +12,7 @@ namespace ApiComercial.interfaces
 
         Task<Departamento> InsertDepartamento(Departamento parametros);
         
-        Task<Pais> GetPais();
+        Task <IEnumerable<Pais>> GetPais();
 
         Task<Pais> InsertPais(Pais parametros);
 

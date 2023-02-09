@@ -140,7 +140,7 @@ namespace ApiComercial.Controllers
             try
             {
                 var resultado = await _service.GetPais();
-                var respuesta = Mapper.Map<PaisResponse>(resultado);
+                var respuesta = Mapper.Map<IEnumerable<PaisResponse>>(resultado);
                 return Ok(respuesta);
             }
             catch (System.Exception e)

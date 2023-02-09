@@ -21,7 +21,7 @@ namespace ApiComercial.Services
             return await _referenciaRepository.GetDepartamentoPorId(departamentoId);
         }
 
-        public async Task<Pais> GetPais()
+        public async Task <IEnumerable<Pais>> GetPais()
         {
             return await _referenciaRepository.GetPais();
         }
