@@ -1,3 +1,5 @@
+using FluentValidation;
+
 namespace ApiComercial.Entities
 {
     public class RequestCiudad
@@ -12,5 +14,15 @@ namespace ApiComercial.Entities
         /// </summary>
         /// <value></value>
         public string? CiudadDesc { get; set; }
+    }
+    public class ValidationActualizaconCiudad : AbstractValidator<RequestCiudad>
+    {
+        public ValidationActualizaconCiudad()
+        {
+            RuleFor(p => p.CiudadDesc).MaximumLength(70)
+            .WithMessage("La longitud máxima para la descripción de la ciudad es de 70 carácteres.");
+            RuleFor(p => p.CiudadDesc).MinimumLength(3)
+            .WithMessage("La longitud mínima para la descripción de la ciudad es de 3 carácteres.");
+        }
     }
 }

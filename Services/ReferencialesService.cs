@@ -50,5 +50,10 @@ namespace ApiComercial.Services
         {
             return await _referenciaRepository.InsertUsuario(parametros);
         }
+
+        public async Task<Ciudad> UpdateCiudad(Ciudad parametros)
+        {
+            return await _referenciaRepository.UpdateCiudad(parametros);
+        }
     }
 }

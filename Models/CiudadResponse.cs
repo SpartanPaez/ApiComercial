@@ -1,3 +1,4 @@
+
 namespace ApiComercial.Entities
 {
     public class CiudadResponse
@@ -18,4 +19,5 @@ namespace ApiComercial.Entities
         /// <value></value>
         public string? CiudadDesc { get; set; }
     }
+   
 }

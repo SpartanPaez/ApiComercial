@@ -76,6 +76,30 @@ namespace ApiComercial.Controllers
             }
 
         }
+        [HttpPut("ciudades")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> UpdateCiudades(CiudadResponse parametros)
+        {
+            try
+            {
+                var resquest = Mapper.Map<Ciudad>(parametros);
+                var resultado = await _service.UpdateCiudad(resquest);
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al actualizar los registros de la ciudad");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al actualizar los registros de la ciudad"
+                });
+            }
+
+        }
 
 
         [HttpGet("departamentos/{Id}")]
