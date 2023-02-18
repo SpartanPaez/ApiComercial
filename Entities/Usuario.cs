@@ -3,6 +3,7 @@ using ApiComercial.Entities;
 namespace ApiComercial.Entities;
 public class Usuario
 {
+
     /// <summary>
     /// Codigo identificador del usuario
     /// </summary>

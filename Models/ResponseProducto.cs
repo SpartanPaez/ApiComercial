@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using FluentValidation;
 
 namespace ApiComercial.Models
 {
@@ -66,5 +67,15 @@ namespace ApiComercial.Models
         /// </summary>
         /// <value></value>
         public int UsuarioId { get; set; }
+    }
+    public class ProductosValidation : AbstractValidator<RequestProducto>
+    {
+        public ProductosValidation()
+        {
+            RuleFor(x => x.ProductoNombre).MinimumLength(3)
+            .WithMessage("El nombre del producto debe tener al menos 3 carácteres.");
+            RuleFor(x => x.ProductoNombre).MaximumLength(100)
+            .WithMessage("El nombre del producto soporta como maxímo 100 carácteres.");
+        }
     }
 }

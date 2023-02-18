@@ -40,10 +40,10 @@ namespace ApiComercial.Controllers
                 _logger.LogError(e, "Ocurrió un error al consultar los datos del producto");
                 return StatusCode(500, new ErrorResponse
                 {
-                  ErrorType = Enums.ErrorType.error_interno_servidor,
-                  ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos del producto"
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos del producto"
                 });
-                
+
             }
         }
         [HttpPost("productos")]
@@ -52,7 +52,7 @@ namespace ApiComercial.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> InsertUsuarios(RequestProducto parametros)
+        public async Task<ActionResult> InsertProducto(RequestProducto parametros)
         {
             try
             {
@@ -71,5 +71,66 @@ namespace ApiComercial.Controllers
             }
 
         }
+
+        [HttpPut("productos")]
+        [ProducesResponseType(typeof(ResponseProducto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> UpdateProducto(ResponseProducto parametros)
+        {
+            try
+            {
+                var resquet = Mapper.Map<Producto>(parametros);
+                bool existe = await _service.ExisteProducto(parametros.ProductoId, parametros.ProductoLote);
+                if (existe)
+                {
+                    var resultado = await _service.UpdateProducto(resquet);
+                    return Ok();
+                }
+                else
+                {
+                   var resultado = await _service.InsertProducto(resquet);
+                   return Created("", _service.GetProductoPorId(parametros.ProductoLote));
+                } 
+            }
+            catch (System.Exception e)
+            {
+                _logger.LogError(e, "Ocurrió un error al intentar actualizar los datos del producto.");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al intentar actualizar los datos del producto."
+                });
+            }
+
+        }
+        [HttpDelete("productos/{ProductoId}")]
+        [ProducesResponseType(typeof(ResponseProducto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> DeleteProducto(int ProductoId)
+        {
+            try
+            {
+                var resultado = await _service.DeleteProducto(ProductoId);
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+                _logger.LogError(e, "Ocurrió un error al intentar eliminar los datos del producto.");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al intentar eliminar los datos del producto."
+                });
+            }
+
+        }
+  
+
     }
 }

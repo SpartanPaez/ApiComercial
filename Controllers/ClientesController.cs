@@ -102,16 +102,29 @@ namespace ApiComercial.Controllers
             return CreatedAtAction(nameof(GetClientePorId), new { Id = resultado.ClienteId}, resultado);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<bool> DeleteCliente()
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> UpdateCliente(int id, RequestDatoCliente parametros)
         {
-            throw new NotImplementedException();
+            var resquest = Mapper.Map<Cliente>(parametros);
+            resquest.ClienteId = id;
+            var resultado = await _service.UpdateCliente(resquest);
+            return Ok(resultado);
         }
-        //[HttpPost]
-        //public async Task<ResponseClientes> UpdateCliente(Clientes clientes)
-        //{
-         //   throw new NotImplementedException();
-       // }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> DeleteCliente(int id)
+        {
+            var resultado = await _service.DeleteCliente(id);
+            return Ok(resultado);
+        }
 
     }
 

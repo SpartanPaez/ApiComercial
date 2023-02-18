@@ -1,6 +1,9 @@
 namespace ApiComercial.Entities;
 public class Categoria
 {
+
+//Implement
+
     /// <summary>
     /// Codigo indentificador de categoria
     /// </summary>

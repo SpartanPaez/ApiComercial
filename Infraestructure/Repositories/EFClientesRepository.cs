@@ -29,5 +29,23 @@ namespace ApiComercial.Infraestructure.Repositories
             await _my.SaveChangesAsync();
             return parametros;
         }
+
+        public async Task<Cliente> UpdateCliente(Cliente parametros)
+        {
+            _my.Clientes.Update(parametros);
+            await _my.SaveChangesAsync();
+            return parametros;
+        }
+
+        //delete clientes
+        public async Task<bool> DeleteCliente(int ClienteId)
+        {
+            var cliente = await _my.Clientes.Where(x => x.ClienteId == ClienteId).FirstOrDefaultAsync();
+            if (cliente == null)
+                return false;
+            _my.Clientes.Remove(cliente);
+            await _my.SaveChangesAsync();
+            return true;
+        }
     }
 }
