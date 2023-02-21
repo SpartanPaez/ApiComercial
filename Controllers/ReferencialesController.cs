@@ -251,7 +251,32 @@ namespace ApiComercial.Controllers
                     ErrorDescripcion = "Ocurrió un error al intentar insertar los datos de paises"
                 });
             }
-
         }
+        //insertar depositos
+        [HttpPost("depositos")]
+        [ProducesResponseType(typeof(DepositoResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> InsertDeposito(RequestDeposito parametros)
+        {
+            try
+            {
+                var resquet = Mapper.Map<Deposito>(parametros);
+                var resultado = await _service.InsertDeposito(resquet);
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al intentar insertar los datos de depositos");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al intentar insertar los datos de depositos"
+                });
+            }
+        }
+
     }
 }

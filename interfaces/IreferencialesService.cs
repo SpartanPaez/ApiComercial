@@ -21,5 +21,7 @@ namespace ApiComercial.interfaces
         Task<Usuario>GetUsuarios();
         
         Task<Usuario>InsertUsuario(Usuario parametros);
+
+        Task<Deposito>InsertDeposito(Deposito parametros);
     }
 }

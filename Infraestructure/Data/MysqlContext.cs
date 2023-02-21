@@ -26,6 +26,7 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<Pais> Paises { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Producto> Productos{get; set;}
+        public DbSet<Deposito> Depositos{get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -118,6 +119,26 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.ProductoFechaVencimiento).HasColumnName("ProductoFechaVencimiento");
                 entity.Property(e => e.ProductoFechaAlta).HasColumnName("ProductoFechaAlta");
                 entity.Property(e => e.UsuarioId).HasColumnName("UsuarioId");
+            });
+
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Deposito>(entity =>
+            {
+                entity.ToTable("DEPOSITOS","ventas");
+                entity.HasKey(e => new { e.DepositoID});
+                entity.Property(e => e.DepositoID).HasColumnName("DepositoId");
+                entity.Property(e => e.DepositoNombre).HasColumnName("DepositoNombre");
+                entity.Property(e => e.DepositoDireccion).HasColumnName("DepositoDireccion");
+                entity.Property(e => e.DepositoTelefono).HasColumnName("DepositoTelefono");
+                entity.Property(e => e.CiudadId).HasColumnName("CiudadId");
+                entity.Property(e => e.DepositoObservaciones).HasColumnName("DepositoObservaciones");
+                entity.Property(e => e.DepositoEstado).HasColumnName("DepositoEstado");
+                entity.Property(e => e.DepositoUsuarioAlta).HasColumnName("DepositoUsuarioAlta");
+                entity.Property(e => e.DepositoFechaAlta).HasColumnName("DepositoFechaAlta");
+                entity.Property(e => e.DepositoUsuarioModif).HasColumnName("DepositoUsuarioModif");
+                entity.Property(e => e.DepositoFechaModif).HasColumnName("DepositoFechaModif");
+
+
             });
         }
     }

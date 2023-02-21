@@ -64,5 +64,12 @@ namespace ApiComercial.Infraestructure.Repositories
              await _my.SaveChangesAsync();
              return parametros;
         }
+        
+        public async Task<Deposito> InsertDeposito(Deposito parametros)
+        {
+            await _my.Depositos.AddAsync(parametros);
+            await _my.SaveChangesAsync();
+            return parametros;
+        }
     }
 }

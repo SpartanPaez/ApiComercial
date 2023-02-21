@@ -128,9 +128,7 @@ namespace ApiComercial.Controllers
                     ErrorDescripcion = "Ocurrió un error al intentar eliminar los datos del producto."
                 });
             }
-
         }
-  
 
     }
 }

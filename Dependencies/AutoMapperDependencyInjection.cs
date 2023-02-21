@@ -22,8 +22,6 @@ namespace ApiComercial.Depedencies
     {
         public MappingProfile()
         {
-            //CreateMap<Core.Entities.DiaHabil, DiaHabil>().ReverseMap();
-            //CreateMap<DateTime, string>().ConvertUsing(s => s.Date.ToString("dd/MM/yyyy"));
             CreateMap<Cliente, ResponseClientes>().ReverseMap();
             CreateMap<Cliente, RequestDatoCliente>().ReverseMap();
             CreateMap<Ciudad, RequestCiudad>().ReverseMap();
@@ -36,6 +34,7 @@ namespace ApiComercial.Depedencies
             CreateMap<Usuario, RequestUsuario>().ReverseMap();
             CreateMap<Producto, ResponseProducto>().ReverseMap();
             CreateMap<Producto, RequestProducto>().ReverseMap();
+            CreateMap<Deposito, RequestDeposito>().ReverseMap();
         }
     }
 }
