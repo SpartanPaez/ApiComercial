@@ -21,6 +21,10 @@ namespace ApiComercial.Controllers
             _mapper = mapper;
             _service = service;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("productos")]
         [ProducesResponseType(typeof(ResponseProducto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -43,7 +47,6 @@ namespace ApiComercial.Controllers
                     ErrorType = Enums.ErrorType.error_interno_servidor,
                     ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos del producto"
                 });
-
             }
         }
         [HttpPost("productos")]

@@ -71,5 +71,17 @@ namespace ApiComercial.Infraestructure.Repositories
             await _my.SaveChangesAsync();
             return parametros;
         }
+
+        public async Task<Deposito> UpdateDeposito(Deposito parametros)
+        {
+            _my.Depositos.Update(parametros);
+            await _my.SaveChangesAsync();
+            return parametros;
+        }
+
+        public async Task<IEnumerable<Deposito>> GetDepositos()
+        {
+            return await _my.Depositos.ToListAsync();
+        }
     }
 }

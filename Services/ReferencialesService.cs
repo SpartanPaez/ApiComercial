@@ -21,6 +21,11 @@ namespace ApiComercial.Services
             return await _referenciaRepository.GetDepartamentoPorId(departamentoId);
         }
 
+        public Task<IEnumerable<Deposito>> GetDepositos()
+        {
+            return _referenciaRepository.GetDepositos();
+        }
+
         public async Task <IEnumerable<Pais>> GetPais()
         {
             return await _referenciaRepository.GetPais();
@@ -59,6 +64,11 @@ namespace ApiComercial.Services
         public async Task<Ciudad> UpdateCiudad(Ciudad parametros)
         {
             return await _referenciaRepository.UpdateCiudad(parametros);
+        }
+
+        public Task<Deposito> UpdateDeposito(Deposito parametros)
+        {
+            return _referenciaRepository.UpdateDeposito(parametros);
         }
     }
 }

@@ -252,6 +252,31 @@ namespace ApiComercial.Controllers
                 });
             }
         }
+        //Crear endpoint para obtener listado de depositos
+        [HttpGet("depositos")]
+        [ProducesResponseType(typeof(DepositoResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetDepositos()
+        {
+            try
+            {
+                var resultado = await _service.GetDepositos();
+                var respuesta = Mapper.Map<IEnumerable<DepositoResponse>>(resultado);
+                return Ok(respuesta);
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al momento de consultar los datos");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.validacion_negocio,
+                    ErrorDescripcion = "Ocurrió un error al momento de consultar los datos"
+                });
+            }
+        }
         //insertar depositos
         [HttpPost("depositos")]
         [ProducesResponseType(typeof(DepositoResponse), StatusCodes.Status200OK)]
@@ -277,6 +302,30 @@ namespace ApiComercial.Controllers
                 });
             }
         }
-
+        //update deposito
+        [HttpPut("depositos")]
+        [ProducesResponseType(typeof(DepositoResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> UpdateDeposito(RequestDeposito parametros)
+        {
+            try
+            {
+                var resquet = Mapper.Map<Deposito>(parametros);
+                var resultado = await _service.UpdateDeposito(resquet);
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al intentar actualizar los datos de depositos");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al intentar actualizar los datos de depositos"
+                });
+            }
+        }
     }
 }

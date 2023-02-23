@@ -6,6 +6,7 @@ namespace ApiComercial.Models
 {
     public class ResponseClientes 
     {  
+        public int? ClienteId { get; set; }
         /// <summary>
         /// Cedula del cliente
         /// </summary>

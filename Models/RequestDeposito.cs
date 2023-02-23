@@ -45,16 +45,16 @@ namespace ApiComercial.Models
         /// Fecha de alta del depósito
         /// </summary>
         /// <value></value>
-        public DateTime DepositoFechaAlta { get; set; }
+        public DateTime ?DepositoFechaAlta { get; set; }
         /// <summary>
         /// Usuario que modifica el depósito
         /// </summary>
         /// <value></value>
-        public string? DepositoUsuarioModif { get; set; }
+        public string ?DepositoUsuarioModif { get; set; }
         /// <summary>
         /// Fecha de modificación del depósito
         /// </summary>
         /// <value></value>
-        public DateTime DepositoFechaModif { get; set; }
+        public DateTime? DepositoFechaModif { get; set; }
     }
 }

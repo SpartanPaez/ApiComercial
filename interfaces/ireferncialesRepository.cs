@@ -23,5 +23,9 @@ namespace ApiComercial.Infraestructure.interfaces
         Task<Usuario>InsertUsuario(Usuario parametros);
 
         Task<Deposito>InsertDeposito(Deposito parametros);
+
+        Task<Deposito>UpdateDeposito(Deposito parametros);
+
+        Task<IEnumerable<Deposito>> GetDepositos();
     }
 }

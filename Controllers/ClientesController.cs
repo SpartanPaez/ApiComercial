@@ -27,13 +27,13 @@ namespace ApiComercial.Controllers
             _mapper = mapper;
             _service = service;
         }
-        //[HttpGet("{id}")]
         [HttpGet()]
-        /// <summary>
-        /// </summary>
-        /// <param name="ClienteId">Recibe el codigo del cliente a ser consultado</param>
+         /// <summary>
+        /// metodo que inserta datos en el log de actualizacion
+        /// </summary>  
+        /// <param name="codigoCliente">codigo del cliente para obtener el grupo de parametros a actualizar</param> 
+        /// <param name="canal">Indica el origen, si es web o app
         /// <returns></returns>
-        /// 
         [ProducesResponseType(typeof(ResponseClientes), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]

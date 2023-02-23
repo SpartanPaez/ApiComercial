@@ -17,6 +17,7 @@ namespace ApiComercial.Models
         public string ?DepositoUsuarioAlta { get; set; }
         public DateTime DepositoFechaAlta { get; set; }
         public string ?DepositoUsuarioModif { get; set; }
-        public DateTime DepositoFechaModif { get; set; }
+    
+        public DateTime? DepositoFechaModif { get; set; }
     }
 }

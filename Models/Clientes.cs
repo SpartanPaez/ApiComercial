@@ -43,14 +43,5 @@ namespace ApiComercial.Models
         /// <value></value>
         public string? ClienteEstado { get; set; }
     }
-    public class ClientesValidator: AbstractValidator<Clientes>
-    {
-        public ClientesValidator()
-        {
-            RuleFor(x=> x.ClienteCedula).MinimumLength(6)
-            .WithMessage("La cedula del cliente no cumple con la longitud requerida.");
-            RuleFor(x=> x.ClienteCedula).MaximumLength(15)
-            .WithMessage("La cedula del cliente excede el limite de longitud requerido.");
-        }
-    }
+    
 }
