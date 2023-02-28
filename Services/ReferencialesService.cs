@@ -61,6 +61,11 @@ namespace ApiComercial.Services
             return await _referenciaRepository.InsertUsuario(parametros);
         }
 
+        public async Task<bool> LoginUsuario(string UsarName, string Password)
+        {
+            return await _referenciaRepository.LoginUsuario(UsarName, Password);
+        }
+
         public async Task<Ciudad> UpdateCiudad(Ciudad parametros)
         {
             return await _referenciaRepository.UpdateCiudad(parametros);

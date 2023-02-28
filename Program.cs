@@ -2,6 +2,7 @@ using ApiComercial;
 using ApiComercial.Depedencies;
 using ApiComercial.Infraestructure.Repositories;
 using AutoMapper;
+using Continental.API.WebApi.Dependencies;
 using FluentValidation.AspNetCore;
 using System.Reflection;
 
@@ -27,6 +28,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AgregarAutoMapper();
 builder.Services.AgregarServicio();
 builder.Services.AgregarRepository();
+//builder.Services.AgregarDocumentacionSwagger();
 var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
@@ -40,6 +42,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    
 }
 
 app.UseHttpsRedirection();

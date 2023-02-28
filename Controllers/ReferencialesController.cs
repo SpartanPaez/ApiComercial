@@ -3,6 +3,7 @@ using ApiComercial.Models;
 using AutoMapper;
 using ApiComercial.interfaces;
 using ApiComercial.Entities;
+using ApiComercial.Helpers;
 
 namespace ApiComercial.Controllers
 {
@@ -238,6 +239,8 @@ namespace ApiComercial.Controllers
         {
             try
             {
+                var Encrypt = Encryption.Encrypt4(parametros.UsuarioPass, "b14ca5898a4e4133bbce2ea2315a1916");
+                parametros.UsuarioPass = Encrypt;
                 var resquet = Mapper.Map<Usuario>(parametros);
                 var resultado = await _service.InsertUsuario(resquet);
                 return Ok();
@@ -252,6 +255,35 @@ namespace ApiComercial.Controllers
                 });
             }
         }
+
+        //controler LoginUsuarios con los parametros UserName y Password
+        [HttpPost("login")]
+        [ProducesResponseType(typeof(UsuarioResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> LoginUsuarios(string UserName, string Password)
+        {
+            try
+            {
+                var Descryp = Encryption.Encrypt4(Password,"b14ca5898a4e4133bbce2ea2315a1916");
+                Password = Descryp;
+                var resultado = await _service.LoginUsuario(UserName, Password);
+                return Ok(resultado);
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al intentar ingresar con los datos de paises");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al intentar ingresar los datos de paises"
+                });
+            }
+        }
+
+
         //Crear endpoint para obtener listado de depositos
         [HttpGet("depositos")]
         [ProducesResponseType(typeof(DepositoResponse), StatusCodes.Status200OK)]

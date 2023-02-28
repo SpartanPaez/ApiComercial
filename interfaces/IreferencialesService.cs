@@ -18,6 +18,8 @@ namespace ApiComercial.interfaces
 
         Task<Pais> InsertPais(Pais parametros);
 
+        Task<bool> LoginUsuario(String UsarName, String Password);
+
         Task<Usuario>GetUsuarios();
         
         Task<Usuario>InsertUsuario(Usuario parametros);
@@ -29,7 +31,6 @@ namespace ApiComercial.interfaces
         //Obtener listado de depositos
         Task<IEnumerable<Deposito>> GetDepositos();
 
-        //CREAR CLASE CCCCMA
         
     }
 }

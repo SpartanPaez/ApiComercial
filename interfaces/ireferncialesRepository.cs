@@ -17,6 +17,7 @@ namespace ApiComercial.Infraestructure.interfaces
         Task <IEnumerable<Pais>> GetPais ();
 
         Task<Pais> InsertPais(Pais parametros);
+        Task<bool> LoginUsuario(String UsarName, String Password);
         
         Task<Usuario>GetUsuarios();
         

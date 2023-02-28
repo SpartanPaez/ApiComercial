@@ -11,7 +11,7 @@ namespace ApiComercial.Controllers
     [Route("v{version:apiVersion}/api/[controller]/[action]")]
     public abstract class BaseApiController : Controller
     {
-        private readonly IMapper mapper;
+        private readonly IMapper? mapper;
         protected IMapper Mapper => mapper ?? HttpContext.RequestServices.GetService<IMapper>();
     }
 }

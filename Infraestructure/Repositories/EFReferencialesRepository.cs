@@ -24,7 +24,7 @@ namespace ApiComercial.Infraestructure.Repositories
                     .Where(c => c.DepartamentoId == departamentoId)
                     .FirstOrDefaultAsync();
 
-        public async Task <IEnumerable<Pais>> GetPais()
+        public async Task<IEnumerable<Pais>> GetPais()
         => await _my.Paises.ToListAsync();
 
         public async Task<Usuario> GetUsuarios()
@@ -60,11 +60,11 @@ namespace ApiComercial.Infraestructure.Repositories
 
         public async Task<Ciudad> UpdateCiudad(Ciudad parametros)
         {
-             _my.Ciudades.Update(parametros);
-             await _my.SaveChangesAsync();
-             return parametros;
+            _my.Ciudades.Update(parametros);
+            await _my.SaveChangesAsync();
+            return parametros;
         }
-        
+
         public async Task<Deposito> InsertDeposito(Deposito parametros)
         {
             await _my.Depositos.AddAsync(parametros);
@@ -83,5 +83,9 @@ namespace ApiComercial.Infraestructure.Repositories
         {
             return await _my.Depositos.ToListAsync();
         }
+
+        public async Task<bool> LoginUsuario(string UsarName, string Password)
+         => await _my.Usuarios.Where(c => c.UsuarioNic == UsarName && c.UsuarioPass == Password).CountAsync() > 0;
+
     }
 }

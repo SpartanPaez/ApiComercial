@@ -64,7 +64,7 @@ namespace ApiComercial.Controllers
         /// <summary>
         /// </summary>
         /// <param name="ClienteId">Recibe el codigo del cliente a ser consultado</param>
-        /// <returns></returns>
+        /// <returns>hola</returns>
         /// 
         [ProducesResponseType(typeof(ResponseClientes), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -125,7 +125,7 @@ namespace ApiComercial.Controllers
             var resultado = await _service.DeleteCliente(id);
             return Ok(resultado);
         }
-
+        
     }
 
 }
