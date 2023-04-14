@@ -125,7 +125,17 @@ namespace ApiComercial.Controllers
             var resultado = await _service.DeleteCliente(id);
             return Ok(resultado);
         }
-        
+        //quiero un endpoint para eliminar clientes
+        [HttpDelete("eliminar/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> DeleteCliente2(int id)
+        {
+            var resultado = await _service.DeleteCliente(id);
+            return Ok(resultado);
+        }
     }
 
 }

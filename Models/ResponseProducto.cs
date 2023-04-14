@@ -32,6 +32,11 @@ namespace ApiComercial.Models
         /// </summary>
         /// <value></value>
         public string? ProductoDescripcion { get; set; }
+         /// <summary>
+        /// Codigo de la categoria del producto
+        /// </summary>
+        /// <value></value>
+        public int IdCategoria { get; set; }
         /// <summary>
         /// precio de costo del producto
         /// </summary>

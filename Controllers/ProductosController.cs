@@ -132,6 +132,32 @@ namespace ApiComercial.Controllers
                 });
             }
         }
+        //Necesito un endpoint que me muestre los productos por vencerse en los proximos 30 dias
+        [HttpGet("productos/vencimiento")]
+        [ProducesResponseType(typeof(ResponseProducto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetProductoVencimiento( DateTime FechaVencimiento)
+        {
+            try
+            {
+                var resultado = await _service.GetProductosVencimiento(FechaVencimiento);
+                var respuesta = Mapper.Map<IEnumerable<ResponseProducto>>(resultado);
+                return Ok(respuesta);
+            }
+            catch (System.Exception e)
+            {
+                _logger.LogError(e, "Ocurrió un error al consultar los datos del producto");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos del producto"
+                });
+            }
+        }
+
 
     }
 }

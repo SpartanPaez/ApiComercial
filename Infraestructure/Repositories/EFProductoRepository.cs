@@ -83,9 +83,42 @@ namespace ApiComercial.Infraestructure.Repositories
                 return true;
             }
         }
-        //reporte de productos por fecha en entity framework
+        /// <summary>
+        /// Reporte de productos por fecha 
+        /// </summary>
+        /// <param name="fecha"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Producto>> GetProductosPorFecha(DateTime fecha)
         => await _my.Productos.Where(x => x.ProductoFechaVencimiento == fecha).ToListAsync();
+        /// <summary>
+        /// Reporte de productos por fecha de vencimiento
+        /// </summary>
+        /// <param name="fecha"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Producto>> GetProductosVencimiento(DateTime fecha)
+        => await _my.Productos.Where(x => x.ProductoFechaVencimiento == fecha).ToListAsync();
+
+        //un metodo que actualice los datos de los productos en la base de datos con el codigo de barra
+        public async Task<Producto> UpdateProductoPorCodigoBarra(Producto parametros)
+        {
+            var producto = await _my.Productos.Where(x => x.ProductoCodigoBarra == parametros.ProductoCodigoBarra).FirstOrDefaultAsync();
+            if (producto == null)
+            {
+                return null;
+            }
+            else
+            {
+                producto.ProductoNombre = parametros.ProductoNombre;
+                producto.ProductoPrecio = parametros.ProductoPrecio;
+                producto.ProductoFechaVencimiento = parametros.ProductoFechaVencimiento;
+                producto.ProductoLote = parametros.ProductoLote;
+                producto.ProductoExistencia = parametros.ProductoExistencia;
+                producto.ProductoDescripcion = parametros.ProductoDescripcion;
+                producto.IdCategoria = parametros.IdCategoria;
+                await _my.SaveChangesAsync();
+                return producto;
+            }
+        }
 
 
     }

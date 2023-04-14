@@ -4,6 +4,7 @@ using AutoMapper;
 using ApiComercial.interfaces;
 using ApiComercial.Entities;
 using ApiComercial.Helpers;
+using Microsoft.AspNetCore.Cors;
 
 namespace ApiComercial.Controllers
 {
@@ -257,19 +258,20 @@ namespace ApiComercial.Controllers
         }
 
         //controler LoginUsuarios con los parametros UserName y Password
+        // [EnableCors("MyAllowSpecificOrigins")]
         [HttpPost("login")]
         [ProducesResponseType(typeof(UsuarioResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> LoginUsuarios(string UserName, string Password)
+        public async Task<ActionResult> LoginUsuarios(UserLoginModel request)
         {
             try
             {
-                var Descryp = Encryption.Encrypt4(Password,"b14ca5898a4e4133bbce2ea2315a1916");
-                Password = Descryp;
-                var resultado = await _service.LoginUsuario(UserName, Password);
+                var Descryp = Encryption.Encrypt4(request.Password,"b14ca5898a4e4133bbce2ea2315a1916");
+                request.Password = Descryp;
+                var resultado = await _service.LoginUsuario(request.UserName, request.Password);
                 return Ok(resultado);
             }
             catch (System.Exception e)
@@ -360,4 +362,10 @@ namespace ApiComercial.Controllers
             }
         }
     }
+}
+
+public class UserLoginModel
+{
+    public string UserName { get; set; }
+    public string Password { get; set; }
 }

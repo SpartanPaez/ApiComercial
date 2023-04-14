@@ -32,6 +32,11 @@ namespace ApiComercial.Services
             return await this._productoRepository.GetProductos();
         }
 
+        public Task<IEnumerable<Producto>> GetProductosVencimiento(DateTime fecha)
+        {
+            return this._productoRepository.GetProductosVencimiento(fecha);
+        }
+
         public async Task<Producto> InsertProducto(Producto parametros)
         {
             return await this._productoRepository.InsertProducto(parametros);

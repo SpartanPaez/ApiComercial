@@ -140,6 +140,23 @@ namespace ApiComercial.Infraestructure.Data
 
 
             });
+            //quiero un context para una tabla de proveedores
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Proveedores>(entity =>
+            {
+                entity.ToTable("PROVEEDORES", "ventas");
+                entity.HasKey(e => new { e.ProveedorId });
+                entity.Property(e => e.ProveedorId).HasColumnName("ProveedorId");
+                entity.Property(e => e.ProveedorNombre).HasColumnName("ProveedorNombre");
+                entity.Property(e => e.ProveedorDireccion).HasColumnName("ProveedorDireccion");
+                entity.Property(e => e.ProveedorTelefono).HasColumnName("ProveedorTelefono");
+                entity.Property(e => e.ProveedorCorreo).HasColumnName("ProveedorCorreo");
+                entity.Property(e => e.ProveedorEstado).HasColumnName("ProveedorEstado");
+                entity.Property(e => e.ProveedorFechaAlta).HasColumnName("ProveedorFechaAlta");
+                entity.Property(e => e.ProveedorUsuarioAlta).HasColumnName("ProveedorUsuarioAlta");
+                entity.Property(e => e.ProveedorFechaModif).HasColumnName("ProveedorFechaModif");
+                entity.Property(e => e.ProveedorUsuarioModif).HasColumnName("ProveedorUsuarioModif");
+            });
         }
     }
 }

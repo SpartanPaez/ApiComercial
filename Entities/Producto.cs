@@ -13,22 +13,27 @@ public class Producto
     /// Numero de lote del producto
     /// </summary>
     /// <value></value>
-    public string ?ProductoLote { get; set; }
+    public string? ProductoLote { get; set; }
     /// <summary>
     /// Codigo de barra del producto
     /// </summary>
     /// <value></value>
-    public string ?ProductoCodigoBarra { get; set; }
+    public string? ProductoCodigoBarra { get; set; }
     /// <summary>
     /// Nombre del producto
     /// </summary>
     /// <value></value>
-    public string ?ProductoNombre { get; set; }
+    public string? ProductoNombre { get; set; }
     /// <summary>
     /// Descripcion del producto
     /// </summary>
     /// <value></value>
-    public string ?ProductoDescripcion { get; set; }
+    public string? ProductoDescripcion { get; set; }
+    /// <summary>
+    /// Codigo de la categoria del producto
+    /// </summary>
+    /// <value></value>
+    public int IdCategoria { get; set; }
     /// <summary>
     /// precio de costo del producto
     /// </summary>
