@@ -25,8 +25,8 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Pais> Paises { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Producto> Productos{get; set;}
-        public DbSet<Deposito> Depositos{get; set;}
+        public DbSet<Producto> Productos { get; set; }
+        public DbSet<Deposito> Depositos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -105,8 +105,8 @@ namespace ApiComercial.Infraestructure.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Producto>(entity =>
             {
-                entity.ToTable("PRODUCTOS","ventas");
-                entity.HasKey(e => new { e.ProductoId});
+                entity.ToTable("PRODUCTOS", "ventas");
+                entity.HasKey(e => new { e.ProductoId });
                 entity.Property(e => e.ProductoId).HasColumnName("ProductoId");
                 entity.Property(e => e.ProductoLote).HasColumnName("ProductoLote");
                 entity.Property(e => e.ProductoCodigoBarra).HasColumnName("ProductoCodigoBarra");
@@ -124,8 +124,8 @@ namespace ApiComercial.Infraestructure.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Deposito>(entity =>
             {
-                entity.ToTable("DEPOSITOS","ventas");
-                entity.HasKey(e => new { e.DepositoID});
+                entity.ToTable("DEPOSITOS", "ventas");
+                entity.HasKey(e => new { e.DepositoID });
                 entity.Property(e => e.DepositoID).HasColumnName("DepositoId");
                 entity.Property(e => e.DepositoNombre).HasColumnName("DepositoNombre");
                 entity.Property(e => e.DepositoDireccion).HasColumnName("DepositoDireccion");
@@ -147,15 +147,16 @@ namespace ApiComercial.Infraestructure.Data
                 entity.ToTable("PROVEEDORES", "ventas");
                 entity.HasKey(e => new { e.ProveedorId });
                 entity.Property(e => e.ProveedorId).HasColumnName("ProveedorId");
+                entity.Property(e => e.ProveedorRuc).HasColumnName("ProveedorRuc");
                 entity.Property(e => e.ProveedorNombre).HasColumnName("ProveedorNombre");
                 entity.Property(e => e.ProveedorDireccion).HasColumnName("ProveedorDireccion");
+                entity.Property(e => e.IdPais).HasColumnName("IdPais");
+                entity.Property(e => e.IdCiudad).HasColumnName("IdCiudad");
                 entity.Property(e => e.ProveedorTelefono).HasColumnName("ProveedorTelefono");
                 entity.Property(e => e.ProveedorCorreo).HasColumnName("ProveedorCorreo");
                 entity.Property(e => e.ProveedorEstado).HasColumnName("ProveedorEstado");
                 entity.Property(e => e.ProveedorFechaAlta).HasColumnName("ProveedorFechaAlta");
-                entity.Property(e => e.ProveedorUsuarioAlta).HasColumnName("ProveedorUsuarioAlta");
-                entity.Property(e => e.ProveedorFechaModif).HasColumnName("ProveedorFechaModif");
-                entity.Property(e => e.ProveedorUsuarioModif).HasColumnName("ProveedorUsuarioModif");
+                entity.Property(e => e.ProveedorUsuarioAlta).HasColumnName("ProveedorUsarAlta");
             });
         }
     }

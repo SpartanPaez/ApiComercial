@@ -10,6 +10,11 @@ public class Proveedores
     /// <value></value>
     public int ProveedorId { get; set; }
     /// <summary>
+    /// Ruc del proveedor
+    /// </summary>
+    /// <value></value>
+    public string? ProveedorRuc { get; set; }
+    /// <summary>
     /// Nombre del proveedor 
     /// </summary>
     /// <value></value>
@@ -20,20 +25,39 @@ public class Proveedores
     /// <value></value>
     public string? ProveedorDireccion { get; set; }
     /// <summary>
+    /// Pais de origen del proveedor
+    /// </summary>
+    /// <value></value>
+    public int IdPais { get; set; }
+    /// <summary>
+    /// Ciudad del proveedor
+    /// </summary>
+    /// <value></value>
+    public int IdCiudad { get; set; }
+    /// <summary>
     /// Telefono del proveedor
     /// </summary>
     /// <value></value>
     public string? ProveedorTelefono { get; set; }
-    public string? ProveedorEmail { get; set; }
-    public string? ProveedorContacto { get; set; }
-    public string? ProveedorRuc { get; set; }
-    public string? ProveedorObservaciones { get; set; }
-    public DateTime ProveedorFechaAlta { get; set; }
-    public DateTime ProveedorFechaModificacion { get; set; }
+    /// <summary>
+    /// Correo electronico del proveedor
+    /// </summary>
+    /// <value></value>
+    public string? ProveedorCorreo { get; set; }
+    /// <summary>
+    /// Estado del proveedor
+    /// </summary>
+    /// <value></value>
     public int ProveedorEstado { get; set; }
+    /// <summary>
+    /// Fecha de alta del proveedor
+    /// </summary>
+    /// <value></value>
+    public DateTime ProveedorFechaAlta { get; set; }
+    /// <summary>
+    /// Usuario que dio de alta al proveedor
+    /// </summary>
+    /// <value></value>
     public int ProveedorUsuarioAlta { get; set; }
-    public int ProveedorUsuarioModificacion { get; set; }
-    public int ProveedorUsuarioBaja { get; set; }
-    public DateTime ProveedorFechaBaja { get; set; }
-    
-    }
+
+}
