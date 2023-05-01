@@ -87,5 +87,11 @@ namespace ApiComercial.Infraestructure.Repositories
         public async Task<bool> LoginUsuario(string UsarName, string Password)
          => await _my.Usuarios.Where(c => c.UsuarioNic == UsarName && c.UsuarioPass == Password).CountAsync() > 0;
 
+        public async Task<Proveedor> InsertarProveedor(Proveedor parametros)
+        {
+            await _my.proveedores.AddAsync(parametros);
+            await _my.SaveChangesAsync();
+            return parametros;
+        }
     }
 }

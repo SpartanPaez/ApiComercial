@@ -31,6 +31,9 @@ namespace ApiComercial.interfaces
         //Obtener listado de depositos
         Task<IEnumerable<Deposito>> GetDepositos();
 
+        Task<Proveedor> InsertarProveedor(Proveedor parametros);
+
+
         
     }
 }

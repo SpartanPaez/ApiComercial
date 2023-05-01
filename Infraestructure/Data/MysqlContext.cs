@@ -27,6 +27,7 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Deposito> Depositos { get; set; }
+        public DbSet<Proveedor> proveedores {get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -142,7 +143,7 @@ namespace ApiComercial.Infraestructure.Data
             });
             //quiero un context para una tabla de proveedores
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Proveedores>(entity =>
+            modelBuilder.Entity<Proveedor>(entity =>
             {
                 entity.ToTable("PROVEEDORES", "ventas");
                 entity.HasKey(e => new { e.ProveedorId });

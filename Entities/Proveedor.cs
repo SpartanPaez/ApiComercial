@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 namespace ApiComercial.Entities;
 
-public class Proveedores
+public class Proveedor
 {
     /// <summary>
     /// Codigo identificador del proveedor
@@ -58,6 +58,6 @@ public class Proveedores
     /// Usuario que dio de alta al proveedor
     /// </summary>
     /// <value></value>
-    public int ProveedorUsuarioAlta { get; set; }
+    public string? ProveedorUsuarioAlta { get; set; }
 
 }

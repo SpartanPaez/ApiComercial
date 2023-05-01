@@ -269,7 +269,7 @@ namespace ApiComercial.Controllers
         {
             try
             {
-                var Descryp = Encryption.Encrypt4(request.Password,"b14ca5898a4e4133bbce2ea2315a1916");
+                var Descryp = Encryption.Encrypt4(request.Password, "b14ca5898a4e4133bbce2ea2315a1916");
                 request.Password = Descryp;
                 var resultado = await _service.LoginUsuario(request.UserName, request.Password);
                 return Ok(resultado);
@@ -361,6 +361,32 @@ namespace ApiComercial.Controllers
                 });
             }
         }
+
+        [HttpPost("proveedor")]
+        [ProducesResponseType(typeof(ProveedorResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> InsertProveedor(RequestProveedor parametros)
+        {
+            try
+            {
+                var resquet = Mapper.Map<Proveedor>(parametros);
+                var resultado = await _service.InsertarProveedor(resquet);
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al intentar insertar los datos de depositos");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al intentar insertar los datos de depositos"
+                });
+            }
+        }
+
     }
 }
 

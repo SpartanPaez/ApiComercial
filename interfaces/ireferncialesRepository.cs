@@ -14,19 +14,21 @@ namespace ApiComercial.Infraestructure.interfaces
 
         Task<Departamento> InsertDepartamento(Departamento parametros);
 
-        Task <IEnumerable<Pais>> GetPais ();
+        Task<IEnumerable<Pais>> GetPais();
 
         Task<Pais> InsertPais(Pais parametros);
         Task<bool> LoginUsuario(String UsarName, String Password);
-        
-        Task<Usuario>GetUsuarios();
-        
-        Task<Usuario>InsertUsuario(Usuario parametros);
 
-        Task<Deposito>InsertDeposito(Deposito parametros);
+        Task<Usuario> GetUsuarios();
 
-        Task<Deposito>UpdateDeposito(Deposito parametros);
+        Task<Usuario> InsertUsuario(Usuario parametros);
+
+        Task<Deposito> InsertDeposito(Deposito parametros);
+
+        Task<Deposito> UpdateDeposito(Deposito parametros);
 
         Task<IEnumerable<Deposito>> GetDepositos();
+        Task<Proveedor> InsertarProveedor(Proveedor parametros);
+
     }
 }

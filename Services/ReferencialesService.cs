@@ -36,6 +36,11 @@ namespace ApiComercial.Services
             return await _referenciaRepository.GetUsuarios();
         }
 
+        public async Task<Proveedor> InsertarProveedor(Proveedor parametros)
+        {
+            return await _referenciaRepository.InsertarProveedor(parametros);
+        }
+
         public async Task<Ciudad> InsertCiudad(Ciudad parametros)
         {
             return await _referenciaRepository.InsertCiudad(parametros);
