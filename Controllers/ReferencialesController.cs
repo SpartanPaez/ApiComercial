@@ -363,7 +363,7 @@ namespace ApiComercial.Controllers
         }
 
         [HttpPost("proveedor")]
-        [ProducesResponseType(typeof(ProveedorResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseProveedor), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
@@ -383,6 +383,31 @@ namespace ApiComercial.Controllers
                 {
                     ErrorType = Enums.ErrorType.error_interno_servidor,
                     ErrorDescripcion = "Ocurrió un error al intentar insertar los datos de depositos"
+                });
+            }
+        }
+        //quiero un endpoint que me muestre a los proveedores
+        [HttpGet("proveedor")]
+        [ProducesResponseType(typeof(ResponseProveedor), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetProveedor()
+        {
+            try
+            {
+                var resultado = await _service.GetProveedor();
+                var respuesta = Mapper.Map<IEnumerable<ResponseProveedor>>(resultado);
+                return Ok(respuesta);
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al momento de consultar los datos");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.validacion_negocio,
+                    ErrorDescripcion = "Ocurrió un error al momento de consultar los datos"
                 });
             }
         }

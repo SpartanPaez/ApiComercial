@@ -93,5 +93,8 @@ namespace ApiComercial.Infraestructure.Repositories
             await _my.SaveChangesAsync();
             return parametros;
         }
+
+        public async Task<IEnumerable<Proveedor>> GetProveedor()
+        => await _my.proveedores.ToListAsync();
     }
 }

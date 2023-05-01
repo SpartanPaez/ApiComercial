@@ -1,6 +1,6 @@
 namespace ApiComercial.Models
 {
-    public class ProveedorResponse
+    public class ResponseProveedor
     {
         /// <summary>
         /// Codigo identificador del proveedor

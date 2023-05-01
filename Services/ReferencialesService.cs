@@ -80,5 +80,15 @@ namespace ApiComercial.Services
         {
             return _referenciaRepository.UpdateDeposito(parametros);
         }
+
+        public Task<Proveedor> UpdateProveedor(Proveedor parametros)
+        {
+            throw new NotImplementedException();
+        }
+          public Task <IEnumerable<Proveedor>> GetProveedor()
+        {
+            return _referenciaRepository.GetProveedor();
+        }
+
     }
 }

@@ -13,27 +13,28 @@ namespace ApiComercial.interfaces
         Task<Departamento> GetDepartamentoPorId(int departamento);
 
         Task<Departamento> InsertDepartamento(Departamento parametros);
-        
-        Task <IEnumerable<Pais>> GetPais();
+
+        Task<IEnumerable<Pais>> GetPais();
 
         Task<Pais> InsertPais(Pais parametros);
 
         Task<bool> LoginUsuario(String UsarName, String Password);
 
-        Task<Usuario>GetUsuarios();
-        
-        Task<Usuario>InsertUsuario(Usuario parametros);
+        Task<Usuario> GetUsuarios();
 
-        Task<Deposito>InsertDeposito(Deposito parametros);
+        Task<Usuario> InsertUsuario(Usuario parametros);
 
-        Task<Deposito>UpdateDeposito(Deposito parametros);
+        Task<Deposito> InsertDeposito(Deposito parametros);
+
+        Task<Deposito> UpdateDeposito(Deposito parametros);
 
         //Obtener listado de depositos
         Task<IEnumerable<Deposito>> GetDepositos();
 
         Task<Proveedor> InsertarProveedor(Proveedor parametros);
 
+        Task<Proveedor> UpdateProveedor(Proveedor parametros);
+        Task<IEnumerable<Proveedor>> GetProveedor();
 
-        
     }
 }

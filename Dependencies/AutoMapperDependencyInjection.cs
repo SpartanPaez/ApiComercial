@@ -37,6 +37,7 @@ namespace ApiComercial.Depedencies
             CreateMap<Deposito, RequestDeposito>().ReverseMap();
             CreateMap<Deposito, DepositoResponse>().ReverseMap();
             CreateMap<Proveedor, RequestProveedor>().ReverseMap();
+            CreateMap<Proveedor, ResponseProveedor>().ReverseMap();
         }
     }
 }

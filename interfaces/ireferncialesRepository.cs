@@ -29,6 +29,7 @@ namespace ApiComercial.Infraestructure.interfaces
 
         Task<IEnumerable<Deposito>> GetDepositos();
         Task<Proveedor> InsertarProveedor(Proveedor parametros);
+        Task <IEnumerable<Proveedor>> GetProveedor();
 
     }
 }
