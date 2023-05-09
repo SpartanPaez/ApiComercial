@@ -56,6 +56,6 @@ namespace ApiComercial.Models
         /// Usuario que dio de alta al proveedor
         /// </summary>
         /// <value></value>
-        public int ProveedorUsuarioAlta { get; set; }
+        public string? ProveedorUsuarioAlta { get; set; }
     }
 }
