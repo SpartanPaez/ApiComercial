@@ -90,5 +90,17 @@ namespace ApiComercial.Services
             return _referenciaRepository.GetProveedor();
         }
 
+        public Task<IEnumerable<Categoria>> GetCategoria()
+        {
+           return _referenciaRepository.GetCategoria();
+        }
+        /// <summary>
+        /// Service para la inserción de categorias
+        /// </summary>
+        /// <returns></returns>
+        public Task<Categoria> InsertarCategoria(Categoria parametros)
+        {
+           return _referenciaRepository.InsertarCategoria(parametros);
+        }
     }
 }

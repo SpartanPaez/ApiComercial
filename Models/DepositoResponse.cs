@@ -8,9 +8,9 @@ namespace ApiComercial.Models
     public class DepositoResponse
     {
         public int DepositoID { get; set; }
-        public string ?DepositoNombre { get; set; }
-        public string ?DepositoDireccion { get; set; }
-        public string ?DepositoTelefono { get; set; }
+        public string? DepositoNombre { get; set; }
+        public string? DepositoDireccion { get; set; }
+        public string? DepositoTelefono { get; set; }
         public int CiudadId { get; set; }
         public string ?DepositoObservaciones { get; set; }
         public string ?DepositoEstado { get; set; }

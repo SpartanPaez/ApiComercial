@@ -27,13 +27,11 @@ namespace ApiComercial.Controllers
             _mapper = mapper;
             _service = service;
         }
-        [HttpGet()]
-         /// <summary>
-        /// metodo que inserta datos en el log de actualizacion
-        /// </summary>  
-        /// <param name="codigoCliente">codigo del cliente para obtener el grupo de parametros a actualizar</param> 
-        /// <param name="canal">Indica el origen, si es web o app
+        /// <summary>
+        /// Chupeeeee
+        /// </summary>
         /// <returns></returns>
+        [HttpGet()]
         [ProducesResponseType(typeof(ResponseClientes), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
@@ -52,20 +50,19 @@ namespace ApiComercial.Controllers
                 _Logger.LogError(e, "Ocurrió un error al consultar los datos del cliente");
                 return StatusCode(500, new ErrorResponse
                 {
-                  ErrorType = Enums.ErrorType.error_interno_servidor,
-                  ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos"
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos"
                 });
-                
+
             }
 
         }
-
-        [HttpGet("{Id}")]
         /// <summary>
         /// </summary>
-        /// <param name="ClienteId">Recibe el codigo del cliente a ser consultado</param>
+        /// <param name="Id">Recibe el codigo del cliente a ser consultado</param>
         /// <returns>hola</returns>
         /// 
+        [HttpGet("{Id}")]
         [ProducesResponseType(typeof(ResponseClientes), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
@@ -99,7 +96,7 @@ namespace ApiComercial.Controllers
         {
             var resquest = Mapper.Map<Cliente>(parametros);
             var resultado = await _service.InsertCliente(resquest);
-            return CreatedAtAction(nameof(GetClientePorId), new { Id = resultado.ClienteId}, resultado);
+            return CreatedAtAction(nameof(GetClientePorId), new { Id = resultado.ClienteId }, resultado);
         }
 
         [HttpPut("{id}")]

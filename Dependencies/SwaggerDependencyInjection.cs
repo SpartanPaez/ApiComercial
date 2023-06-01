@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Continental.API.WebApi.Dependencies
+namespace ApiComercial.Depedencies
 {
     public static class SwaggerDependencyInjection
     {
@@ -19,16 +19,16 @@ namespace Continental.API.WebApi.Dependencies
                     Description = $"Documentacion para el uso de API de sistema",
                     Contact = new OpenApiContact
                     {
-                        Email = "informatica@bancontinental.com.py",
-                        Name  = "Departamento de Tecnologia"
+                        Email = "hola",
+                        Name  = ":v"
                     }
                 });
 
 
                 var xmlFile = Path.ChangeExtension(typeof(Program).Assembly.Location, ".xml");
                 c.IncludeXmlComments(xmlFile);
-                c.OperationFilter<RemoveVersionParameterFilter>();
-                c.DocumentFilter<ReplaceVersionWithExactValueInPathFilter>();
+                //c.OperationFilter<RemoveVersionParameterFilter>();
+                //c.DocumentFilter<ReplaceVersionWithExactValueInPathFilter>();
             });
         }
     }

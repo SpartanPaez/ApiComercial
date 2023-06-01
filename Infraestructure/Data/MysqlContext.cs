@@ -29,6 +29,8 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<Deposito> Depositos { get; set; }
         public DbSet<Proveedor> proveedores {get; set;}
 
+        public DbSet<Categoria> categorias {get; set;}
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -158,6 +160,15 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.ProveedorEstado).HasColumnName("ProveedorEstado");
                 entity.Property(e => e.ProveedorFechaAlta).HasColumnName("ProveedorFechaAlta");
                 entity.Property(e => e.ProveedorUsuarioAlta).HasColumnName("ProveedorUsarAlta");
+            });
+
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Categoria>(entity =>
+            {
+             entity.ToTable("CATEGORIAS","ventas");
+             entity.HasKey(e => new { e.CategoriaId});
+             entity.Property(e => e.CategoriaId).HasColumnName("CATEGORIA_ID");
+             entity.Property(e => e.CategoriaDesc).HasColumnName("CATEGORIA_DESC");
             });
         }
     }

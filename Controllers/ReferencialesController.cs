@@ -361,7 +361,11 @@ namespace ApiComercial.Controllers
                 });
             }
         }
-
+        /// <summary>
+        /// Endpoint que inserta datos del proveedor a la base de datos
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
         [HttpPost("proveedor")]
         [ProducesResponseType(typeof(ResponseProveedor), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -386,7 +390,10 @@ namespace ApiComercial.Controllers
                 });
             }
         }
-        //quiero un endpoint que me muestre a los proveedores
+        /// <summary>
+        /// Muestra el listado de proveedores
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("proveedor")]
         [ProducesResponseType(typeof(ResponseProveedor), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -412,6 +419,63 @@ namespace ApiComercial.Controllers
             }
         }
 
+        /// <summary>
+        /// Obtiene el listado de las categorias
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("categorias")]
+        [ProducesResponseType(typeof(ResponseCategoria), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task <ActionResult> GetCategorias()
+        {
+            try
+            {
+                var resultado = await _service.GetCategoria();
+                var respuesta = Mapper.Map<IEnumerable<ResponseCategoria>>(resultado);
+                return Ok(respuesta);
+            }
+            catch (System.Exception e)
+            {
+                 _Logger.LogError(e, "Ocurrió un error al momento de consultar los datos");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.validacion_negocio,
+                    ErrorDescripcion = "Ocurrió un error al momento de consultar los datos"
+                });
+            }
+        }
+        /// <summary>
+        /// Endpoint que inserta los datos de categoria
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        [HttpPost("categoria")]
+        [ProducesResponseType(typeof(ResponseCategoria), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> InsertCategoria(RequestProveedor parametros)
+        {
+            try
+            {
+                var resquet = Mapper.Map<Proveedor>(parametros);
+                var resultado = await _service.InsertarProveedor(resquet);
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al intentar insertar los datos de depositos");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al intentar insertar los datos de depositos"
+                });
+            }
+        }
     }
 }
 

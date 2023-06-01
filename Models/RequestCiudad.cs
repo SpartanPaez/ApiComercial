@@ -15,8 +15,14 @@ namespace ApiComercial.Entities
         /// <value></value>
         public string? CiudadDesc { get; set; }
     }
+    /// <summary>
+    /// Validación del request
+    /// </summary>
     public class ValidationActualizaconCiudad : AbstractValidator<RequestCiudad>
     {
+        /// <summary>
+        /// FluentValidation para ciudad
+        /// </summary>
         public ValidationActualizaconCiudad()
         {
             RuleFor(p => p.CiudadDesc).MaximumLength(70)

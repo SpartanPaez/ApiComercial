@@ -30,6 +30,12 @@ namespace ApiComercial.Infraestructure.interfaces
         Task<IEnumerable<Deposito>> GetDepositos();
         Task<Proveedor> InsertarProveedor(Proveedor parametros);
         Task <IEnumerable<Proveedor>> GetProveedor();
+        Task <IEnumerable<Categoria>> GetCategoria();
+         /// <summary>
+        /// Interfaz para la insercion de categorias
+        /// </summary>
+        /// <returns></returns>
+        Task <Categoria> InsertarCategoria( Categoria parametros);
 
     }
 }
