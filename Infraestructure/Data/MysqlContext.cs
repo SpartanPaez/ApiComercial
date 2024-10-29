@@ -27,12 +27,83 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Deposito> Depositos { get; set; }
-        public DbSet<Proveedor> proveedores {get; set;}
+        public DbSet<Proveedor> proveedores { get; set; }
 
-        public DbSet<Categoria> categorias {get; set;}
+        public DbSet<Categoria> categorias { get; set; }
+
+        public DbSet<MarcaAuto> Marcas { get; set; }  // Cambiado de MarcasAutos a Marcas
+        public DbSet<ModeloAuto> Modelos { get; set; }  // Cambiado de ModelosAutos a Modelos
+
+        public DbSet<Vehiculo> Vehiculos { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            // Configuración de la tabla Vehiculo
+            modelBuilder.Entity<Vehiculo>(entity =>
+            {
+                entity.ToTable("vehiculos");
+                entity.HasKey(e => e.IdChasis);
+                entity.Property(e => e.IdChasis).HasColumnName("id_chasis").IsRequired();
+                entity.Property(e => e.IdMarca).HasColumnName("id_marca");
+                entity.Property(e => e.IdModelo).HasColumnName("id_modelo");
+                entity.Property(e => e.TipoCar).HasColumnName("tipo_car").HasMaxLength(50);
+                entity.Property(e => e.AnoFabricacion).HasColumnName("ano_fabricacion");
+                entity.Property(e => e.Color).HasColumnName("color").HasMaxLength(50);
+                // No mapear 'Marca' ni 'Modelo' aquí porque no son columnas de la base de datos
+                entity.Ignore(e => e.Marca);
+                entity.Ignore(e => e.Modelo);
+            });
+            base.OnModelCreating(modelBuilder);
+
+            // Configuración de la tabla MarcaAuto
+            modelBuilder.Entity<MarcaAuto>(entity =>
+            {
+                entity.ToTable("marcas_autos");
+                entity.HasKey(e => e.IdMarca);
+                entity.Property(e => e.IdMarca).HasColumnName("id_marca").IsRequired();
+                entity.Property(e => e.DescripcionMarca).HasColumnName("descripcion_marca").HasMaxLength(100).IsRequired();
+
+            });
+
+            // Configuración de la tabla ModeloAuto
+            modelBuilder.Entity<ModeloAuto>(entity =>
+            {
+                entity.ToTable("modelos_autos");
+                entity.HasKey(e => e.IdModelo);
+                entity.Property(e => e.IdModelo).HasColumnName("id_modelo").IsRequired();
+                entity.Property(e => e.IdMarca).HasColumnName("id_marca").IsRequired();
+                entity.Property(e => e.DescripcionModelo).HasColumnName("descripcion_modelo").HasMaxLength(100).IsRequired();
+            });
+
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Vehiculo>(entity =>
+            {
+                entity.ToTable("AUTOS", "ventas");
+
+                entity.HasKey(e => e.IdChasis);
+
+                entity.Property(e => e.IdChasis)
+                      .HasColumnName("id_chasis")
+                      .IsRequired();
+
+                entity.Property(e => e.IdMarca)
+                      .HasColumnName("id_marca");
+
+                entity.Property(e => e.IdModelo)
+                      .HasColumnName("id_modelo");
+
+                entity.Property(e => e.TipoCar)
+                      .HasColumnName("tipo_car");
+
+                entity.Property(e => e.AnoFabricacion)
+                      .HasColumnName("ano_fabricacion");
+
+                entity.Property(e => e.Color)
+                      .HasColumnName("color");
+            });
+
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Cliente>(entity =>
             {
@@ -165,10 +236,10 @@ namespace ApiComercial.Infraestructure.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Categoria>(entity =>
             {
-             entity.ToTable("CATEGORIAS","ventas");
-             entity.HasKey(e => new { e.CategoriaId});
-             entity.Property(e => e.CategoriaId).HasColumnName("CATEGORIA_ID");
-             entity.Property(e => e.CategoriaDesc).HasColumnName("CATEGORIA_DESC");
+                entity.ToTable("CATEGORIAS", "ventas");
+                entity.HasKey(e => new { e.CategoriaId });
+                entity.Property(e => e.CategoriaId).HasColumnName("CATEGORIA_ID");
+                entity.Property(e => e.CategoriaDesc).HasColumnName("CATEGORIA_DESC");
             });
         }
     }

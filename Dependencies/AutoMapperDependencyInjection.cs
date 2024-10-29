@@ -40,6 +40,12 @@ namespace ApiComercial.Depedencies
             CreateMap<Proveedor, ResponseProveedor>().ReverseMap();
             CreateMap<Categoria, ResponseCategoria>().ReverseMap();
             CreateMap<Categoria, RequestCategoria>().ReverseMap();
+            CreateMap<Vehiculo, ResponseVehiculo>().ReverseMap();
+            CreateMap<Vehiculo, RequestVehiculo>().ReverseMap();
+            CreateMap<InsertarVehiculoRequest, Vehiculo>()
+                .ForMember(dest => dest.Marca, opt => opt.Ignore())  // Ignorar 'Marca' en la inserción
+                .ForMember(dest => dest.Modelo, opt => opt.Ignore());  // Ignorar 'Modelo' en la inserción
+
         }
     }
 }

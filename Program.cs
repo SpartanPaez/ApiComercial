@@ -64,7 +64,7 @@ app.MapGet("/", ()
 .ExcludeFromDescription();
 app.UseCors();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
