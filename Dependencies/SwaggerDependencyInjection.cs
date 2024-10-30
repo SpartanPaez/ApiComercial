@@ -16,11 +16,11 @@ namespace ApiComercial.Depedencies
                 {
                     Title       = "Spartan API",
                     Version     = "v1",
-                    Description = $"Documentacion para el uso de API de sistema",
+                    Description = $"Documentación para el uso de la API de sistema de gestión automotor",
                     Contact = new OpenApiContact
                     {
-                        Email = "hola",
-                        Name  = ":v"
+                        Email = "Spartanpaez@icloud.com",
+                        Name  = "SpartanDev"
                     }
                 });
 

@@ -28,12 +28,9 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Deposito> Depositos { get; set; }
         public DbSet<Proveedor> proveedores { get; set; }
-
         public DbSet<Categoria> categorias { get; set; }
-
         public DbSet<MarcaAuto> Marcas { get; set; }  // Cambiado de MarcasAutos a Marcas
         public DbSet<ModeloAuto> Modelos { get; set; }  // Cambiado de ModelosAutos a Modelos
-
         public DbSet<Vehiculo> Vehiculos { get; set; }
 
 
