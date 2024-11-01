@@ -9,14 +9,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApiComercial.Infraestructure.Repositories
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class DependencyInjection
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public static IServiceCollection AgregarRepository(this IServiceCollection services)
         {
             var config = services.BuildServiceProvider().GetService<IConfiguration>();
 
             services.AddDbContext<MysqlContext>(o =>
-                o.UseMySQL("server=localhost;port=3306;database=ventas;user=root;password=a.12345678"));
+                o.UseMySQL("server=localhost;port=3306;database=ventas;user=root;password=Spartan.Chupapi.117"));
 
             services.AddTransient<IclientesRepository, EFClientesRepository>();
             services.AddTransient<IreferencialesRepository, EFReferencialesRepository>();

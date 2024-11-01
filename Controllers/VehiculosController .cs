@@ -99,11 +99,25 @@ namespace ApiComercial.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> InsertVehiculo(InsertarVehiculoRequest parametros)
         {
-            var vehiculo = _mapper.Map<Vehiculo>(parametros); // Mapeo del DTO a la entidad
+            try
+            {
+                var vehiculo = _mapper.Map<Vehiculo>(parametros); // Mapeo del DTO a la entidad
 
-            var resultado = await _service.InsertVehiculo(vehiculo); // Inserción en la base de datos
+                var resultado = await _service.InsertVehiculo(vehiculo); // Inserción en la base de datos
 
-            return CreatedAtAction(nameof(GetVehiculoPorId), new { idChasis = resultado.IdChasis }, resultado); // Respuesta
+                return CreatedAtAction(nameof(GetVehiculoPorId), new { idChasis = resultado.IdChasis }, resultado); // Respuesta
+            }
+            catch (System.Exception e)
+            {
+                _logger.LogError(e, "Ocurrió un error al consultar el vehículo.");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos del vehículo: " + e.Message
+                });
+            }
+
+
         }
         /// <summary>
         /// Actualizar los datos de un vehículo.

@@ -37,23 +37,6 @@ namespace ApiComercial.Infraestructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            // Configuración de la tabla Vehiculo
-            modelBuilder.Entity<Vehiculo>(entity =>
-            {
-                entity.ToTable("vehiculos");
-                entity.HasKey(e => e.IdChasis);
-                entity.Property(e => e.IdChasis).HasColumnName("id_chasis").IsRequired();
-                entity.Property(e => e.IdMarca).HasColumnName("id_marca");
-                entity.Property(e => e.IdModelo).HasColumnName("id_modelo");
-                entity.Property(e => e.TipoCar).HasColumnName("tipo_car").HasMaxLength(50);
-                entity.Property(e => e.AnoFabricacion).HasColumnName("ano_fabricacion");
-                entity.Property(e => e.Color).HasColumnName("color").HasMaxLength(50);
-                // No mapear 'Marca' ni 'Modelo' aquí porque no son columnas de la base de datos
-                entity.Ignore(e => e.Marca);
-                entity.Ignore(e => e.Modelo);
-            });
-            base.OnModelCreating(modelBuilder);
-
             // Configuración de la tabla MarcaAuto
             modelBuilder.Entity<MarcaAuto>(entity =>
             {
@@ -77,7 +60,7 @@ namespace ApiComercial.Infraestructure.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Vehiculo>(entity =>
             {
-                entity.ToTable("AUTOS", "ventas");
+                entity.ToTable("autos", "ventas");
 
                 entity.HasKey(e => e.IdChasis);
 
@@ -99,6 +82,9 @@ namespace ApiComercial.Infraestructure.Data
 
                 entity.Property(e => e.Color)
                       .HasColumnName("color");
+                                      // No mapear 'Marca' ni 'Modelo' aquí porque no son columnas de la base de datos
+                entity.Ignore(e => e.Marca);
+                entity.Ignore(e => e.Modelo);
             });
 
             base.OnModelCreating(modelBuilder);
