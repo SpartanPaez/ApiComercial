@@ -55,6 +55,7 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.IdModelo).HasColumnName("id_modelo").IsRequired();
                 entity.Property(e => e.IdMarca).HasColumnName("id_marca").IsRequired();
                 entity.Property(e => e.DescripcionModelo).HasColumnName("descripcion_modelo").HasMaxLength(100).IsRequired();
+                entity.Ignore(e => e.NombreMarca);
             });
 
             base.OnModelCreating(modelBuilder);
