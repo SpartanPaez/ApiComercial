@@ -29,13 +29,14 @@ namespace ApiComercial.Infraestructure.Repositories
              marca => marca.IdMarca,
              (modelo, marca) => new ModeloAuto
              {
-                 // Asigna las propiedades correctas según tu clase ModeloAuto
+                 IdModelo = modelo.IdModelo,
+                 IdMarca = modelo.IdMarca,
                  NombreMarca = marca.DescripcionMarca,
                  DescripcionModelo = modelo.DescripcionModelo
              })
          .ToListAsync();
 
-         return resultado;
+            return resultado;
 
         }
         public async Task<MarcaAuto> GetMarcaPorId(int id) => await _context.Marcas.FindAsync(id);
