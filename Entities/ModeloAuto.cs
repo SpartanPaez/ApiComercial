@@ -13,6 +13,11 @@ namespace ApiComercial.Entities
         public int IdMarca { get; set; }
 
         /// <summary>
+        /// Nombre de la marca
+        /// </summary>
+        public string NombreMarca { get; set; }
+
+        /// <summary>
         /// Descripción del modelo de auto
         /// </summary>
         public string DescripcionModelo { get; set; }

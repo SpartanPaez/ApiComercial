@@ -16,7 +16,28 @@ namespace ApiComercial.Infraestructure.Repositories
         }
 
         public async Task<IEnumerable<MarcaAuto>> GetMarcas() => await _context.Marcas.ToListAsync();
-        public async Task<IEnumerable<ModeloAuto>> GetModelos() => await _context.Modelos.ToListAsync();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<ModeloAuto>> GetModelos()
+        {
+            var resultado = await _context.Modelos
+         .Join(
+             _context.Marcas,
+             modelo => modelo.IdMarca,
+             marca => marca.IdMarca,
+             (modelo, marca) => new ModeloAuto
+             {
+                 // Asigna las propiedades correctas según tu clase ModeloAuto
+                 NombreMarca = marca.DescripcionMarca,
+                 DescripcionModelo = modelo.DescripcionModelo
+             })
+         .ToListAsync();
+
+         return resultado;
+
+        }
         public async Task<MarcaAuto> GetMarcaPorId(int id) => await _context.Marcas.FindAsync(id);
         public async Task<IEnumerable<ModeloAuto>> GetModelosPorMarca(int idMarca)
         {
