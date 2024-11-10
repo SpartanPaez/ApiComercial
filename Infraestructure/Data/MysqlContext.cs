@@ -32,6 +32,10 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<MarcaAuto> Marcas { get; set; }  // Cambiado de MarcasAutos a Marcas
         public DbSet<ModeloAuto> Modelos { get; set; }  // Cambiado de ModelosAutos a Modelos
         public DbSet<Vehiculo> Vehiculos { get; set; }
+        /// <summary>
+        /// Dbset para estados de los autos
+        /// </summary>
+        public DbSet<Estados> Estados {get; set;}
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -224,6 +228,15 @@ namespace ApiComercial.Infraestructure.Data
                 entity.HasKey(e => new { e.CategoriaId });
                 entity.Property(e => e.CategoriaId).HasColumnName("CATEGORIA_ID");
                 entity.Property(e => e.CategoriaDesc).HasColumnName("CATEGORIA_DESC");
+            });
+
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Estados>(entity =>
+            {
+                entity.ToTable("estados");
+                entity.HasKey(e => new {e.Id});
+                entity.Property(e => e.Id).HasColumnName("id_estado");
+                entity.Property(e => e.Descripcion).HasColumnName("descripcion");
             });
         }
     }

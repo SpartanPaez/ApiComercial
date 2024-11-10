@@ -45,5 +45,16 @@ namespace ApiComercial.Services
         {
             return await _vehiculoRepository.ExisteVehiculo(idChasis);
         }
+
+        public async Task<IEnumerable<Estados>> GetEstados()
+        => await _vehiculoRepository.GetEstados();
+
+        /// <summary>
+        /// Insertar datos para estados de vehiculos
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        public async Task<Estados> InsertarEstados(Estados parametros)
+        => await _vehiculoRepository.InsertarEstados(parametros);
     }
 }

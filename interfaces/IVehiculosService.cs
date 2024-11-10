@@ -44,8 +44,18 @@ namespace ApiComercial.Interfaces
         /// <param name="idChasis">El identificador del chasis del vehículo a eliminar.</param>
         /// <returns>True si la eliminación fue exitosa, false en caso contrario.</returns>
         Task<bool> DeleteVehiculo(string idChasis);
+        /// <summary>
+        /// Obtiene los estados para los vehiculos
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Estados>> GetEstados();
+        /// <summary>
+        /// Insertar estados
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        Task<Estados> InsertarEstados(Estados parametros);
 
-        // Si necesitas métodos adicionales, puedes agregarlos aquí.
-        // Por ejemplo, obtener vehículos por marca, modelo, año, etc.
+
     }
 }

@@ -169,5 +169,65 @@ namespace ApiComercial.Controllers
             var resultado = await _service.DeleteVehiculo(idChasis);
             return Ok(resultado);
         }
+        /// <summary>
+        /// Endopoint para consultar estados de vehiculos
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("estados")]
+        [ProducesResponseType(typeof(List<EstadosResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetEstados()
+        {
+            try
+            {
+                var resultado = await _service.GetEstados();
+                var respuesta = _mapper.Map<List<EstadosResponse>>(resultado);
+                return Ok(respuesta);
+            }
+            catch (System.Exception e)
+            {
+                _logger.LogError(e, "Ocurrió un error al consultar los esstados.");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error en el proceso de consulta de estados."
+                });
+            }
+        }
+        /// <summary>
+        /// Endpoint encargado de insertar los estados para los vehiculos
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        [HttpPost("estados")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> InsertEstados([FromBody] EstadosRequest parametros)
+        {
+            try
+            {
+                var estado = _mapper.Map<Estados>(parametros);
+
+                var resultado = await _service.InsertarEstados(estado);
+
+                return CreatedAtAction(nameof(GetEstados), new { id = estado.Id }, resultado);
+            }
+            catch (System.Exception e)
+            {
+                _logger.LogError(e, "Ocurrió un error al consultar el vehículo.");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos del vehículo: " + e.Message
+                });
+            }
+
+
+        }
     }
 }

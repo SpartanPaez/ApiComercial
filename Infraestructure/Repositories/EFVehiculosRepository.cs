@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using ApiComercial.Models;
 
 namespace ApiComercial.Infraestructure.Repositories
 {
@@ -21,7 +22,10 @@ namespace ApiComercial.Infraestructure.Repositories
 
         }
 
-
+        /// <summary>
+        /// Consulta para vehiculos
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<Vehiculo>> GetVehiculos()
         {
             var vehiculos = await (from v in _my.Vehiculos
@@ -98,6 +102,21 @@ namespace ApiComercial.Infraestructure.Repositories
         public Task<Vehiculo> GetVehiculoPorId(string idChasis)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Estados>> GetEstados()
+        => await _my.Estados.ToListAsync();
+
+        /// <summary>
+        /// Inserta estados
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        public async Task<Estados> InsertarEstados(Estados parametros)
+        {
+            _my.Estados.Add(parametros);
+            await _my.SaveChangesAsync();
+            return parametros;
         }
     }
 }

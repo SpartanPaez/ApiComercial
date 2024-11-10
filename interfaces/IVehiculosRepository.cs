@@ -1,4 +1,5 @@
 using ApiComercial.Entities;
+using ApiComercial.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,6 +8,10 @@ namespace ApiComercial.Infraestructure.Interfaces // Asegúrate de que está en 
 {
     public interface IVehiculoRepository
     {
+        /// <summary>
+        /// Tarea para obtener autos
+        /// </summary>
+        /// <returns></returns>
         Task<IEnumerable<Vehiculo>> GetVehiculos();
         Task<Vehiculo> GetVehiculoPorId(string idChasis);
         Task<Vehiculo> InsertVehiculo(Vehiculo parametros);
@@ -14,5 +19,16 @@ namespace ApiComercial.Infraestructure.Interfaces // Asegúrate de que está en 
         Task<bool> ExisteVehiculo(string idChasis);
         Task<bool> DeleteVehiculo(string idChasis);
         Task<IEnumerable<Vehiculo>> GetVehiculosVencimiento(string fecha);
+        /// <summary>
+        /// Tarea para mostrar los datos de estados
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Estados>> GetEstados();
+        /// <summary>
+        /// Para insertar datos de estados
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        Task<Estados> InsertarEstados(Estados parametros);
     }
 }
