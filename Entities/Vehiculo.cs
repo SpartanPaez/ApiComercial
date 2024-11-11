@@ -6,6 +6,6 @@ public class Vehiculo
     public int IdModelo { get; set; }
     public string Modelo { get; set; }
     public string TipoCar { get; set; }
-    public string AnoFabricacion { get; set; }
+    public int AnoFabricacion { get; set; }
     public string Color { get; set; }
 }

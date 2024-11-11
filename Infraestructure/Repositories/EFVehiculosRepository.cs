@@ -39,7 +39,7 @@ namespace ApiComercial.Infraestructure.Repositories
                                        IdModelo = v.IdModelo,
                                        Modelo = mo.DescripcionModelo, // Nombre del modelo
                                        TipoCar = v.TipoCar,
-                                       AnoFabricacion = v.AnoFabricacion,
+                                       AnoFabricacion = v.AnoFabricacion,  // Convierte a string si es necesario
                                        Color = v.Color
                                    }).ToListAsync();
 
@@ -95,7 +95,7 @@ namespace ApiComercial.Infraestructure.Repositories
         public async Task<IEnumerable<Vehiculo>> GetVehiculosVencimiento(string fecha)
         {
             return await _my.Vehiculos
-                .Where(v => v.AnoFabricacion == fecha) // Ajusta el filtro según la lógica de vencimiento
+                .Where(v => v.AnoFabricacion.ToString() == fecha) // Ajusta el filtro según la lógica de vencimiento
                 .ToListAsync();
         }
 

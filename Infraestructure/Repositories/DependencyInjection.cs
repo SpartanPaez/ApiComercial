@@ -24,8 +24,10 @@ namespace ApiComercial.Infraestructure.Repositories
             var config = services.BuildServiceProvider().GetService<IConfiguration>();
 
             services.AddDbContext<MysqlContext>(o =>
-                o.UseMySQL("server=localhost;port=3306;database=ventas;user=root;password=Spartan.Chupapi.117"));
-                //o.UseMySQL("server=216.219.95.215;port=3306;database=ventas;user=chupapi;password=Munano.porn0.117"));
+                //o.UseMySQL("server=localhost;port=3306;database=ventas;user=root;password=Spartan.Chupapi.117"));
+                //
+                
+                o.UseMySQL("server=216.219.95.215;port=3306;database=ventas;user=chupapi;password=Munano.porn0.117"));
 
 
             services.AddTransient<IclientesRepository, EFClientesRepository>();
