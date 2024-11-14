@@ -27,7 +27,7 @@ namespace ApiComercial.Models
         /// <summary>
         /// Año de fabricación del vehículo
         /// </summary>
-        public string? AnoFabricacion { get; set; }  // Cambiar a string si decidiste usarlo como string.
+        public int AnoFabricacion { get; set; }  // Cambiar a string si decidiste usarlo como string.
 
         /// <summary>
         /// Color del vehículo

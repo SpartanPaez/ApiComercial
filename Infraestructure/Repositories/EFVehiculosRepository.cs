@@ -40,7 +40,10 @@ namespace ApiComercial.Infraestructure.Repositories
                                        Modelo = mo.DescripcionModelo, // Nombre del modelo
                                        TipoCar = v.TipoCar,
                                        AnoFabricacion = v.AnoFabricacion,  // Convierte a string si es necesario
-                                       Color = v.Color
+                                       Color = v.Color,
+                                       Usado = v.Usado,
+                                       Chapa = v.Chapa,
+                                       Estado = v.Estado
                                    }).ToListAsync();
 
             return vehiculos;

@@ -35,7 +35,7 @@ namespace ApiComercial.Infraestructure.Data
         /// <summary>
         /// Dbset para estados de los autos
         /// </summary>
-        public DbSet<Estados> Estados {get; set;}
+        public DbSet<Estados> Estados { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -87,7 +87,17 @@ namespace ApiComercial.Infraestructure.Data
 
                 entity.Property(e => e.Color)
                       .HasColumnName("color");
-                                      // No mapear 'Marca' ni 'Modelo' aquí porque no son columnas de la base de datos
+                // No mapear 'Marca' ni 'Modelo' aquí porque no son columnas de la base de datos
+                entity.Property(e => e.Usado)
+                     .HasColumnName("usado");
+
+                entity.Property(e => e.Chapa)
+                     .HasColumnName("chapa");
+
+                entity.Property(e => e.Chapa)
+                     .HasColumnName("estado");
+
+
                 entity.Ignore(e => e.Marca);
                 entity.Ignore(e => e.Modelo);
             });
@@ -234,7 +244,7 @@ namespace ApiComercial.Infraestructure.Data
             modelBuilder.Entity<Estados>(entity =>
             {
                 entity.ToTable("estados");
-                entity.HasKey(e => new {e.Id});
+                entity.HasKey(e => new { e.Id });
                 entity.Property(e => e.Id).HasColumnName("id_estado");
                 entity.Property(e => e.Descripcion).HasColumnName("descripcion");
             });

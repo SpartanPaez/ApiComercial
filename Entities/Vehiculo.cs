@@ -7,5 +7,8 @@ public class Vehiculo
     public string Modelo { get; set; }
     public string TipoCar { get; set; }
     public int AnoFabricacion { get; set; }
-    public string Color { get; set; }
+    public string? Color { get; set; }
+    public string? Usado { get; set; }
+    public string? Chapa { get; set; }
+    public string Estado { get; set; }
 }
