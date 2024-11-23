@@ -130,7 +130,7 @@ namespace ApiComercial.Infraestructure.Repositories
         public async Task<int> GetCountByEstado(string estado)
         {
             return await _my.Vehiculos
-                .Where(v => v.Estado.ToUpper() == estado.ToUpper()) 
+                .Where(v => v.Estado.ToUpper() == estado.ToUpper().Trim()) 
                 .CountAsync();
         }
     }
