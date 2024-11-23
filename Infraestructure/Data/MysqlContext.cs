@@ -94,7 +94,7 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.Chapa)
                      .HasColumnName("chapa");
 
-                entity.Property(e => e.Chapa)
+                entity.Property(e => e.Estado)
                      .HasColumnName("estado");
 
 
