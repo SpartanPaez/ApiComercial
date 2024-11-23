@@ -121,5 +121,17 @@ namespace ApiComercial.Infraestructure.Repositories
             await _my.SaveChangesAsync();
             return parametros;
         }
+
+        /// <summary>
+        /// Selects de estados de vehiculos
+        /// </summary>
+        /// <param name="estado"></param>
+        /// <returns></returns>
+        public async Task<int> GetCountByEstado(string estado)
+        {
+            return await _my.Vehiculos
+                .Where(v => v.Estado.ToUpper() == estado.ToUpper()) 
+                .CountAsync();
+        }
     }
 }

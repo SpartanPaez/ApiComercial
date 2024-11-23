@@ -229,5 +229,34 @@ namespace ApiComercial.Controllers
 
 
         }
+
+        /// <summary>
+        /// Endpoint para obtener el conteo de vehículos por estado.
+        /// </summary>
+        /// <param name="estado">El estado de los vehículos.</param>
+        /// <returns>El número de vehículos que tienen el estado especificado.</returns>
+        [HttpGet("/estado/{estado}")]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetCountByEstado(string estado)
+        {
+            try
+            {
+                var count = await _service.GetCountByEstado(estado.Trim());
+                return Ok(count);
+            }
+            catch (System.Exception e)
+            {
+                _logger.LogError(e, "Ocurrió un error al consultar el conteo de vehículos por estado.");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error en el proceso de consulta del conteo de vehículos por estado."
+                });
+            }
+        }
+
     }
 }

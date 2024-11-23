@@ -20,7 +20,7 @@ namespace ApiComercial.Interfaces
         /// <summary>
         /// Inserta un nuevo vehículo en la base de datos.
         /// </summary>
-        /// <param name="parametros">Los parámetros del vehículo a insertar.</param>
+        /// <param name="vehiculo">Los parámetros del vehículo a insertar.</param>
         /// <returns>El vehículo insertado con sus datos actualizados.</returns>
         Task<Vehiculo> InsertVehiculo(Vehiculo vehiculo);
 
@@ -55,6 +55,13 @@ namespace ApiComercial.Interfaces
         /// <param name="parametros"></param>
         /// <returns></returns>
         Task<Estados> InsertarEstados(Estados parametros);
+
+        /// <summary>
+        /// Obtiene el conteo de vehículos con un estado específico.
+        /// </summary>
+        /// <param name="estado">El estado del vehículo.</param>
+        /// <returns>El número de vehículos con el estado especificado.</returns>
+        Task<int> GetCountByEstado(string estado);
 
 
     }

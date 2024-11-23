@@ -30,6 +30,11 @@ namespace ApiComercial.Services
         }
 
 
+        /// <summary>
+        /// Tarea para actualizar vehiculos 
+        /// </summary>
+        /// <param name="vehiculo"></param>
+        /// <returns></returns>
         public async Task<Vehiculo> UpdateVehiculo(Vehiculo vehiculo)
         {
             return await _vehiculoRepository.UpdateVehiculo(vehiculo);
@@ -56,5 +61,14 @@ namespace ApiComercial.Services
         /// <returns></returns>
         public async Task<Estados> InsertarEstados(Estados parametros)
         => await _vehiculoRepository.InsertarEstados(parametros);
+
+        /// <summary>
+        /// Devuele la cantidad de vehiculos en base a un estado
+        /// </summary>
+        /// <param name="estado"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<int> GetCountByEstado(string estado)
+        => await _vehiculoRepository.GetCountByEstado(estado);
     }
 }

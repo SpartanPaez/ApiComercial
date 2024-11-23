@@ -30,5 +30,12 @@ namespace ApiComercial.Infraestructure.Interfaces // Asegúrate de que está en 
         /// <param name="parametros"></param>
         /// <returns></returns>
         Task<Estados> InsertarEstados(Estados parametros);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="estado"></param>
+        /// <returns></returns>
+        Task<int> GetCountByEstado(string estado);
     }
 }
