@@ -70,5 +70,9 @@ namespace ApiComercial.Services
         /// <exception cref="NotImplementedException"></exception>
         public async Task<int> GetCountByEstado(string estado)
         => await _vehiculoRepository.GetCountByEstado(estado);
+
+        public async Task<int> GetTotalVehiculos()
+        => await _vehiculoRepository.GetTotalVehiculos();
+
     }
 }

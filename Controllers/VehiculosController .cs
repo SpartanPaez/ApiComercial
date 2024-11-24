@@ -257,6 +257,36 @@ namespace ApiComercial.Controllers
                 });
             }
         }
+        /// <summary>
+        /// Devuelte el total de vehiculos, excluyendo los vendidos.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("total-vehiculos")]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetTotalVehiculos()
+        {
+            try
+            {
+                // Llamar al servicio para obtener el total de vehículos excluyendo los vendidos
+                var totalVehiculosExcluyendoVendidos = await _service.GetTotalVehiculos();
+
+                // Retornar el total de vehículos excluyendo los vendidos
+                return Ok(new { TotalVehiculos = totalVehiculosExcluyendoVendidos });
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Ocurrió un error al consultar el total de vehículos.");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error en el proceso de consulta de vehículos."
+                });
+            }
+        }
+
 
     }
 }

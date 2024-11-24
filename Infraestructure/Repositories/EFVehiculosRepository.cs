@@ -133,5 +133,12 @@ namespace ApiComercial.Infraestructure.Repositories
                 .Where(v => v.Estado.ToUpper().Trim() == estado.ToUpper().Trim()) 
                 .CountAsync();
         }
+
+        public async Task<int> GetTotalVehiculos()
+        {
+             return await _my.Vehiculos
+            .Where(v => v.Estado.Trim().ToUpper() != "VENDIDO")
+            .CountAsync();
+        }
     }
 }

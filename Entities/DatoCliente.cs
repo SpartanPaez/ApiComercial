@@ -27,12 +27,12 @@ public class Cliente
         /// Nacionalidad del cliente
         /// </summary>
         /// <value></value>
-        public int? ClientePais { get; set; }
+        public string? ClientePais { get; set; }
         /// <summary>
         /// Indica la ciudad del cliente
         /// </summary>
         /// <value></value>
-        public int? ClienteCiudad { get; set; }
+        public string? ClienteCiudad { get; set; }
         /// <summary>
         /// Indica el barrio del cliente
         /// </summary>

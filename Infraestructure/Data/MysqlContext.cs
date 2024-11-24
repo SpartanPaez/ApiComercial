@@ -105,7 +105,7 @@ namespace ApiComercial.Infraestructure.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Cliente>(entity =>
             {
-                entity.ToTable("CLIENTES", "ventas");
+                entity.ToTable("clientes", "ventas");
                 entity.HasKey(e => new { e.ClienteId });
                 entity.Property(e => e.ClienteId);
                 entity.Property(e => e.ClienteId).HasColumnName("ClienteId");

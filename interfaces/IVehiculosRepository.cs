@@ -37,5 +37,10 @@ namespace ApiComercial.Infraestructure.Interfaces // Asegúrate de que está en 
         /// <param name="estado"></param>
         /// <returns></returns>
         Task<int> GetCountByEstado(string estado);
+        /// <summary>
+        /// Devuelte el total de autos
+        /// </summary>
+        /// <returns></returns>
+        Task<int> GetTotalVehiculos();
     }
 }
