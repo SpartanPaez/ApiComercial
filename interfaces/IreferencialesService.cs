@@ -2,9 +2,17 @@ using ApiComercial.Entities;
 
 namespace ApiComercial.interfaces
 {
+    /// <summary>
+    /// Interfaz
+    /// </summary>
     public interface IreferencialesService
     {
-        Task<Ciudad> GetCiudadPorId(int ciudadId);
+        /// <summary>
+        /// Task para obtener ciudad en base al departamento
+        /// </summary>
+        /// <param name="departamentoId"></param>
+        /// <returns></returns>
+        Task <IEnumerable<Ciudad>> GetCiudadPorId(int departamentoId);
 
         Task<Ciudad> InsertCiudad(Ciudad parametros);
 

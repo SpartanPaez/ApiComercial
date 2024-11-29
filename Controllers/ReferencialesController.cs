@@ -24,6 +24,11 @@ namespace ApiComercial.Controllers
             _mapper = mapper;
             _service = service;
         }
+        /// <summary>
+        /// Endpoint que consulta las ciudades en base al id del departamento
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [HttpGet("ciudades/{Id}")]
         [ProducesResponseType(typeof(CiudadResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -35,7 +40,7 @@ namespace ApiComercial.Controllers
             try
             {
                 var resultado = await _service.GetCiudadPorId(Id);
-                var respuesta = Mapper.Map<CiudadResponse>(resultado);
+                var respuesta = Mapper.Map<IEnumerable<CiudadResponse>>(resultado);
                 return Ok(respuesta);
             }
             catch (System.Exception e)
@@ -54,7 +59,7 @@ namespace ApiComercial.Controllers
         /// <param name="parametros"></param>
         /// <returns></returns>                            
         [HttpPost("ciudades")]
-        [ProducesResponseType(typeof(CiudadResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(RequestCiudad), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]

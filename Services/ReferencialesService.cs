@@ -11,7 +11,7 @@ namespace ApiComercial.Services
         {
             this._referenciaRepository = ireferencialesRepository;
         }
-        public async Task<Ciudad> GetCiudadPorId(int ciudadId)
+        public async Task <IEnumerable<Ciudad>> GetCiudadPorId(int ciudadId)
         {
             return await _referenciaRepository.GetCiudadPorId(ciudadId);
         }

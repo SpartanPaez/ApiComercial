@@ -135,17 +135,6 @@ namespace ApiComercial.Infraestructure.Data
             });
 
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Ciudad>(entity =>
-            {
-                entity.ToTable("CIUDADES", "ventas");
-                entity.HasKey(e => new { e.CiudadId });
-                entity.Property(e => e.CiudadId).HasColumnName("CiudadId");
-                entity.Property(e => e.DepartamentoId).HasColumnName("DepartamentoId");
-                entity.Property(e => e.CiudadDesc).HasColumnName("CiudadDesc");
-
-            });
-
-            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Categoria>(entity =>
             {
                 entity.ToTable("CATEGOIRAS", "ventas");
@@ -161,6 +150,16 @@ namespace ApiComercial.Infraestructure.Data
                 entity.HasKey(e => new { e.DepartamentoId });
                 entity.Property(e => e.DepartamentoId).HasColumnName("id_departamento");
                 entity.Property(e => e.DepartamentoDesc).HasColumnName("descripcion");
+            });
+
+             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Ciudad>(entity =>
+            {
+                entity.ToTable("ciudades");
+                entity.HasKey(e => new { e.CiudadId });
+                entity.Property(e => e.CiudadId).HasColumnName("id_ciudad");
+                entity.Property(e => e.DepartamentoId).HasColumnName("id_departamento");
+                entity.Property(e => e.CiudadDesc).HasColumnName("descripcion");
             });
 
             base.OnModelCreating(modelBuilder);

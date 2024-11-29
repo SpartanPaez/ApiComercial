@@ -27,15 +27,14 @@ namespace ApiComercial.Infraestructure.Repositories
         /// </summary>
         /// <param name="departamentoId"></param>
         /// <returns></returns>
-        public async Task<Ciudad> GetCiudadPorId(int departamentoId)
+        public async Task<IEnumerable<Ciudad>> GetCiudadPorId(int departamentoId)
          => await _my.Ciudades
             .Where(c => c.DepartamentoId == departamentoId)
-            .FirstOrDefaultAsync();
+            .ToListAsync();
 
         /// <summary>
-        /// Consulta la tabla de departamentos por Id
+        /// Consulta la tabla de departamentos
         /// </summary>
-        /// <param name="departamentoId"></param>
         /// <returns></returns>
         public async Task<IEnumerable<Departamento>> GetDepartamentoPorId()
            => await _my.Departamentos.ToListAsync();
