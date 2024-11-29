@@ -103,19 +103,22 @@ namespace ApiComercial.Controllers
 
         }
 
-
-        [HttpGet("departamentos/{Id}")]
+        /// <summary>
+        /// Obtiene los departamentos del pais
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("departamentos")]
         [ProducesResponseType(typeof(DepartamentoResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> GeDepartamentoPorId(int Id)
+        public async Task<ActionResult> GeDepartamentoPorId()
         {
             try
             {
-                var resultado = await _service.GetDepartamentoPorId(Id);
-                var respuesta = Mapper.Map<DepartamentoResponse>(resultado);
+                var resultado = await _service.GetDepartamentoPorId();
+                var respuesta = Mapper.Map<IEnumerable<DepartamentoResponse>>(resultado);
                 return Ok(respuesta);
             }
             catch (System.Exception e)
@@ -128,9 +131,13 @@ namespace ApiComercial.Controllers
                 });
             }
         }
-
+        /// <summary>
+        /// Endpoint para insertar departamentos
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
         [HttpPost("departamentos")]
-        [ProducesResponseType(typeof(DepartamentoResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(RequestDepartamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]

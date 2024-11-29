@@ -37,10 +37,8 @@ namespace ApiComercial.Infraestructure.Repositories
         /// </summary>
         /// <param name="departamentoId"></param>
         /// <returns></returns>
-        public async Task<Departamento> GetDepartamentoPorId(int departamentoId)
-           => await _my.Departamentos
-                    .Where(c => c.DepartamentoId == departamentoId)
-                    .FirstOrDefaultAsync();
+        public async Task<IEnumerable<Departamento>> GetDepartamentoPorId()
+           => await _my.Departamentos.ToListAsync();
         /// <summary>
         /// Consulta la tabla de paises
         /// </summary>

@@ -10,7 +10,7 @@ namespace ApiComercial.interfaces
 
         Task<Ciudad> UpdateCiudad(Ciudad parametros);
 
-        Task<Departamento> GetDepartamentoPorId(int departamento);
+        Task <IEnumerable<Departamento>> GetDepartamentoPorId();
 
         Task<Departamento> InsertDepartamento(Departamento parametros);
 

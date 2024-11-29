@@ -4,13 +4,11 @@ using System.Text;
 
 namespace ApiComercial.Models
 {
+    /// <summary>
+    /// CLase para insertar departamentos
+    /// </summary>
     public class RequestDepartamento
     {
-        /// <summary>
-        /// Pais asociado
-        /// </summary>
-        /// <value></value>
-        public int PaisId { get; set; }
         /// <summary>
         /// Nombre del departamento
         /// </summary>

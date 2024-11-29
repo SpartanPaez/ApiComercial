@@ -16,9 +16,9 @@ namespace ApiComercial.Services
             return await _referenciaRepository.GetCiudadPorId(ciudadId);
         }
 
-        public async Task<Departamento> GetDepartamentoPorId(int departamentoId)
+        public async Task<IEnumerable<Departamento>> GetDepartamentoPorId()
         {
-            return await _referenciaRepository.GetDepartamentoPorId(departamentoId);
+            return await _referenciaRepository.GetDepartamentoPorId();
         }
 
         public Task<IEnumerable<Deposito>> GetDepositos()

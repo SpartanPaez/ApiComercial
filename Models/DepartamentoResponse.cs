@@ -1,5 +1,8 @@
 namespace ApiComercial.Entities
 {
+    /// <summary>
+    /// Datos de los departamentos del pais
+    /// </summary>
     public class DepartamentoResponse
     {
         /// <summary>
@@ -7,11 +10,6 @@ namespace ApiComercial.Entities
         /// </summary>
         /// <value></value>
         public int DepartamentoId { get; set; }
-        /// <summary>
-        /// Pais asociado
-        /// </summary>
-        /// <value></value>
-        public int PaisId { get; set; }
         /// <summary>
         /// Nombre del departamento
         /// </summary>

@@ -1,5 +1,8 @@
 using ApiComercial.Entities;
 namespace ApiComercial.Entities;
+/// <summary>
+/// Clase para los departamentos del paraguay
+/// </summary>
 
 public class Departamento
 {
@@ -8,11 +11,6 @@ public class Departamento
     /// </summary>
     /// <value></value>
     public int DepartamentoId { get; set; }
-    /// <summary>
-    /// Pais asociado
-    /// </summary>
-    /// <value></value>
-    public int PaisId { get; set; }
     /// <summary>
     /// Nombre del departamento
     /// </summary>

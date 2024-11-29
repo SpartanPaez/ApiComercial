@@ -157,11 +157,10 @@ namespace ApiComercial.Infraestructure.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Departamento>(entity =>
             {
-                entity.ToTable("DEPARTAMENTOS", "ventas");
+                entity.ToTable("departamentos");
                 entity.HasKey(e => new { e.DepartamentoId });
-                entity.Property(e => e.DepartamentoId).HasColumnName("DepartamentoId");
-                entity.Property(e => e.PaisId).HasColumnName("PaisId");
-                entity.Property(e => e.DepartamentoDesc).HasColumnName("DepartamentoDesc");
+                entity.Property(e => e.DepartamentoId).HasColumnName("id_departamento");
+                entity.Property(e => e.DepartamentoDesc).HasColumnName("descripcion");
             });
 
             base.OnModelCreating(modelBuilder);
