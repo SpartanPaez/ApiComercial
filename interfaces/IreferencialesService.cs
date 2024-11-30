@@ -12,13 +12,13 @@ namespace ApiComercial.interfaces
         /// </summary>
         /// <param name="departamentoId"></param>
         /// <returns></returns>
-        Task <IEnumerable<Ciudad>> GetCiudadPorId(int departamentoId);
+        Task<IEnumerable<Ciudad>> GetCiudadPorId(int departamentoId);
 
         Task<Ciudad> InsertCiudad(Ciudad parametros);
 
         Task<Ciudad> UpdateCiudad(Ciudad parametros);
 
-        Task <IEnumerable<Departamento>> GetDepartamentoPorId();
+        Task<IEnumerable<Departamento>> GetDepartamentoPorId();
 
         Task<Departamento> InsertDepartamento(Departamento parametros);
 
@@ -52,12 +52,19 @@ namespace ApiComercial.interfaces
         /// Obtiene listado de categorias
         /// </summary>
         /// <returns></returns>
-        Task <IEnumerable<Categoria>> GetCategoria();
+        Task<IEnumerable<Categoria>> GetCategoria();
         /// <summary>
         /// Interfaz para la insercion de categorias
         /// </summary>
         /// <returns></returns>
-        Task <Categoria> InsertarCategoria(Categoria parametros);
+        Task<Categoria> InsertarCategoria(Categoria parametros);
+
+        /// <summary>
+        /// Obtiene el barrio relacionado con un identificador 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<IEnumerable<Barrio>> GetBarrio(int id);
 
     }
 }

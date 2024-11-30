@@ -488,6 +488,35 @@ namespace ApiComercial.Controllers
                 });
             }
         }
+
+        /// <summary>
+        /// Obtiene el listado de barrios
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("barrios")]
+        [ProducesResponseType(typeof(ResponseBarrio), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task <ActionResult> GetBarrios(int id)
+        {
+            try
+            {
+                var resultado = await _service.GetBarrio(id);
+                var respuesta = Mapper.Map<IEnumerable<ResponseBarrio>>(resultado);
+                return Ok(respuesta);
+            }
+            catch (System.Exception e)
+            {
+                 _Logger.LogError(e, "Ocurrió un error al momento de consultar los datos");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.validacion_negocio,
+                    ErrorDescripcion = "Ocurrió un error al momento de consultar los datos"
+                });
+            }
+        }
     }
 }
 

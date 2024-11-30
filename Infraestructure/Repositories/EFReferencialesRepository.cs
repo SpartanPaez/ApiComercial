@@ -182,6 +182,12 @@ namespace ApiComercial.Infraestructure.Repositories
             await _my.SaveChangesAsync();
             return parametros;
         }
-
+        /// <summary>
+        /// Obtiene los datos de barrio mediante ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task <IEnumerable<Barrio>> GetBarrio(int id)
+        => await _my.Barrios.Where(c => c.IdBarrio == id).ToListAsync();
     }
 }

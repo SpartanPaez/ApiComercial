@@ -32,14 +32,29 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<MarcaAuto> Marcas { get; set; }  // Cambiado de MarcasAutos a Marcas
         public DbSet<ModeloAuto> Modelos { get; set; }  // Cambiado de ModelosAutos a Modelos
         public DbSet<Vehiculo> Vehiculos { get; set; }
+        public DbSet<Barrio> Barrios { get; set; }
         /// <summary>
         /// Dbset para estados de los autos
         /// </summary>
         public DbSet<Estados> Estados { get; set; }
 
-
+        /// <summary>
+        /// Callback que se invoca cuando EF Core está configurando el modelo de datos antes de crear la base de datos. 
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Barrio>(entity =>
+            {
+                entity.ToTable("barrios");
+                entity.HasKey(e => e.IdBarrio);
+                entity.Property(e => e.IdBarrio).HasColumnName("id_barrio").IsRequired();
+                entity.Property(e => e.IdDepartamento).HasColumnName("id_departamento").IsRequired();
+                entity.Property(e => e.Descripcion).HasColumnName("descripcion").HasMaxLength(100).IsRequired();
+
+            });
 
             // Configuración de la tabla MarcaAuto
             modelBuilder.Entity<MarcaAuto>(entity =>
@@ -62,47 +77,33 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Ignore(e => e.NombreMarca);
             });
 
-            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Vehiculo>(entity =>
             {
                 entity.ToTable("autos", "ventas");
-
                 entity.HasKey(e => e.IdChasis);
-
                 entity.Property(e => e.IdChasis)
                       .HasColumnName("id_chasis")
                       .IsRequired();
-
                 entity.Property(e => e.IdMarca)
                       .HasColumnName("id_marca");
-
                 entity.Property(e => e.IdModelo)
                       .HasColumnName("id_modelo");
-
                 entity.Property(e => e.TipoCar)
                       .HasColumnName("tipo_car");
-
                 entity.Property(e => e.AnoFabricacion)
                       .HasColumnName("ano_fabricacion");
-
                 entity.Property(e => e.Color)
                       .HasColumnName("color");
-                // No mapear 'Marca' ni 'Modelo' aquí porque no son columnas de la base de datos
                 entity.Property(e => e.Usado)
                      .HasColumnName("usado");
-
                 entity.Property(e => e.Chapa)
                      .HasColumnName("chapa");
-
                 entity.Property(e => e.Estado)
                      .HasColumnName("estado");
-
-
                 entity.Ignore(e => e.Marca);
                 entity.Ignore(e => e.Modelo);
             });
 
-            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Cliente>(entity =>
             {
                 entity.ToTable("clientes", "ventas");
@@ -113,6 +114,7 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.ClienteNombre).HasColumnName("ClienteNombre");
                 entity.Property(e => e.ClienteDireccion).HasColumnName("ClienteDireccion");
                 entity.Property(e => e.ClientePais).HasColumnName("ClientePais");
+                entity.Property(e => e.ClienteDepartamento).HasColumnName("ClienteDepartamento");
                 entity.Property(e => e.ClienteCiudad).HasColumnName("ClienteCiudad");
                 entity.Property(e => e.ClienteBarrio).HasColumnName("ClienteBarrio");
                 entity.Property(e => e.ClienteCelular).HasColumnName("ClienteCelular");
@@ -152,7 +154,7 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.DepartamentoDesc).HasColumnName("descripcion");
             });
 
-             base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Ciudad>(entity =>
             {
                 entity.ToTable("ciudades");

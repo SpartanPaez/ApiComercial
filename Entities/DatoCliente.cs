@@ -24,6 +24,10 @@ public class Cliente
         /// <value></value>
         public string? ClienteDireccion { get; set; }
         /// <summary>
+        /// Departamento del cliente
+        /// </summary>
+        public string? ClienteDepartamento { get; set; }
+        /// <summary>
         /// Nacionalidad del cliente
         /// </summary>
         /// <value></value>

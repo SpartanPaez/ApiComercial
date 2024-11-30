@@ -4,8 +4,8 @@ using System.Text;
 
 namespace ApiComercial.Models
 {
-    public class ResponseClientes 
-    {  
+    public class ResponseClientes
+    {
         public int? ClienteId { get; set; }
         /// <summary>
         /// Cedula del cliente
@@ -17,6 +17,10 @@ namespace ApiComercial.Models
         /// </summary>
         /// <value></value>
         public string? ClienteNombre { get; set; }
+        /// <summary>
+        /// Departamento del cliente
+        /// </summary>
+        public string? ClienteDepartamento { get; set; }
         /// <summary>
         /// Dirección del cliente
         /// </summary>
@@ -57,6 +61,6 @@ namespace ApiComercial.Models
         /// </summary>
         /// <value></value>
         public string? ClienteEstado { get; set; }
-        
+
     }
 }

@@ -36,6 +36,12 @@ namespace ApiComercial.Infraestructure.interfaces
         /// </summary>
         /// <returns></returns>
         Task <Categoria> InsertarCategoria( Categoria parametros);
+        /// <summary>
+        /// Obtiene el barrio relacionado con un identificador 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task <IEnumerable<Barrio>> GetBarrio (int id);
 
     }
 }
