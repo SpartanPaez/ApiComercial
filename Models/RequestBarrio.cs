@@ -9,7 +9,7 @@ namespace ApiComercial.Entities
         /// <summary>
         /// Id del departamentow
         /// </summary>
-        public int IdDepartamento { get; set; }
+        public int IdCiudad { get; set; }
         /// <summary>
         /// Descripcion del barrio
         /// </summary>

@@ -66,5 +66,21 @@ namespace ApiComercial.interfaces
         /// <returns></returns>
         Task<IEnumerable<Barrio>> GetBarrio(int id);
 
+
+        /// <summary>
+        /// Obtiene el barrio relacionado con un identificador 
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Barrio>> GetBarrios();
+        /// <summary>
+        /// Inserta barrios
+        /// </summary>
+        /// <returns></returns>
+        Task <Barrio> InsertatBarrio(Barrio parametros);
+        /// <summary>
+        /// Tarea para enlistar todaas las ciudades
+        /// </summary>
+        /// <returns></returns>/
+         Task<IEnumerable<Ciudad>> GetCiudades();
     }
 }

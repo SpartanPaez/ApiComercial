@@ -51,8 +51,9 @@ namespace ApiComercial.Infraestructure.Data
                 entity.ToTable("barrios");
                 entity.HasKey(e => e.IdBarrio);
                 entity.Property(e => e.IdBarrio).HasColumnName("id_barrio").IsRequired();
-                entity.Property(e => e.IdDepartamento).HasColumnName("id_departamento").IsRequired();
+                entity.Property(e => e.IdCiudad).HasColumnName("id_ciudad").IsRequired();
                 entity.Property(e => e.Descripcion).HasColumnName("descripcion").HasMaxLength(100).IsRequired();
+                entity.Ignore(e => e.ciudadDescripcion);
 
             });
 

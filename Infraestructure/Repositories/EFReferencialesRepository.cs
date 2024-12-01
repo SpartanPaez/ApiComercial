@@ -187,7 +187,44 @@ namespace ApiComercial.Infraestructure.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task <IEnumerable<Barrio>> GetBarrio(int id)
-        => await _my.Barrios.Where(c => c.IdBarrio == id).ToListAsync();
+        public async Task<IEnumerable<Barrio>> GetBarrio(int id)
+        => await _my.Barrios.AsNoTracking().Where(c => c.IdBarrio == id).ToListAsync();
+        /// <summary>
+        /// Consulta SQL que obtiene un listado de barrios
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Barrio>> GetBarrios()
+        {
+            var barrios = await (from b in _my.Barrios.AsNoTracking()
+                                 join c in _my.Ciudades.AsNoTracking() on b.IdCiudad equals c.CiudadId
+                                 select new Barrio
+                                 {
+                                     IdBarrio = b.IdBarrio,
+                                     Descripcion = b.Descripcion,
+                                     ciudadDescripcion = c.CiudadDesc
+                                 }).ToListAsync();
+            return barrios;
+        }
+        /// <summary>
+        /// EF para insertar Barrio
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<Barrio> InsertatBarrio(Barrio parametros)
+        {
+            await _my.Barrios.AddAsync(parametros);
+            await _my.SaveChangesAsync();
+            return parametros;
+        }
+
+        /// <summary>
+        /// Ef que enlista las ciudades
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Ciudad>> GetCiudades()
+        {
+            return await _my.Ciudades.AsNoTracking().ToListAsync();
+        }
     }
 }

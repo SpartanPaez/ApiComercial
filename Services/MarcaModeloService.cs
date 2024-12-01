@@ -16,7 +16,7 @@ namespace ApiComercial.Services
         public Task<IEnumerable<MarcaAuto>> GetMarcas() => _repository.GetMarcas();
         public Task<IEnumerable<ModeloAuto>> GetModelos() => _repository.GetModelos();
         public Task<MarcaAuto> GetMarcaPorId(int id) => _repository.GetMarcaPorId(id);
-        public Task<ModeloAuto> GetModeloPorId(int id) => _repository.GetModeloPorIdMarca(id);
+        public Task <IEnumerable<ModeloAuto>> GetModeloPorId(int id) => _repository.GetModeloPorIdMarca(id);
         public Task<MarcaAuto> InsertMarca(MarcaAuto marca) => _repository.InsertMarca(marca);
         public Task<ModeloAuto> InsertModelo(ModeloAuto modelo) => _repository.InsertModelo(modelo);
         public Task<MarcaAuto> UpdateMarca(MarcaAuto marca) => _repository.UpdateMarca(marca);

@@ -2,6 +2,7 @@ using ApiComercial.Infraestructure.Data;
 using ApiComercial.Interfaces;
 using ApiComercial.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 
 
 namespace ApiComercial.Infraestructure.Repositories
@@ -15,26 +16,26 @@ namespace ApiComercial.Infraestructure.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<MarcaAuto>> GetMarcas() => await _context.Marcas.ToListAsync();
+        public async Task<IEnumerable<MarcaAuto>> GetMarcas() => await _context.Marcas.AsNoTracking().ToListAsync();
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<ModeloAuto>> GetModelos()
         {
-            var resultado = await _context.Modelos
-         .Join(
-             _context.Marcas,
-             modelo => modelo.IdMarca,
-             marca => marca.IdMarca,
-             (modelo, marca) => new ModeloAuto
-             {
-                 IdModelo = modelo.IdModelo,
-                 IdMarca = modelo.IdMarca,
-                 NombreMarca = marca.DescripcionMarca,
-                 DescripcionModelo = modelo.DescripcionModelo
-             })
-         .ToListAsync();
+            var resultado = await _context.Modelos.AsNoTracking()
+            .Join(
+                _context.Marcas.AsNoTracking(),
+                modelo => modelo.IdMarca,
+                marca => marca.IdMarca,
+                (modelo, marca) => new ModeloAuto
+                {
+                    IdModelo = modelo.IdModelo,
+                    IdMarca = modelo.IdMarca,
+                    NombreMarca = marca.DescripcionMarca,
+                    DescripcionModelo = modelo.DescripcionModelo
+                })
+            .ToListAsync();
 
             return resultado;
 
@@ -42,7 +43,7 @@ namespace ApiComercial.Infraestructure.Repositories
         public async Task<MarcaAuto> GetMarcaPorId(int id) => await _context.Marcas.FindAsync(id);
         public async Task<IEnumerable<ModeloAuto>> GetModelosPorMarca(int idMarca)
         {
-            return await _context.Modelos
+            return await _context.Modelos.AsNoTracking()
                 .Where(m => m.IdMarca == idMarca)
                 .ToListAsync();
         }
@@ -87,10 +88,12 @@ namespace ApiComercial.Infraestructure.Repositories
             return true;
         }
 
-        public async Task<ModeloAuto> GetModeloPorIdMarca(int idMarca)
+        public async Task<IEnumerable<ModeloAuto>> GetModeloPorIdMarca(int idMarca)
         {
-            return await _context.Modelos
-                .FirstOrDefaultAsync(m => m.IdMarca == idMarca);
+            return await _context.Modelos.AsNoTracking()
+                .Where(m => m.IdMarca == idMarca)
+                .ToListAsync();
         }
+
     }
 }

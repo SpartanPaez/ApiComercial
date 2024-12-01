@@ -11,7 +11,11 @@ public class Barrio
     /// <summary>
     /// Id del departamento
     /// </summary>
-    public int IdDepartamento { get; set; }
+    public int IdCiudad { get; set; }
+    /// <summary>
+    /// Descripcion de ciiudad
+    /// </summary>
+    public string? ciudadDescripcion { get; set; }
     /// <summary>
     /// Descripcion del barrio
     /// </summary>

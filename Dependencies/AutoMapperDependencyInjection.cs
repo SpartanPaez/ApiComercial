@@ -48,6 +48,8 @@ namespace ApiComercial.Depedencies
             CreateMap<Estados, EstadosRequest>().ReverseMap();
             CreateMap<Estados, EstadosResponse>().ReverseMap();
             CreateMap<Barrio, ResponseBarrio>().ReverseMap();
+            CreateMap<Barrio, RequestBarrio>().ReverseMap()
+                .ForMember(dest => dest.ciudadDescripcion, opt => opt.Ignore());
 
 
         }

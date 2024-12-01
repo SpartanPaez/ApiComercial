@@ -111,5 +111,29 @@ namespace ApiComercial.Services
         {
            return _referenciaRepository.GetBarrio(id);
         }
+        /// <summary>
+        /// MUetsra lista de barrios
+        /// </summary>
+        /// <returns></returns>
+
+        public Task<IEnumerable<Barrio>> GetBarrios()
+        {
+            return _referenciaRepository.GetBarrios();
+        }
+
+        /// <summary>
+        /// Inserta barrios
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        public Task<Barrio> InsertatBarrio(Barrio parametros)
+        {
+            return _referenciaRepository.InsertatBarrio(parametros);
+        }
+
+        public Task<IEnumerable<Ciudad>> GetCiudades()
+        {
+            return _referenciaRepository.GetCiudades();
+        }
     }
 }

@@ -1,3 +1,4 @@
+namespace ApiComercial.Entities;
 public class Vehiculo
 {
     public string IdChasis { get; set; }

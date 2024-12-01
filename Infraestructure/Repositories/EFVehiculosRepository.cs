@@ -28,7 +28,7 @@ namespace ApiComercial.Infraestructure.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Vehiculo>> GetVehiculos()
         {
-            var vehiculos = await (from v in _my.Vehiculos
+                        var vehiculos = await (from v in _my.Vehiculos
                                    join m in _my.Marcas on v.IdMarca equals m.IdMarca
                                    join mo in _my.Modelos on v.IdModelo equals mo.IdModelo
                                    select new Vehiculo
@@ -45,7 +45,6 @@ namespace ApiComercial.Infraestructure.Repositories
                                        Chapa = v.Chapa,
                                        Estado = v.Estado
                                    }).ToListAsync();
-
             return vehiculos;
         }
 
@@ -108,7 +107,7 @@ namespace ApiComercial.Infraestructure.Repositories
         }
 
         public async Task<IEnumerable<Estados>> GetEstados()
-        => await _my.Estados.ToListAsync();
+        => await _my.Estados.AsNoTracking().ToListAsync();
 
         /// <summary>
         /// Inserta estados
@@ -129,16 +128,16 @@ namespace ApiComercial.Infraestructure.Repositories
         /// <returns></returns>
         public async Task<int> GetCountByEstado(string estado)
         {
-            return await _my.Vehiculos
-                .Where(v => v.Estado.ToUpper().Trim() == estado.ToUpper().Trim()) 
+            return await _my.Vehiculos.AsNoTracking()
+                .Where(v => v.Estado.ToUpper().Trim() == estado.ToUpper().Trim())
                 .CountAsync();
         }
 
         public async Task<int> GetTotalVehiculos()
         {
-             return await _my.Vehiculos
-            .Where(v => v.Estado.Trim().ToUpper() != "VENDIDO")
-            .CountAsync();
+            return await _my.Vehiculos.AsNoTracking()
+           .Where(v => v.Estado.Trim().ToUpper() != "VENDIDO")
+           .CountAsync();
         }
     }
 }

@@ -1,7 +1,7 @@
 using ApiComercial.Entities;
 namespace ApiComercial.Entities;
 
-public class Cliente
+public class                                                                                                                                                            Cliente
 {
         /// <summary>
         /// Codigo 

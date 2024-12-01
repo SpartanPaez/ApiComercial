@@ -1,10 +1,11 @@
+using System.Runtime.CompilerServices;
 using ApiComercial.Entities;
 
 namespace ApiComercial.Infraestructure.interfaces
 {
     public interface IreferencialesRepository
     {
-        Task <IEnumerable<Ciudad>> GetCiudadPorId(int departamentoId);
+        Task<IEnumerable<Ciudad>> GetCiudadPorId(int departamentoId);
 
         Task<Ciudad> InsertCiudad(Ciudad parametros);
 
@@ -29,19 +30,36 @@ namespace ApiComercial.Infraestructure.interfaces
 
         Task<IEnumerable<Deposito>> GetDepositos();
         Task<Proveedor> InsertarProveedor(Proveedor parametros);
-        Task <IEnumerable<Proveedor>> GetProveedor();
-        Task <IEnumerable<Categoria>> GetCategoria();
-         /// <summary>
+        Task<IEnumerable<Proveedor>> GetProveedor();
+        Task<IEnumerable<Categoria>> GetCategoria();
+        /// <summary>
         /// Interfaz para la insercion de categorias
         /// </summary>
         /// <returns></returns>
-        Task <Categoria> InsertarCategoria( Categoria parametros);
+        Task<Categoria> InsertarCategoria(Categoria parametros);
         /// <summary>
         /// Obtiene el barrio relacionado con un identificador 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task <IEnumerable<Barrio>> GetBarrio (int id);
+        Task<IEnumerable<Barrio>> GetBarrio(int id);
+
+        /// <summary>
+        /// Enlista todos los barrios registrados
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Barrio>> GetBarrios();
+        /// <summary>
+        /// Inserta barrios
+        /// </summary>
+        /// <returns></returns>
+        Task<Barrio> InsertatBarrio(Barrio parametros);
+
+        /// <summary>
+        /// Tarea para enlistar todaas las ciudades
+        /// </summary>
+        /// <returns></returns>/
+        Task<IEnumerable<Ciudad>> GetCiudades();
 
     }
 }

@@ -54,6 +54,35 @@ namespace ApiComercial.Controllers
             }
         }
         /// <summary>
+        /// Endpoint que consulta las ciudades en base al id del departamento
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpGet("ciudades")]
+        [ProducesResponseType(typeof(CiudadResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetCiudades()
+        {
+            try
+            {
+                var resultado = await _service.GetCiudades();
+                var respuesta = Mapper.Map<IEnumerable<CiudadResponse>>(resultado);
+                return Ok(respuesta);
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al obtener los datos de la ciudad por ID");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al obtener los datos de la ciudad por ID"
+                });
+            }
+        }
+        /// <summary>
         /// Inserta nuevas ciudades
         /// </summary>
         /// <param name="parametros"></param>
@@ -516,6 +545,66 @@ namespace ApiComercial.Controllers
                     ErrorDescripcion = "Ocurrió un error al momento de consultar los datos"
                 });
             }
+        }
+
+                /// <summary>
+        /// Obtiene el listado de barrios
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("lista-barrios")]
+        [ProducesResponseType(typeof(ResponseBarrio), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task <ActionResult> GetBarriosLista()
+        {
+            try
+            {
+                var resultado = await _service.GetBarrios();
+                var respuesta = Mapper.Map<IEnumerable<ResponseBarrio>>(resultado);
+                return Ok(respuesta);
+            }
+            catch (System.Exception e)
+            {
+                 _Logger.LogError(e, "Ocurrió un error al momento de consultar los datos");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.validacion_negocio,
+                    ErrorDescripcion = "Ocurrió un error al momento de consultar los datos"
+                });
+            }
+        }
+
+        /// <summary>
+        /// Inserta nuevas ciudades
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>                            
+        [HttpPost("barrios")]
+        [ProducesResponseType(typeof(RequestBarrio), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> InsertBarrio(RequestBarrio parametros)
+        {
+            try
+            {
+                var request = Mapper.Map<Barrio>(parametros);
+                var resultado = await _service.InsertatBarrio(request);
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al insertar los registros de barrio");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al insertar los registros del barrio"
+                });
+            }
+
         }
     }
 }
