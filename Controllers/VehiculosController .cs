@@ -287,6 +287,128 @@ namespace ApiComercial.Controllers
             }
         }
 
+        /// <summary>
+        /// Obtener todas las ventas con sus detalles.
+        /// </summary>
+        /// <returns>Una lista de ventas con sus detalles.</returns>
+        [HttpGet("ventas")]
+        [ProducesResponseType(typeof(IEnumerable<ResponseVenta>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetVentas()
+        {
+            try
+            {
+                var ventas = await _service.GetVentas();
+                if (ventas == null || !ventas.Any())
+                    return NoContent();
 
+                var respuesta = _mapper.Map<IEnumerable<ResponseVenta>>(ventas);
+                return Ok(respuesta);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Ocurrió un error al consultar las ventas.");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al consultar las ventas."
+                });
+            }
+        }
+        /// <summary>
+        /// ENdpoint que inserta la cabecera de la venta realizada
+        /// </summary>
+        /// <param name="ventaRequest"></param>
+        /// <returns></returns>
+        [HttpPost("ventas")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> InsertVenta([FromBody] InsertarVentaRequest ventaRequest)
+        {
+            try
+            {
+                var venta = _mapper.Map<Venta>(ventaRequest);
+    
+                var resultado = await _service.InsertVenta(venta);
+
+                return CreatedAtAction(nameof(GetVentas), new { id = resultado.VentaId }, resultado);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Ocurrió un error al insertar la venta.");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al insertar la venta: " + e.Message
+                });
+            }
+        }
+
+        /// <summary>
+        /// Endpoint que inserta el detalle de la venta realizada
+        /// </summary>
+        /// <param name="ventaDetalleRequest"></param>
+        /// <returns></returns>
+        [HttpPost("detalleVenta")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> InsertarDetalleVentas([FromBody] DetalleVentaRequest ventaDetalleRequest)
+        {
+            try
+            {
+                var detalle = _mapper.Map<DetalleVenta>(ventaDetalleRequest);
+    
+                var resultado = await _service.InsertarDetalleVenta(detalle);
+
+                return Ok(resultado);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Ocurrió un error al insertar el detalle la venta.");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al insertar el detalle la venta: " + e.Message
+                });
+            }
+        }
+
+        /// <summary>
+        /// Endpoint que inserta las cuotas generadas para una venta
+        /// </summary>
+        /// <param name="cuotasRequest"></param>
+        /// <returns></returns>
+        [HttpPost("cuotas")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> InsertarCuotas([FromBody] InsertarCuotasRequest cuotasRequest)
+        {
+            try
+            {
+                var cuota = _mapper.Map<Cuota>(cuotasRequest);
+    
+                var resultado = await _service.InsertarCUota(cuota);
+
+                return CreatedAtAction(nameof(GetVentas), new { id = resultado.VentaId }, resultado);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Ocurrió un error al insertar la venta.");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al insertar la venta: " + e.Message
+                });
+            }
+        }
     }
 }

@@ -1,9 +1,18 @@
 public class InsertarVehiculoRequest
 {
-    public string IdChasis { get; set; } = string.Empty;
+    /// <summary>
+    /// Numero de chasis del auto
+    /// </summary>
+    public string? IdChasis { get; set; }
+    /// <summary>
+    /// Codigo de la marca
+    /// </summary>
     public int IdMarca { get; set; }
     public int IdModelo { get; set; }
-    public string TipoCar { get; set; } = string.Empty;
-    public int AnoFabricacion { get; set; } = 0;
-    public string Color { get; set; } = string.Empty;
+    public string TipoCar { get; set; }
+    public int AnoFabricacion { get; set; }
+    public string? Color { get; set; }
+    public string? Usado { get; set; }
+    public string? Chapa { get; set; }
+    public string Estado { get; set; }
 }

@@ -38,6 +38,15 @@ namespace ApiComercial.Infraestructure.Data
         /// </summary>
         public DbSet<Estados> Estados { get; set; }
 
+        public DbSet<Venta> Ventas { get; set; }
+        /// <summary>
+        /// Representa a la tabla detalle_ventas
+        /// Contiene la informacion detallada de cada detalle de la venta
+        /// </summary>
+        public DbSet<DetalleVenta> DetalleVenta { get; set; }
+
+        public DbSet<Cuota> Cuota {get; set;}
+
         /// <summary>
         /// Callback que se invoca cuando EF Core está configurando el modelo de datos antes de crear la base de datos. 
         /// </summary>
@@ -45,6 +54,42 @@ namespace ApiComercial.Infraestructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<DetalleVenta> (entity =>
+            {
+                entity.ToTable("detalle_venta");
+                entity.HasKey(v => v.DetalleVentaId);
+                entity.Property(v => v.DetalleVentaId).HasColumnName("DetalleVentaId");
+                entity.Property(v => v.VentaId).HasColumnName("VentaId");
+                entity.Property(v => v.IdChasis).HasColumnName("id_chasis");
+                entity.Property(v => v.Cantidad).HasColumnName("Cantidad");
+                entity.Property(v => v.PrecioUnitario).HasColumnName("PrecioUnitario");
+                entity.Property(v => v.Total).HasColumnName("Total");
+            });
+
+            modelBuilder.Entity<Cuota>(entity =>
+            {
+                entity.ToTable("cuotas");
+                entity.HasKey(v => v.CuotaId);
+                entity.Property(v => v.CuotaId).HasColumnName("CuotaId");
+                entity.Property(v => v.VentaId).HasColumnName("VentaId");
+                entity.Property(v => v.MontoCuota).HasColumnName("MontoCuota");
+                entity.Property(v => v.FechaVencimiento).HasColumnName("FechaVencimiento");
+                entity.Property(v => v.Estado).HasColumnName("Estado");
+            });
+
+            modelBuilder.Entity<Venta>(entity =>
+                {
+                    entity.ToTable("ventas");
+                    entity.HasKey(v => v.VentaId);
+                    entity.Property(v => v.VentaId).HasColumnName("VentaId");
+                    entity.Property(v => v.ClienteId).HasColumnName("ClienteId");
+                    entity.Property(v => v.FechaVenta).HasColumnName("FechaVenta");
+                    entity.Property(v => v.PrecioTotal).HasColumnName("PrecioTotal");
+                    entity.Property(v => v.InteresAnual).HasColumnName("InteresAnual");
+                    entity.Property(v => v.CantidadCuotas).HasColumnName("CantidadCuotas");
+                });
+
 
             modelBuilder.Entity<Barrio>(entity =>
             {
@@ -109,7 +154,6 @@ namespace ApiComercial.Infraestructure.Data
             {
                 entity.ToTable("clientes", "ventas");
                 entity.HasKey(e => new { e.ClienteId });
-                entity.Property(e => e.ClienteId);
                 entity.Property(e => e.ClienteId).HasColumnName("ClienteId");
                 entity.Property(e => e.ClienteCedula).HasColumnName("ClienteCedula");
                 entity.Property(e => e.ClienteNombre).HasColumnName("ClienteNombre");

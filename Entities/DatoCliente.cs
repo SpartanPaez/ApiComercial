@@ -1,7 +1,7 @@
 using ApiComercial.Entities;
 namespace ApiComercial.Entities;
 
-public class                                                                                                                                                            Cliente
+public class Cliente
 {
         /// <summary>
         /// Codigo 
@@ -62,4 +62,7 @@ public class                                                                    
         /// </summary>
         /// <value></value>
         public string? ClienteEstado { get; set; }
+
+        public ICollection<Venta> Ventas { get; set; } // Propiedad de navegación inversa
+
 }

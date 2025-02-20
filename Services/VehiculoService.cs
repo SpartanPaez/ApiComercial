@@ -74,5 +74,30 @@ namespace ApiComercial.Services
         public async Task<int> GetTotalVehiculos()
         => await _vehiculoRepository.GetTotalVehiculos();
 
+        public async Task<IEnumerable<Venta>> GetVentas()
+        => await _vehiculoRepository.GetVentas();
+
+        /// <summary>
+        /// Inserta la venta como tal
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        public async Task<Venta> InsertVenta(Venta parametros)
+        => await _vehiculoRepository.InsertVenta(parametros);
+
+        /// <summary>
+        /// Inserta cuotas de la venta
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        public async Task<Cuota> InsertarCUota(Cuota parametros)
+        => await _vehiculoRepository.InsertarCUota(parametros);
+        /// <summary>
+        /// Insertar detalle de la venta
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        public async Task<DetalleVenta> InsertarDetalleVenta(DetalleVenta parametros)
+        => await _vehiculoRepository.InsertarDetalleVenta(parametros);
     }
 }

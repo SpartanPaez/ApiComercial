@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using ApiComercial.Entities;
 
 namespace ApiComercial.Interfaces
@@ -67,7 +68,30 @@ namespace ApiComercial.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<int> GetTotalVehiculos();
+        /// <summary>
+        /// Obtiene una lista de todas las ventas con sus detalles.
+        /// </summary>
+        /// <returns>Una lista de ventas con detalles.</returns>
+        Task<IEnumerable<Venta>> GetVentas();
 
+        /// <summary>
+        /// Inserta venta
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        Task<Venta> InsertVenta(Venta parametros);
+        /// <summary>
+        /// Tarea de la interfaz para la insercion de cuotas
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        Task<Cuota> InsertarCUota(Cuota parametros);
+        /// <summary>
+        /// Insertar el detalle de la venta
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        Task<DetalleVenta> InsertarDetalleVenta(DetalleVenta parametros);
 
     }
 }

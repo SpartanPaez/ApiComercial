@@ -50,8 +50,9 @@ namespace ApiComercial.Depedencies
             CreateMap<Barrio, ResponseBarrio>().ReverseMap();
             CreateMap<Barrio, RequestBarrio>().ReverseMap()
                 .ForMember(dest => dest.ciudadDescripcion, opt => opt.Ignore());
-
-
+            CreateMap<Venta, InsertarVentaRequest>().ReverseMap();
+            CreateMap<Cuota, InsertarCuotasRequest>().ReverseMap();
+            CreateMap<DetalleVenta, DetalleVentaRequest>().ReverseMap();
         }
     }
 }

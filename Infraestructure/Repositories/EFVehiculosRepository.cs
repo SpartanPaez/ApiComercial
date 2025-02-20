@@ -9,6 +9,9 @@ using ApiComercial.Models;
 
 namespace ApiComercial.Infraestructure.Repositories
 {
+    /// <summary>
+    /// Esta clase implementa la interfaz IVehiculoRepository para interactuar con la base de datos usando Entity Framework (EF Core).
+    /// </summary>
     public class EFVehiculosRepository : IVehiculoRepository
     {
         private readonly MysqlContext _my;
@@ -28,7 +31,7 @@ namespace ApiComercial.Infraestructure.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Vehiculo>> GetVehiculos()
         {
-                        var vehiculos = await (from v in _my.Vehiculos
+            var vehiculos = await (from v in _my.Vehiculos
                                    join m in _my.Marcas on v.IdMarca equals m.IdMarca
                                    join mo in _my.Modelos on v.IdModelo equals mo.IdModelo
                                    select new Vehiculo
@@ -60,10 +63,12 @@ namespace ApiComercial.Infraestructure.Repositories
                 IdModelo = parametros.IdModelo,
                 TipoCar = parametros.TipoCar,
                 AnoFabricacion = parametros.AnoFabricacion,
-                Color = parametros.Color
+                Color = parametros.Color,
+                Usado = parametros.Usado,
+                Chapa = parametros.Chapa,
+                Estado = parametros.Estado
             };
 
-            // Insertar el vehículo
             await _my.Vehiculos.AddAsync(nuevoVehiculo);
             await _my.SaveChangesAsync();
 
@@ -132,12 +137,58 @@ namespace ApiComercial.Infraestructure.Repositories
                 .Where(v => v.Estado.ToUpper().Trim() == estado.ToUpper().Trim())
                 .CountAsync();
         }
-
+        /// <summary>
+        /// Obtiene total de vehiculos no vendidos
+        /// </summary>
+        /// <returns></returns>
         public async Task<int> GetTotalVehiculos()
         {
             return await _my.Vehiculos.AsNoTracking()
            .Where(v => v.Estado.Trim().ToUpper() != "VENDIDO")
            .CountAsync();
+        }
+
+        public async Task<IEnumerable<Venta>> GetVentas()
+        {
+            return await _my.Ventas
+            .ToListAsync();
+        }
+       /// <summary>
+       /// Inserta ventas
+       /// </summary>
+       /// <param name="parametros"></param>
+       /// <returns></returns>
+       /// <exception cref="Exception"></exception>
+        public async Task<Venta> InsertVenta(Venta parametros)
+        {
+                _my.Ventas.Add(parametros);
+                await _my.SaveChangesAsync();
+                return parametros;
+            
+        }
+        /// <summary>
+        /// Inserta cuotas
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<Cuota> InsertarCUota(Cuota parametros)
+        {
+            _my.Cuota.Add(parametros);
+            await _my.SaveChangesAsync();
+            return parametros;
+        }
+
+        /// <summary>
+        /// Guarda un detalle de venta en la base de datos.
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        public async Task<DetalleVenta> InsertarDetalleVenta(DetalleVenta parametros)
+        {
+            _my.DetalleVenta.Add(parametros);
+            await _my.SaveChangesAsync();
+            return parametros;
         }
     }
 }

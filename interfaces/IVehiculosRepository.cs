@@ -1,11 +1,11 @@
 using ApiComercial.Entities;
-using ApiComercial.Models;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace ApiComercial.Infraestructure.Interfaces // Asegúrate de que está en este espacio de nombres
+
+namespace ApiComercial.Infraestructure.Interfaces
 {
+    /// <summary>
+    /// Esta interfaz define un contrato para el repositorio de vehículos en la capa de infraestructura 
+    /// </summary>
     public interface IVehiculoRepository
     {
         /// <summary>
@@ -13,6 +13,11 @@ namespace ApiComercial.Infraestructure.Interfaces // Asegúrate de que está en 
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<Vehiculo>> GetVehiculos();
+        /// <summary>
+        /// Obtiene un vehículo específico a partir de su ID de chasis.
+        /// </summary>
+        /// <param name="idChasis"></param>
+        /// <returns></returns>
         Task<Vehiculo> GetVehiculoPorId(string idChasis);
         Task<Vehiculo> InsertVehiculo(Vehiculo parametros);
         Task<Vehiculo> UpdateVehiculo(Vehiculo parametros);
@@ -42,5 +47,30 @@ namespace ApiComercial.Infraestructure.Interfaces // Asegúrate de que está en 
         /// </summary>
         /// <returns></returns>
         Task<int> GetTotalVehiculos();
+
+        /// <summary>
+        /// Obtiene una lista de todas las ventas con sus detalles.
+        /// </summary>
+        /// <returns>Una lista de ventas con detalles.</returns>
+        Task<IEnumerable<Venta>> GetVentas();
+
+        /// <summary>
+        /// Inserta una operacion de venta
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        Task<Venta> InsertVenta(Venta parametros);
+        /// <summary>
+        /// Tarea de la interfaz para la insercion de cuotas
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        Task<Cuota> InsertarCUota(Cuota parametros);
+        /// <summary>
+        /// Inserta el detalle de la venta
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        Task<DetalleVenta> InsertarDetalleVenta(DetalleVenta parametros);
     }
 }
