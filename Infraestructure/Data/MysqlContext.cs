@@ -6,12 +6,23 @@ using ApiComercial.Entities;
 
 namespace ApiComercial.Infraestructure.Data
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class MysqlContext : DbContext
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
         public MysqlContext(DbContextOptions<MysqlContext> options) : base(options)
         {
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -20,32 +31,75 @@ namespace ApiComercial.Infraestructure.Data
                 //optionsBuilder.UseMySQL(_mysqlconnection);
             }
         }
+        /// <summary>
+        /// Representa la tabla de clientes
+        /// </summary>
         public DbSet<Cliente> Clientes { get; set; }
+        /// <summary>
+        /// Representa la tabla de ciudaes
+        /// </summary>
         public DbSet<Ciudad> Ciudades { get; set; }
+        /// <summary>
+        /// Representa la tabla de departamentos del pais
+        /// </summary>
         public DbSet<Departamento> Departamentos { get; set; }
+        /// <summary>
+        /// Representa la tabla de paises
+        /// </summary>
         public DbSet<Pais> Paises { get; set; }
+        /// <summary>
+        /// Representa la tabla de usuarios
+        /// </summary>
         public DbSet<Usuario> Usuarios { get; set; }
+        /// <summary>
+        /// Representa la tabla de productos
+        /// </summary>
         public DbSet<Producto> Productos { get; set; }
+        /// <summary>
+        /// Representa la tabla de depositos
+        /// </summary>
         public DbSet<Deposito> Depositos { get; set; }
+        /// <summary>
+        /// Representa la tabla de proveedores
+        /// </summary>
         public DbSet<Proveedor> proveedores { get; set; }
+        /// <summary>
+        /// Representa la tabla de catagorias de vehiculos
+        /// </summary>
         public DbSet<Categoria> categorias { get; set; }
+        /// <summary>
+        /// Representa la tabla de marcas de vehiculos
+        /// </summary>
         public DbSet<MarcaAuto> Marcas { get; set; }  // Cambiado de MarcasAutos a Marcas
+        /// <summary>
+        /// Representa la tabla de modelos de vehiculos
+        /// </summary>
         public DbSet<ModeloAuto> Modelos { get; set; }  // Cambiado de ModelosAutos a Modelos
+        /// <summary>
+        /// Representa la tabla de vehiculos
+        /// </summary>
         public DbSet<Vehiculo> Vehiculos { get; set; }
+        /// <summary>
+        /// Representa la tabla de barrios
+        /// </summary>
         public DbSet<Barrio> Barrios { get; set; }
         /// <summary>
         /// Dbset para estados de los autos
         /// </summary>
         public DbSet<Estados> Estados { get; set; }
-
+        /// <summary>
+        /// Representa la tabla de ventas
+        /// </summary>
         public DbSet<Venta> Ventas { get; set; }
         /// <summary>
         /// Representa a la tabla detalle_ventas
         /// Contiene la informacion detallada de cada detalle de la venta
         /// </summary>
         public DbSet<DetalleVenta> DetalleVenta { get; set; }
-
-        public DbSet<Cuota> Cuota {get; set;}
+        /// <summary>
+        /// Representa la tabla de cuotas de ventas
+        /// </summary>
+        public DbSet<Cuota> Cuota { get; set; }
 
         /// <summary>
         /// Callback que se invoca cuando EF Core está configurando el modelo de datos antes de crear la base de datos. 
@@ -55,7 +109,7 @@ namespace ApiComercial.Infraestructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<DetalleVenta> (entity =>
+            modelBuilder.Entity<DetalleVenta>(entity =>
             {
                 entity.ToTable("detalle_venta");
                 entity.HasKey(v => v.DetalleVentaId);
