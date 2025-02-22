@@ -100,7 +100,6 @@ namespace ApiComercial.Infraestructure.Data
         /// Representa la tabla de cuotas de ventas
         /// </summary>
         public DbSet<Cuota> Cuota { get; set; }
-
         /// <summary>
         /// Callback que se invoca cuando EF Core está configurando el modelo de datos antes de crear la base de datos. 
         /// </summary>
