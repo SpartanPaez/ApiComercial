@@ -46,13 +46,18 @@ namespace ApiComercial.Infraestructure.Repositories
                                        Color = v.Color,
                                        Usado = v.Usado,
                                        Chapa = v.Chapa,
-                                       Estado = v.Estado
+                                       Estado = v.Estado,
+                                       Precio = v.Precio
                                    }).ToListAsync();
             return vehiculos;
         }
 
 
-
+        /// <summary>
+        /// Repositorio que inserta vehiculos a la base de datos
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
         public async Task<Vehiculo> InsertVehiculo(Vehiculo parametros)
         {
             // Convertir de InsertarVehiculoRequest a la entidad Vehiculo
@@ -66,7 +71,8 @@ namespace ApiComercial.Infraestructure.Repositories
                 Color = parametros.Color,
                 Usado = parametros.Usado,
                 Chapa = parametros.Chapa,
-                Estado = parametros.Estado
+                Estado = parametros.Estado,
+                Precio = parametros.Precio
             };
 
             await _my.Vehiculos.AddAsync(nuevoVehiculo);
@@ -153,18 +159,18 @@ namespace ApiComercial.Infraestructure.Repositories
             return await _my.Ventas
             .ToListAsync();
         }
-       /// <summary>
-       /// Inserta ventas
-       /// </summary>
-       /// <param name="parametros"></param>
-       /// <returns></returns>
-       /// <exception cref="Exception"></exception>
+        /// <summary>
+        /// Inserta ventas
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<Venta> InsertVenta(Venta parametros)
         {
-                _my.Ventas.Add(parametros);
-                await _my.SaveChangesAsync();
-                return parametros;
-            
+            _my.Ventas.Add(parametros);
+            await _my.SaveChangesAsync();
+            return parametros;
+
         }
         /// <summary>
         /// Inserta cuotas

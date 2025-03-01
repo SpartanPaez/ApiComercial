@@ -14,5 +14,12 @@ public class InsertarVehiculoRequest
     public string? Color { get; set; }
     public string? Usado { get; set; }
     public string? Chapa { get; set; }
-    public string Estado { get; set; }
+    /// <summary>
+    /// INidica el estado del vehiculo, si es usado o no en PY
+    /// </summary>
+    public string? Estado { get; set; }
+    /// <summary>
+    /// INidica el precio del vehiculo
+    /// </summary>
+    public string? Precio { get; set; }
 }

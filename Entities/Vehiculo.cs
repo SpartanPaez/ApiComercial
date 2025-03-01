@@ -12,4 +12,5 @@ public class Vehiculo
     public string? Usado { get; set; }
     public string? Chapa { get; set; }
     public string Estado { get; set; }
+    public string Precio { get; set; }
 }
