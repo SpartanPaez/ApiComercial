@@ -6,9 +6,9 @@ namespace ApiComercial.Models
 {
     public class RequestPais
     {
-        /// Descripción del país
-        /// </summary>
-        /// <value></value>
+       /// <summary>
+       /// Descripcion del pais
+       /// </summary>
         public string? PaisDescripcion { get; set; }
         /// <summary>
         /// Nacionalidad del páis

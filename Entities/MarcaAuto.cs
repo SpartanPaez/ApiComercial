@@ -12,7 +12,7 @@ namespace ApiComercial.Entities
         /// <summary>
         /// Descripción de la marca de autos
         /// </summary>
-        public string DescripcionMarca { get; set; }
+        public string? DescripcionMarca { get; set; }
 
 
     }

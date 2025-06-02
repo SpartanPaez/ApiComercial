@@ -9,8 +9,8 @@ namespace ApiComercial.Entities;
         /// </summary>
         public int? Id { get; set; }
 
-        /// <summary>
-        /// Descripción del estado
-        /// </summary>
-        public string Descripcion { get; set; } = string.Empty;
+    /// <summary>
+    /// Descripción del estado
+    /// </summary>
+    public string? Descripcion { get; set; }
     }

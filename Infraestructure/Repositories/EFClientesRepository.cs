@@ -1,7 +1,6 @@
-using ApiComercial.interfaces;
+
 using ApiComercial.Entities;
 using ApiComercial.Infraestructure.Data;
-using ApiComercial.Infraestructure.Repositories;
 using ApiComercial.Infraestructure.interfaces;
 using Microsoft.EntityFrameworkCore;
 

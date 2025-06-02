@@ -5,8 +5,8 @@ public class ResponseVenta
     public DateTime Fecha { get; set; }
     public decimal Total { get; set; }
     public int ClienteId { get; set; } // Identificador del cliente
-    public string ClienteNombre { get; set; } // Opcional: Nombre del cliente
-    public List<ResponseDetalleVenta> Detalles { get; set; }
+    public string? ClienteNombre { get; set; } // Opcional: Nombre del cliente
+    public List<ResponseDetalleVenta?> Detalles { get; set; }
 }
 
 public class ResponseDetalleVenta

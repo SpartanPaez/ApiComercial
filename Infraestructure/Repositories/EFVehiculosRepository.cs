@@ -153,7 +153,10 @@ namespace ApiComercial.Infraestructure.Repositories
            .Where(v => v.Estado.Trim().ToUpper() != "VENDIDO")
            .CountAsync();
         }
-
+        /// <summary>
+        /// Task para obtener un listado de ventas
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<Venta>> GetVentas()
         {
             return await _my.Ventas

@@ -86,7 +86,7 @@ namespace ApiComercial.Controllers
             try
             {
                 var resquet = Mapper.Map<Producto>(parametros);
-                bool existe = await _service.ExisteProducto(parametros.ProductoId, parametros.ProductoLote);
+                bool existe = await _service.ExisteProducto(parametros.ProductoId, parametros.ProductoLote!);
                 if (existe)
                 {
                     var resultado = await _service.UpdateProducto(resquet);
@@ -95,7 +95,7 @@ namespace ApiComercial.Controllers
                 else
                 {
                    var resultado = await _service.InsertProducto(resquet);
-                   return Created("", _service.GetProductoPorId(parametros.ProductoLote));
+                   return Created("", _service.GetProductoPorId(parametros.ProductoLote!));
                 } 
             }
             catch (System.Exception e)

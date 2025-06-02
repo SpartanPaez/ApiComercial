@@ -56,7 +56,6 @@ namespace ApiComercial.Controllers
         /// <summary>
         /// Endpoint que consulta las ciudades en base al id del departamento
         /// </summary>
-        /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet("ciudades")]
         [ProducesResponseType(typeof(CiudadResponse), StatusCodes.Status200OK)]
@@ -611,6 +610,6 @@ namespace ApiComercial.Controllers
 
 public class UserLoginModel
 {
-    public string UserName { get; set; }
-    public string Password { get; set; }
+    public string? UserName { get; set; }
+    public string? Password { get; set; }
 }
