@@ -11,4 +11,5 @@ public interface IVentasRepository
     /// </summary>
     /// <returns></returns>
     Task<IEnumerable<CabeceraCuotaResponse>> ObtenerCabeceraCuotas();
+    Task<IEnumerable<DetalleCuotaResponse>> ObtenerDetalleCuotas(int idVenta);
 }

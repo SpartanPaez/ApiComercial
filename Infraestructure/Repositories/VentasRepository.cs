@@ -28,7 +28,7 @@ public class VentasRepository : IVentasRepository
         using var scope = _serviceScopeFactory.CreateAsyncScope();
         var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
 
-        var cabecera = await (from ventas in ctx.Ventas.AsNoTracking()
+        return await (from ventas in ctx.Ventas.AsNoTracking()
                               join detalleventas in ctx.DetalleVenta.AsNoTracking()
                               on ventas.VentaId equals detalleventas.VentaId
                               join clientes in ctx.Clientes.AsNoTracking()
@@ -52,7 +52,20 @@ public class VentasRepository : IVentasRepository
                                   FechaVenta = ventas.FechaVenta
                               })
                               .ToListAsync();
+    }
 
-        return cabecera;
+    public async Task<IEnumerable<DetalleCuotaResponse>> ObtenerDetalleCuotas(int idVenta)
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+
+        return await (from cuotas in ctx.Cuota.AsNoTracking()
+                      where cuotas.VentaId == idVenta
+                      select new DetalleCuotaResponse
+                      {
+                          NumeroCuota = cuotas.NumeroCuota,
+                          MontoCuota = cuotas.MontoCuota,
+                          FechaVencimiento = cuotas.FechaVencimiento
+                      }).ToListAsync();
     }
 }
