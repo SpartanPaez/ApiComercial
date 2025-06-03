@@ -40,6 +40,7 @@ public class VentasRepository : IVentasRepository
                       where ventas.CantidadCuotas > 0
                       select new CabeceraCuotaResponse
                       {
+                          IdVenta = ventas.VentaId,
                           CedulaCliente = clientes.ClienteCedula,
                           NombreCliente = clientes.ClienteNombre,
                           IdChasis = detalleventas.IdChasis,

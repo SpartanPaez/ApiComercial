@@ -47,4 +47,29 @@ public class VentasController : BaseApiController
             });
         }
     }
+
+    [HttpGet("{idVenta}/DetalleCuota")]
+    [ProducesResponseType(typeof(DetalleCuotaResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> DetalleCuota(int idVenta)
+    {
+        try
+        {
+            var resultado = await _service.ObtenerDetalleCuotas(idVenta);
+            var respuesta = Mapper.Map<IEnumerable<DetalleCuotaResponse>>(resultado);
+            return Ok(respuesta);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al consultar los datos de la cabecera de las cuotas");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos - cuotas cabecera"
+            });
+        }
+    }
 }

@@ -2,6 +2,7 @@ namespace ApiComercial.Models.Responses;
 
 public class CabeceraCuotaResponse
 {
+    public int IdVenta { get; set; }
     public string? CedulaCliente { get; set; }
     public string? NombreCliente { get; set; }
     public string? IdChasis { get; set; }
