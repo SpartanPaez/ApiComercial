@@ -1,7 +1,9 @@
 using ApiComercial.Infraestructure.Repositories;
 using ApiComercial.interfaces;
 using ApiComercial.Interfaces;
+using ApiComercial.Repositories.Interfaces;
 using ApiComercial.Services;
+using ApiComercial.Services.Interfaces;
 
 namespace ApiComercial
 {
@@ -17,6 +19,7 @@ namespace ApiComercial
             // Agregar el servicio y repositorio para Marcas y Modelos
             services.AddTransient<IMarcaModeloService, MarcaModeloService>();
             services.AddTransient<IMarcaModeloRepository, MarcaModeloRepository>();
+            services.AddTransient<IVentaService, VentasService>();
 
             return services;
         }

@@ -1,7 +1,5 @@
-using ApiComercial.Enums;
 using ApiComercial.Entities;
 using ApiComercial.interfaces;
-using System.Threading.Tasks;
 using ApiComercial.Infraestructure.interfaces;
 
 namespace ApiComercial.Services

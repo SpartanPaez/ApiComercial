@@ -1,9 +1,10 @@
 using ApiComercial.Infraestructure.Data;
 using ApiComercial.Infraestructure.interfaces;
 using ApiComercial.Infraestructure.Interfaces;
-using ApiComercial.interfaces;
 using ApiComercial.Interfaces;
+using ApiComercial.Repositories.Interfaces;
 using ApiComercial.Services;
+using ApiComercial.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -32,6 +33,8 @@ namespace ApiComercial.Infraestructure.Repositories
             services.AddTransient<IVehiculoRepository, EFVehiculosRepository>();
             services.AddScoped<IMarcaModeloRepository, MarcaModeloRepository>();
             services.AddScoped<IMarcaModeloService, MarcaModeloService>();
+            services.AddTransient<IVentasRepository, VentasRepository>();
+
                                                                     
             return services;
         }
