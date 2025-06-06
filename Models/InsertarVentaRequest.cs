@@ -27,4 +27,5 @@ public class InsertarVentaRequest
     /// Cantidad de cuotas generadas para la venta
     /// </summary>
     public int CantidadCuotas { get; set; }
+    public decimal PrecioTotalCuotas { get; set; }
 }

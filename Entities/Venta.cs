@@ -29,6 +29,7 @@ namespace ApiComercial.Entities
         /// Cantidad de cuotas de la venta
         /// </summary>
         public int CantidadCuotas { get; set; }
+        public decimal PrecioTotalCuotas { get; set; }
 
     }
 

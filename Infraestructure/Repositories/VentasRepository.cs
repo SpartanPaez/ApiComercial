@@ -1,3 +1,4 @@
+using ApiComercial.Entities;
 using ApiComercial.Infraestructure.Data;
 using ApiComercial.Models.Responses;
 using ApiComercial.Repositories.Interfaces;
@@ -49,7 +50,7 @@ public class VentasRepository : IVentasRepository
                           Precio = autos.Precio,
                           Interes = ventas.InteresAnual,
                           CantidadCuotas = ventas.CantidadCuotas,
-                          PrecioTotal = ventas.PrecioTotal,
+                          PrecioTotal = ventas.PrecioTotalCuotas,
                           FechaVenta = ventas.FechaVenta
                       })
                       .ToListAsync();
@@ -66,8 +67,36 @@ public class VentasRepository : IVentasRepository
                       {
                           NumeroCuota = cuotas.NumeroCuota,
                           MontoCuota = cuotas.MontoCuota,
-                          FechaVencimiento = cuotas.FechaVencimiento
+                          FechaVencimiento = cuotas.FechaVencimiento,
+                          Estado = cuotas.Estado
                       })
                       .ToListAsync();
+    }
+
+    public async Task<bool> PagarCuota(Cuota cuota)
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+
+        cuota.Estado = 0;
+        cuota.FechaPago = DateTime.Now;
+        ctx.Cuota.Update(cuota);
+        var result = await ctx.SaveChangesAsync();
+
+        return result > 0;
+
+    }
+
+    public async Task<int?> VerificaEstadoCuota(int idCuota, int idVenta)
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+
+        return await (from cuotas in ctx.Cuota
+                      where cuotas.CuotaId == idCuota
+                      && cuotas.VentaId == idVenta
+                      && cuotas.Estado == 1
+                      select (int?)cuotas.Estado)
+                      .FirstOrDefaultAsync();
     }
 }

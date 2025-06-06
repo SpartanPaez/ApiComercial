@@ -140,7 +140,7 @@ namespace ApiComercial.Infraestructure.Repositories
         public async Task<int> GetCountByEstado(string estado)
         {
             return await _my.Vehiculos.AsNoTracking()
-                .Where(v => v.Estado.ToUpper().Trim() == estado.ToUpper().Trim())
+                .Where(v => v.Estado!.ToUpper().Trim() == estado.ToUpper().Trim())
                 .CountAsync();
         }
         /// <summary>
@@ -150,7 +150,7 @@ namespace ApiComercial.Infraestructure.Repositories
         public async Task<int> GetTotalVehiculos()
         {
             return await _my.Vehiculos.AsNoTracking()
-           .Where(v => v.Estado.Trim().ToUpper() != "VENDIDO")
+           .Where(v => v.Estado!.Trim().ToUpper() != "VENDIDO")
            .CountAsync();
         }
         /// <summary>

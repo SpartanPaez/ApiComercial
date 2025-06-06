@@ -141,6 +141,7 @@ namespace ApiComercial.Infraestructure.Data
                     entity.Property(v => v.PrecioTotal).HasColumnName("PrecioTotal");
                     entity.Property(v => v.InteresAnual).HasColumnName("InteresAnual");
                     entity.Property(v => v.CantidadCuotas).HasColumnName("CantidadCuotas");
+                    entity.Property(v => v.PrecioTotalCuotas).HasColumnName("PrecioTotalCuotas");
                 });
 
 
