@@ -92,7 +92,7 @@ public class VentasRepository : IVentasRepository
         using var scope = _serviceScopeFactory.CreateAsyncScope();
         var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
 
-        return await (from cuotas in ctx.Cuota
+        return await (from cuotas in ctx.Cuota.AsNoTracking()
                       where cuotas.CuotaId == idCuota
                       && cuotas.VentaId == idVenta
                       && cuotas.Estado == 1

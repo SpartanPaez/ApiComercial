@@ -129,6 +129,7 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(v => v.MontoCuota).HasColumnName("MontoCuota");
                 entity.Property(v => v.FechaVencimiento).HasColumnName("FechaVencimiento");
                 entity.Property(v => v.Estado).HasColumnName("Estado");
+                entity.Property(v => v.FechaPago).HasColumnName("FechaPago");
             });
 
             modelBuilder.Entity<Venta>(entity =>
