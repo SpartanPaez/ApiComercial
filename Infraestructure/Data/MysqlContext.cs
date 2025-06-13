@@ -3,6 +3,7 @@ using ApiComercial.Models;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ApiComercial.Entities;
+using ApiComercial.Entitie.Documentaciones;
 
 namespace ApiComercial.Infraestructure.Data
 {
@@ -100,6 +101,7 @@ namespace ApiComercial.Infraestructure.Data
         /// Representa la tabla de cuotas de ventas
         /// </summary>
         public DbSet<Cuota> Cuota { get; set; }
+        public DbSet<EstadoDocumento> EstadosDocumentos { get; set; }
         /// <summary>
         /// Callback que se invoca cuando EF Core está configurando el modelo de datos antes de crear la base de datos. 
         /// </summary>
@@ -347,6 +349,18 @@ namespace ApiComercial.Infraestructure.Data
                 entity.HasKey(e => new { e.Id });
                 entity.Property(e => e.Id).HasColumnName("id_estado");
                 entity.Property(e => e.Descripcion).HasColumnName("descripcion");
+            });
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<EstadoDocumento>(entity =>
+            {
+                entity.ToTable("ESTADOS_DOCUMENTACION", "ventas");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.Property(e => e.Codigo).HasColumnName("CODIGO");
+                entity.Property(e => e.Descripcion).HasColumnName("DESCRIPCION");
+                entity.Property(e => e.Orden).HasColumnName("ORDEN");
+                entity.Property(e => e.EsFinal).HasColumnName("ES_FINAL");
             });
         }
     }
