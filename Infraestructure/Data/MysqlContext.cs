@@ -102,6 +102,8 @@ namespace ApiComercial.Infraestructure.Data
         /// </summary>
         public DbSet<Cuota> Cuota { get; set; }
         public DbSet<EstadoDocumento> EstadosDocumentos { get; set; }
+        public DbSet<DocumentacionOrigen> ArchivosDocumentosOrigen { get; set; }
+        public DbSet<ArchivoDocumentoOrigen> ArchivosDocumentacionOrigen { get; set; }
         /// <summary>
         /// Callback que se invoca cuando EF Core está configurando el modelo de datos antes de crear la base de datos. 
         /// </summary>
@@ -361,6 +363,28 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.Descripcion).HasColumnName("DESCRIPCION");
                 entity.Property(e => e.Orden).HasColumnName("ORDEN");
                 entity.Property(e => e.EsFinal).HasColumnName("ES_FINAL");
+            });
+
+            modelBuilder.Entity<DocumentacionOrigen>(entity =>
+            {
+                entity.ToTable("documentacion_origen");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.IdChasis).HasColumnName("id_chasis");
+                entity.Property(e => e.FechaRecepcion).HasColumnName("fecha_recepcion");
+                entity.Property(e => e.Observacion).HasColumnName("observacion");
+                entity.Property(e => e.RegistradoPor).HasColumnName("registrado_por");
+            });
+
+            modelBuilder.Entity<ArchivoDocumentoOrigen>(entity =>
+            {
+                entity.ToTable("archivo_documento_origen");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.DocumentacionOrigenId).HasColumnName("documentacion_origen_id");
+                entity.Property(e => e.NombreArchivo).HasColumnName("nombreArchivo");
+                entity.Property(e => e.RutaArchivo).HasColumnName("rutaArchivo");
+                entity.Property(e => e.FechaSubida).HasColumnName("fecha_subida");
             });
         }
     }

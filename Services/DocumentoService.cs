@@ -11,6 +11,17 @@ public class DocumentoService : IDocumentoService
     {
         _documentosRepository = documentosRepository;
     }
+
+    public async Task<int> InsertarArchivoDocumentoOrigen(ArchivoDocumentoOrigenRequest archivoDocumentoOrigen)
+    {
+        return await _documentosRepository.InsertarArchivoDocumentoOrigen(archivoDocumentoOrigen);
+    }
+
+    public Task<int> InsertarDocumentacionOrigen(DocumentacionOrigenRequest documentacionOrigen)
+    {
+        return _documentosRepository.InsertarDocumentacionOrigen(documentacionOrigen);
+    }
+
     public async Task<int> InsertarDocumento(EstadoDocumentoRequest documento)
     {
         return await _documentosRepository.InsertarDocumento(documento);
@@ -19,5 +30,10 @@ public class DocumentoService : IDocumentoService
     public Task<IEnumerable<EstadoDocumentoResponse>> ObtenerDocumentos()
     {
         return _documentosRepository.ObtenerDocumentos();
+    }
+
+    public async Task<IEnumerable<DocumentacionOrigenResponse>> ObtenerListadoDocumentacionOrigen()
+    {
+        return await _documentosRepository.ObtenerListadoDocumentacionOrigen();
     }
 }

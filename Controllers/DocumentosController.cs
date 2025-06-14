@@ -23,8 +23,11 @@ public class DocumentosController : BaseApiController
         _service = service;
         _mapper = mapper;
     }
-
-    [HttpGet()]
+    /// <summary>
+    /// Obtiene el listado de los tipos de documentos disponibles en el sistema.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("estado-documentos")]
     [ProducesResponseType(typeof(EstadoDocumentoResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
@@ -48,8 +51,12 @@ public class DocumentosController : BaseApiController
             });
         }
     }
-
-    [HttpPost]
+    /// <summary>
+    /// Inserta un nuevo tipo documento en el sistema.
+    /// </summary>
+    /// <param name="documento"></param>
+    /// <returns></returns>
+    [HttpPost("insertar-estado-documento")]
     [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
@@ -77,6 +84,71 @@ public class DocumentosController : BaseApiController
             {
                 ErrorType = Enums.ErrorType.error_interno_servidor,
                 ErrorDescripcion = "Ocurrió un error en el proceso de inserción del documento"
+            });
+        }
+    }
+    /// <summary>
+    /// Obtiene la lista de la documentación vehicular de origen.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("documentacion-origen")]
+    [ProducesResponseType(typeof(DocumentacionOrigenResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+
+    public async Task<ActionResult> ObtenerListadoDocumentacionOrigen()
+    {
+        try
+        {
+            var resultado = await _service.ObtenerListadoDocumentacionOrigen();
+            var respuesta = _mapper.Map<IEnumerable<DocumentacionOrigenResponse>>(resultado);
+            return Ok(respuesta);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al consultar la documentación de origen");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de consulta de documentación de origen"
+            });
+        }
+    }
+    /// <summary>
+    /// Inserta la documentación de origen del vehículo.
+    /// </summary>
+    /// <param name="documentacionOrigen"></param>
+    /// <returns></returns>
+    [HttpPost("insertar-documentacion-origen")]
+    [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)] 
+    public async Task<ActionResult> InsertarDocumentacionOrigen([FromBody] DocumentacionOrigenRequest documentacionOrigen)
+    {
+        try
+        {
+            if (documentacionOrigen == null)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "La documentación de origen no puede ser nula"
+                });
+            }
+
+            var resultado = await _service.InsertarDocumentacionOrigen(documentacionOrigen);
+            return CreatedAtAction(nameof(ObtenerListadoDocumentacionOrigen), new { id = resultado }, resultado);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al insertar la documentación de origen");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de inserción de la documentación de origen"
             });
         }
     }
