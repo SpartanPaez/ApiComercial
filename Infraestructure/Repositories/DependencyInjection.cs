@@ -34,6 +34,7 @@ namespace ApiComercial.Infraestructure.Repositories
             services.AddScoped<IMarcaModeloRepository, MarcaModeloRepository>();
             services.AddScoped<IMarcaModeloService, MarcaModeloService>();
             services.AddTransient<IVentasRepository, VentasRepository>();
+            services.AddTransient<IDocuementosRepository, DocumentosRepository>();
 
                                                                     
             return services;

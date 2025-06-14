@@ -15,11 +15,13 @@ namespace ApiComercial
             services.AddTransient<IreferencialesService, ReferencialesService>();
             services.AddTransient<IproductosService, ProductoService>();
             services.AddTransient<IVehiculosService, VehiculosService>();
+            services.AddTransient<IDocumentoService, DocumentoService>();
 
             // Agregar el servicio y repositorio para Marcas y Modelos
             services.AddTransient<IMarcaModeloService, MarcaModeloService>();
             services.AddTransient<IMarcaModeloRepository, MarcaModeloRepository>();
             services.AddTransient<IVentaService, VentasService>();
+            services.AddTransient<IVentasRepository, VentasRepository>();
 
             return services;
         }

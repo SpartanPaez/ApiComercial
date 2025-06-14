@@ -354,7 +354,7 @@ namespace ApiComercial.Infraestructure.Data
 
             modelBuilder.Entity<EstadoDocumento>(entity =>
             {
-                entity.ToTable("ESTADOS_DOCUMENTACION", "ventas");
+                entity.ToTable("estados_documentacion");
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).HasColumnName("ID");
                 entity.Property(e => e.Codigo).HasColumnName("CODIGO");
