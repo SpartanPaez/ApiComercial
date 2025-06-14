@@ -24,17 +24,17 @@ public class DocumentosController : BaseApiController
         _mapper = mapper;
     }
 
-    [HttpGet("{idEstado}")]
+    [HttpGet()]
     [ProducesResponseType(typeof(EstadoDocumentoResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> ObtenerDocumentos(int idEstado)
+    public async Task<ActionResult> ObtenerDocumentos()
     {
         try
         {
-            var resultado = await _service.ObtenerDocumentos(idEstado);
+            var resultado = await _service.ObtenerDocumentos();
             var respuesta = _mapper.Map<IEnumerable<EstadoDocumentoResponse>>(resultado);
             return Ok(respuesta);
         }

@@ -16,8 +16,8 @@ public class DocumentoService : IDocumentoService
         return await _documentosRepository.InsertarDocumento(documento);
     }
 
-    public Task<IEnumerable<EstadoDocumentoResponse>> ObtenerDocumentos(int idEstado)
+    public Task<IEnumerable<EstadoDocumentoResponse>> ObtenerDocumentos()
     {
-        return _documentosRepository.ObtenerDocumentos(idEstado);
+        return _documentosRepository.ObtenerDocumentos();
     }
 }

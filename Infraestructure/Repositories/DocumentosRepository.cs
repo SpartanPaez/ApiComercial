@@ -36,13 +36,12 @@ public class DocumentosRepository : IDocuementosRepository
         return nuevoDocumento.Id;
     }
 
-    public async Task<IEnumerable<EstadoDocumentoResponse>> ObtenerDocumentos(int idEstado)
+    public async Task<IEnumerable<EstadoDocumentoResponse>> ObtenerDocumentos()
     {
         using var scope = _serviceScopeFactory.CreateAsyncScope();
         var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
 
         return await ctx.EstadosDocumentos
-            .Where(x => x.Id == idEstado)
             .Select(x => new EstadoDocumentoResponse
             {
                 Id = x.Id,

@@ -5,6 +5,6 @@ namespace ApiComercial.Repositories.Interfaces;
 
 public interface IDocuementosRepository
 {
-    Task<IEnumerable<EstadoDocumentoResponse>> ObtenerDocumentos(int idEstado);
+    Task<IEnumerable<EstadoDocumentoResponse>> ObtenerDocumentos();
     Task<int> InsertarDocumento(EstadoDocumentoRequest documento);
 }
