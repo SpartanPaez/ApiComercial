@@ -125,7 +125,7 @@ public class DocumentosController : BaseApiController
     [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)] 
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> InsertarDocumentacionOrigen([FromBody] DocumentacionOrigenRequest documentacionOrigen)
     {
         try
@@ -152,4 +152,69 @@ public class DocumentosController : BaseApiController
             });
         }
     }
-}     
+
+    [HttpPost("subir-archivo-documentacion-origen-base64")]
+    [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> SubirArchivoBase64([FromBody] ArchivoDocumentoOrigenBase64Request request)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(request.ArchivoBase64))
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.validacion_negocio,
+                    ErrorDescripcion = "El archivo está vacío o no fue enviado en base64."
+                });
+            }
+
+            var rutaRelativa = Path.Combine("uploads", "origen", request.DocumentacionOrigenId.ToString());
+            var rutaFisica = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", rutaRelativa);
+
+            Directory.CreateDirectory(rutaFisica);
+
+            var rutaCompleta = Path.Combine(rutaFisica, request.NombreArchivo);
+
+            byte[] archivoBytes = Convert.FromBase64String(request.ArchivoBase64);
+            await System.IO.File.WriteAllBytesAsync(rutaCompleta, archivoBytes);
+
+            var rutaPublica = Path.Combine("/", rutaRelativa, request.NombreArchivo).Replace("\\", "/");
+
+            var registro = new ArchivoDocumentoOrigenRequest
+            {
+                DocumentacionOrigenId = request.DocumentacionOrigenId,
+                NombreArchivo = request.NombreArchivo,
+                RutaArchivo = rutaPublica
+            };
+
+            var id = await _service.InsertarArchivoDocumentoOrigen(registro);
+
+            return Ok(id);
+        }
+        catch (Exception ex)
+        {
+            _Logger.LogError(ex, "Error al guardar archivo en base64");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error al guardar el archivo"
+            });
+        }
+    }
+
+    [HttpGet("documentos/{documentacionOrigenId}/archivos")]
+    [ProducesResponseType(typeof(List<ArchivoDocumentoOrigenResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ObtenerArchivosPorDocumentacion(int documentacionOrigenId)
+    {
+        var archivos = await _service.ObtenerArchivosPorDocumentacionId(documentacionOrigenId);
+
+        if (archivos == null || !archivos.Any())
+            return NotFound();
+
+        return Ok(archivos);
+    }
+
+}

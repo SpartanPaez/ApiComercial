@@ -382,8 +382,8 @@ namespace ApiComercial.Infraestructure.Data
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.DocumentacionOrigenId).HasColumnName("documentacion_origen_id");
-                entity.Property(e => e.NombreArchivo).HasColumnName("nombreArchivo");
-                entity.Property(e => e.RutaArchivo).HasColumnName("rutaArchivo");
+                entity.Property(e => e.NombreArchivo).HasColumnName("nombre_archivo");
+                entity.Property(e => e.RutaArchivo).HasColumnName("ruta_archivo");
                 entity.Property(e => e.FechaSubida).HasColumnName("fecha_subida");
             });
         }

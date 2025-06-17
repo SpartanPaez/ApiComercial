@@ -27,6 +27,11 @@ public class DocumentoService : IDocumentoService
         return await _documentosRepository.InsertarDocumento(documento);
     }
 
+    public async Task<List<ArchivoDocumentoOrigenResponse>> ObtenerArchivosPorDocumentacionId(int documentacionOrigenId)
+    {
+       return await _documentosRepository.ObtenerArchivosPorDocumentacionId(documentacionOrigenId);
+    }
+
     public Task<IEnumerable<EstadoDocumentoResponse>> ObtenerDocumentos()
     {
         return _documentosRepository.ObtenerDocumentos();

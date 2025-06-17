@@ -20,16 +20,16 @@ namespace ApiComercial.Entities
         /// <summary>
         /// Precio total de las ventas
         /// </summary>
-        public decimal PrecioTotal { get; set; }
+        public decimal? PrecioTotal { get; set; }
         /// <summary>
         /// INteres anual con la que se calculan las cuotas
         /// </summary>
-        public decimal InteresAnual { get; set; }
+        public decimal? InteresAnual { get; set; }
         /// <summary>
         /// Cantidad de cuotas de la venta
         /// </summary>
         public int CantidadCuotas { get; set; }
-        public decimal PrecioTotalCuotas { get; set; }
+        public decimal? PrecioTotalCuotas { get; set; }
 
     }
 

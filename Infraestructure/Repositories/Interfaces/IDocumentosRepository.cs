@@ -10,4 +10,5 @@ public interface IDocuementosRepository
     Task<int> InsertarDocumentacionOrigen(DocumentacionOrigenRequest documentacionOrigen);
     Task<IEnumerable<DocumentacionOrigenResponse>> ObtenerListadoDocumentacionOrigen();
     Task<int> InsertarArchivoDocumentoOrigen(ArchivoDocumentoOrigenRequest archivoDocumentoOrigen);
+     Task<List<ArchivoDocumentoOrigenResponse>> ObtenerArchivosPorDocumentacionId(int documentacionOrigenId);
 }

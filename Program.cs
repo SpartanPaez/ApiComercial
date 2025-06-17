@@ -71,5 +71,5 @@ app.UseCors(); // Asegúrate de colocar esto antes de UseAuthorization
 
 app.UseAuthorization();
 app.MapControllers();
-
+app.UseStaticFiles();
 app.Run();

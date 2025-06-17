@@ -18,14 +18,14 @@ public class InsertarVentaRequest
     /// <summary>
     /// Precio total de la venta
     /// </summary>
-    public decimal PrecioTotal { get; set; }
+    public decimal? PrecioTotal { get; set; }
     /// <summary>
     /// Interes anual de la venta
     /// </summary>
-    public decimal InteresAnual { get; set; }
+    public decimal? InteresAnual { get; set; }
     /// <summary>
     /// Cantidad de cuotas generadas para la venta
     /// </summary>
     public int CantidadCuotas { get; set; }
-    public decimal PrecioTotalCuotas { get; set; }
+    public decimal? PrecioTotalCuotas { get; set; }
 }

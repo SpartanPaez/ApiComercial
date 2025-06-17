@@ -8,7 +8,7 @@ public interface IDocumentoService
     Task<IEnumerable<EstadoDocumentoResponse>> ObtenerDocumentos();
     Task<int> InsertarDocumento(EstadoDocumentoRequest documento);
     Task<int> InsertarDocumentacionOrigen(DocumentacionOrigenRequest documentacionOrigen);
-    Task<IEnumerable<DocumentacionOrigenResponse>> ObtenerListadoDocumentacionOrigen();  
+    Task<IEnumerable<DocumentacionOrigenResponse>> ObtenerListadoDocumentacionOrigen();
     Task<int> InsertarArchivoDocumentoOrigen(ArchivoDocumentoOrigenRequest archivoDocumentoOrigen);
-
+    Task<List<ArchivoDocumentoOrigenResponse>> ObtenerArchivosPorDocumentacionId(int documentacionOrigenId);
 }

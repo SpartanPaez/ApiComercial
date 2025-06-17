@@ -24,11 +24,11 @@ namespace ApiComercial.Entities
         /// <summary>
         /// Precio por unidad
         /// </summary>
-        public decimal PrecioUnitario { get; set; }
+        public decimal? PrecioUnitario { get; set; }
         /// <summary>
         /// Precio total con interes
         /// </summary>
-        public decimal Total { get; set; }
+        public decimal? Total { get; set; }
 
     }
 

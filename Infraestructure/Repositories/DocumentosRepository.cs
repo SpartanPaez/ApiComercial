@@ -75,6 +75,23 @@ public class DocumentosRepository : IDocuementosRepository
         return nuevoDocumento.Id;
     }
 
+    public async Task<List<ArchivoDocumentoOrigenResponse>> ObtenerArchivosPorDocumentacionId(int documentacionOrigenId)
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+        return await ctx.ArchivosDocumentacionOrigen
+            .Where(x => x.DocumentacionOrigenId == documentacionOrigenId)
+            .Select(x => new ArchivoDocumentoOrigenResponse
+            {
+                Id = x.Id,
+                DocumentacionOrigenId = x.DocumentacionOrigenId,
+                NombreArchivo = x.NombreArchivo,
+                RutaArchivo = x.RutaArchivo,
+                FechaSubida = x.FechaSubida
+            })
+            .ToListAsync();
+    }
+
     public async Task<IEnumerable<EstadoDocumentoResponse>> ObtenerDocumentos()
     {
         using var scope = _serviceScopeFactory.CreateAsyncScope();
