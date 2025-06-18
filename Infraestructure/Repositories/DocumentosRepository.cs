@@ -75,6 +75,29 @@ public class DocumentosRepository : IDocuementosRepository
         return nuevoDocumento.Id;
     }
 
+    public async Task<int> InsertarEscribania(EscribaniaRequest escribaniaRequest)
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+
+        var nuevaEscribania = new Escribania
+        {
+            Nombre = escribaniaRequest.Nombre,
+            Titular = escribaniaRequest.Titular,
+            Ruc = escribaniaRequest.Ruc,
+            Telefono = escribaniaRequest.Telefono,
+            Direccion = escribaniaRequest.Direccion,
+            Correo = escribaniaRequest.Correo,
+            Estado = true, // Asumiendo que al insertar una escribanía, su estado es activo
+            FechaRegistro = DateTime.UtcNow
+        };
+
+        ctx.Escribanias.Add(nuevaEscribania);
+        await ctx.SaveChangesAsync();
+
+        return nuevaEscribania.Id;
+    }
+
     public async Task<List<ArchivoDocumentoOrigenResponse>> ObtenerArchivosPorDocumentacionId(int documentacionOrigenId)
     {
         using var scope = _serviceScopeFactory.CreateAsyncScope();
@@ -105,6 +128,27 @@ public class DocumentosRepository : IDocuementosRepository
                 Descripcion = x.Descripcion,
                 Orden = x.Orden,
                 EsFinal = x.EsFinal
+            })
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<EscribaniaResponse>> ObtenerEscribanias()
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+
+        return await ctx.Escribanias
+            .Select(x => new EscribaniaResponse
+            {
+                Id = x.Id,
+                Nombre = x.Nombre,
+                Titular = x.Titular,
+                Ruc = x.Ruc,
+                Telefono = x.Telefono,
+                Direccion = x.Direccion,
+                Correo = x.Correo,
+                Estado = x.Estado,
+                FechaRegistro = x.FechaRegistro
             })
             .ToListAsync();
     }

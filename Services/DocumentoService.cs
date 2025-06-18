@@ -27,6 +27,11 @@ public class DocumentoService : IDocumentoService
         return await _documentosRepository.InsertarDocumento(documento);
     }
 
+    public async Task<int> InsertarEscribania(EscribaniaRequest escribaniaRequest)
+    {
+        return await _documentosRepository.InsertarEscribania(escribaniaRequest);
+    }
+
     public async Task<List<ArchivoDocumentoOrigenResponse>> ObtenerArchivosPorDocumentacionId(int documentacionOrigenId)
     {
        return await _documentosRepository.ObtenerArchivosPorDocumentacionId(documentacionOrigenId);
@@ -35,6 +40,11 @@ public class DocumentoService : IDocumentoService
     public Task<IEnumerable<EstadoDocumentoResponse>> ObtenerDocumentos()
     {
         return _documentosRepository.ObtenerDocumentos();
+    }
+
+    public async Task<IEnumerable<EscribaniaResponse>> ObtenerEscribanias()
+    {
+        return await _documentosRepository.ObtenerEscribanias();
     }
 
     public async Task<IEnumerable<DocumentacionOrigenResponse>> ObtenerListadoDocumentacionOrigen()

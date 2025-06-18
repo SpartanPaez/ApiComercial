@@ -104,6 +104,7 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<EstadoDocumento> EstadosDocumentos { get; set; }
         public DbSet<DocumentacionOrigen> ArchivosDocumentosOrigen { get; set; }
         public DbSet<ArchivoDocumentoOrigen> ArchivosDocumentacionOrigen { get; set; }
+        public DbSet<Escribania> Escribanias { get; set; }
         /// <summary>
         /// Callback que se invoca cuando EF Core está configurando el modelo de datos antes de crear la base de datos. 
         /// </summary>
@@ -385,6 +386,21 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.NombreArchivo).HasColumnName("nombre_archivo");
                 entity.Property(e => e.RutaArchivo).HasColumnName("ruta_archivo");
                 entity.Property(e => e.FechaSubida).HasColumnName("fecha_subida");
+            });
+
+            modelBuilder.Entity<Escribania>(entity =>
+            {
+                entity.ToTable("escribanias");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Nombre).HasColumnName("nombre").HasMaxLength(100).IsRequired();
+                entity.Property(e => e.Titular).HasColumnName("titular").HasMaxLength(100);
+                entity.Property(e => e.Ruc).HasColumnName("ruc").HasMaxLength(15);
+                entity.Property(e => e.Telefono).HasColumnName("telefono").HasMaxLength(20);
+                entity.Property(e => e.Direccion).HasColumnName("direccion").HasMaxLength(150);
+                entity.Property(e => e.Correo).HasColumnName("correo").HasMaxLength(100);
+                entity.Property(e => e.Estado).HasColumnName("estado").HasDefaultValue(true);
+                entity.Property(e => e.FechaRegistro).HasColumnName("fecha_registro").HasDefaultValueSql("CURRENT_TIMESTAMP");
             });
         }
     }

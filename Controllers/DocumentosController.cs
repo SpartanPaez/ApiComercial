@@ -216,5 +216,69 @@ public class DocumentosController : BaseApiController
 
         return Ok(archivos);
     }
+    /// <summary>
+    /// Inserta una nueva escribanía en el sistema.
+    /// </summary>
+    /// <param name="escribaniaRequest"></param>
+    /// <returns></returns>
+    [HttpPost("insertar-escribania")]
+    [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> InsertarEscribania([FromBody] EscribaniaRequest escribaniaRequest)
+    {
+        try
+        {
+            if (escribaniaRequest == null)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "La escribanía no puede ser nula"
+                });
+            }
+
+            var resultado = await _service.InsertarEscribania(escribaniaRequest);
+            return CreatedAtAction(nameof(ObtenerEscribanias), new { id = resultado }, resultado);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al insertar la escribanía");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de inserción de la escribanía"
+            });
+        }
+    }
+    /// <summary>
+    /// Obtiene el listado de escribanías registradas en el sistema.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("escribanias")]
+    [ProducesResponseType(typeof(IEnumerable<EscribaniaResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> ObtenerEscribanias()
+    {
+        try
+        {
+            var resultado = await _service.ObtenerEscribanias();
+            var respuesta = _mapper.Map<IEnumerable<EscribaniaResponse>>(resultado);
+            return Ok(respuesta);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al consultar las escribanías");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de consulta de escribanías"
+            });
+        }
+    }
 
 }
