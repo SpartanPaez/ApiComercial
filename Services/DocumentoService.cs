@@ -17,9 +17,19 @@ public class DocumentoService : IDocumentoService
         return await _documentosRepository.InsertarArchivoDocumentoOrigen(archivoDocumentoOrigen);
     }
 
+    public Task<int> InsertarArchivoDocumentoPostVenta(ArchivoPostVentaRequest archivoPostVentaRequest)
+    {
+        return _documentosRepository.InsertarArchivoDocumentoPostVenta(archivoPostVentaRequest);
+    }
+
     public Task<int> InsertarDocumentacionOrigen(DocumentacionOrigenRequest documentacionOrigen)
     {
         return _documentosRepository.InsertarDocumentacionOrigen(documentacionOrigen);
+    }
+
+    public Task<int> InsertarDocumentacionPostVenta(DocumentacionPostVentaRequest documentacionPostVenta)
+    {
+        return _documentosRepository.InsertarDocumentacionPostVenta(documentacionPostVenta);
     }
 
     public async Task<int> InsertarDocumento(EstadoDocumentoRequest documento)
@@ -35,6 +45,16 @@ public class DocumentoService : IDocumentoService
     public async Task<List<ArchivoDocumentoOrigenResponse>> ObtenerArchivosPorDocumentacionId(int documentacionOrigenId)
     {
        return await _documentosRepository.ObtenerArchivosPorDocumentacionId(documentacionOrigenId);
+    }
+
+    public Task<List<ArchivoPostVentaResponse>> ObtenerArchivosPorDocumentacionPostVentaId(int documentacionPostVentaId)
+    {
+        return _documentosRepository.ObtenerArchivosPorDocumentacionPostVentaId(documentacionPostVentaId);
+    }
+
+    public Task<IEnumerable<DocumentacionPostVentaResponse>> ObtenerDocumentacionPostVenta()
+    {
+        return _documentosRepository.ObtenerDocumentacionPostVenta();
     }
 
     public Task<IEnumerable<EstadoDocumentoResponse>> ObtenerDocumentos()

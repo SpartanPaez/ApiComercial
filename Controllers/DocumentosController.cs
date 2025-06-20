@@ -281,4 +281,82 @@ public class DocumentosController : BaseApiController
         }
     }
 
+    /// <summary>
+    /// Obtiene los archivos asociados a una documentación de post venta.
+    /// </summary>
+    [HttpGet("documentacion-post-venta/{documentacionPostVentaId}/archivos")]
+    [ProducesResponseType(typeof(List<ArchivoPostVentaResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ObtenerArchivosPorDocumentacionPostVenta(int documentacionPostVentaId)
+    {
+        var archivos = await _service.ObtenerArchivosPorDocumentacionPostVentaId(documentacionPostVentaId);
+
+        if (archivos == null || !archivos.Any())
+            return NotFound();
+
+        return Ok(archivos);
+    }
+    /// <summary>
+    /// Obtiene la lista de la documentación de post venta.
+    /// </summary>
+    [HttpGet("documentacion-post-venta")]
+    [ProducesResponseType(typeof(IEnumerable<DocumentacionPostVentaResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> ObtenerDocumentacionPostVenta()
+    {
+        try
+        {
+            var resultado = await _service.ObtenerDocumentacionPostVenta();
+            var respuesta = _mapper.Map<IEnumerable<DocumentacionPostVentaResponse>>(resultado);
+            return Ok(respuesta);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al consultar la documentación de post venta");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de consulta de documentación de post venta"
+            });
+        }
+    }
+    /// <summary>
+    /// Inserta una nueva documentación de post venta.
+    /// </summary>
+    /// <param name="documentacionPostVentaRequest"></param>
+    /// <returns></returns>
+    [HttpPost("insertar-documentacion-post-venta")]
+    [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> InsertarDocumentacionPostVenta([FromBody] DocumentacionPostVentaRequest documentacionPostVentaRequest)
+    {
+        try
+        {
+            if (documentacionPostVentaRequest == null)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "La documentación de post venta no puede ser nula"
+                });
+            }
+
+            var resultado = await _service.InsertarDocumentacionPostVenta(documentacionPostVentaRequest);
+            return CreatedAtAction(nameof(ObtenerDocumentacionPostVenta), new { id = resultado }, resultado);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al insertar la documentación de post venta");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de inserción de la documentación de post venta"
+            });
+        }
+    }
 }

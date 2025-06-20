@@ -7,7 +7,7 @@ namespace ApiComercial.Models
         /// <summary>
         /// Identificador único del chasis del vehículo
         /// </summary>
-        public string IdChasis { get; set; }  // Asegúrate de que este campo sea requerido para insertar el vehículo.
+        public string? IdChasis { get; set; }  // Asegúrate de que este campo sea requerido para insertar el vehículo.
 
         /// <summary>
         /// Identificador de la marca del vehículo

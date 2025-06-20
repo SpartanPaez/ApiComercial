@@ -13,4 +13,8 @@ public interface IDocumentoService
     Task<List<ArchivoDocumentoOrigenResponse>> ObtenerArchivosPorDocumentacionId(int documentacionOrigenId);
     Task<int> InsertarEscribania(EscribaniaRequest escribaniaRequest);
     Task<IEnumerable<EscribaniaResponse>> ObtenerEscribanias();
+    Task<int> InsertarDocumentacionPostVenta(DocumentacionPostVentaRequest documentacionPostVenta);
+    Task<IEnumerable<DocumentacionPostVentaResponse>> ObtenerDocumentacionPostVenta();
+    Task<int> InsertarArchivoDocumentoPostVenta(ArchivoPostVentaRequest archivoPostVentaRequest);
+    Task<List<ArchivoPostVentaResponse>> ObtenerArchivosPorDocumentacionPostVentaId(int documentacionPostVentaId);
 }

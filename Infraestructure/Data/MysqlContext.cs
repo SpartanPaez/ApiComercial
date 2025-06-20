@@ -1,7 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using ApiComercial.Models;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ApiComercial.Entities;
 using ApiComercial.Entitie.Documentaciones;
 
@@ -105,6 +102,9 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<DocumentacionOrigen> ArchivosDocumentosOrigen { get; set; }
         public DbSet<ArchivoDocumentoOrigen> ArchivosDocumentacionOrigen { get; set; }
         public DbSet<Escribania> Escribanias { get; set; }
+        public DbSet<DocumentacionPostVenta> DocumentacionPostVenta { get; set; }
+        public DbSet<ArchivoPostVenta> ArchivosPostVenta { get; set; }
+        
         /// <summary>
         /// Callback que se invoca cuando EF Core está configurando el modelo de datos antes de crear la base de datos. 
         /// </summary>
@@ -402,6 +402,32 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.Estado).HasColumnName("estado").HasDefaultValue(true);
                 entity.Property(e => e.FechaRegistro).HasColumnName("fecha_registro").HasDefaultValueSql("CURRENT_TIMESTAMP");
             });
+
+            modelBuilder.Entity<DocumentacionPostVenta>(entity =>
+            {
+                entity.ToTable("documentacion_postventa");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.IdChasis).HasColumnName("id_chasis").HasMaxLength(50).IsRequired();
+                entity.Property(e => e.IdEscribania).HasColumnName("id_escribania").IsRequired();
+                entity.Property(e => e.Estado).HasColumnName("estado").HasMaxLength(30).IsRequired();
+                entity.Property(e => e.Observacion).HasColumnName("observacion").HasMaxLength(500);
+                entity.Property(e => e.FechaActualizacion).HasColumnName("fecha_actualizacion");
+                entity.Property(e => e.UsuarioActualizacion).HasColumnName("usuario_actualizacion").HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<ArchivoPostVenta>(entity =>
+           {
+               entity.ToTable("archivo_postventa");
+               entity.HasKey(e => e.Id);
+               entity.Property(e => e.Id).HasColumnName("id");
+               entity.Property(e => e.IdDocumentacion).HasColumnName("id_documentacion").IsRequired();
+               entity.Property(e => e.NombreArchivo).HasColumnName("nombre_archivo").HasMaxLength(255).IsRequired();
+               entity.Property(e => e.RutaArchivo).HasColumnName("ruta_archivo").HasMaxLength(1000).IsRequired();
+               entity.Property(e => e.Tipo).HasColumnName("tipo").HasMaxLength(50).IsRequired();
+               entity.Property(e => e.FechaCarga).HasColumnName("fecha_carga");
+               entity.Property(e => e.UsuarioCarga).HasColumnName("usuario_carga").HasMaxLength(100);
+           });
         }
     }
 }

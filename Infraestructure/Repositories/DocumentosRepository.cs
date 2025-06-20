@@ -37,6 +37,24 @@ public class DocumentosRepository : IDocuementosRepository
         return nuevoArchivo.Id;
     }
 
+    public async Task<int> InsertarArchivoDocumentoPostVenta(ArchivoPostVentaRequest archivoPostVentaRequest)
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+
+        var nuevoArchivo = new ArchivoPostVenta
+        {
+            IdDocumentacion = archivoPostVentaRequest.IdDocumentacion,
+            NombreArchivo = archivoPostVentaRequest.NombreArchivo,
+            RutaArchivo = archivoPostVentaRequest.RutaArchivo
+        };
+
+        ctx.ArchivosPostVenta.Add(nuevoArchivo);
+        await ctx.SaveChangesAsync();
+
+        return nuevoArchivo.Id;
+    }
+
     public async Task<int> InsertarDocumentacionOrigen(DocumentacionOrigenRequest documentacionOrigen)
     {
         using var scope = _serviceScopeFactory.CreateAsyncScope();
@@ -51,6 +69,26 @@ public class DocumentosRepository : IDocuementosRepository
         };
 
         ctx.ArchivosDocumentosOrigen.Add(nuevaDocumentacion);
+        await ctx.SaveChangesAsync();
+
+        return nuevaDocumentacion.Id;
+    }
+
+    public async Task<int> InsertarDocumentacionPostVenta(DocumentacionPostVentaRequest documentacionPostVenta)
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+
+        var nuevaDocumentacion = new DocumentacionPostVenta
+        {
+            IdChasis = documentacionPostVenta.IdChasis,
+            IdEscribania = documentacionPostVenta.IdEscribania,
+            Estado = documentacionPostVenta.Estado,
+            Observacion = documentacionPostVenta.Observacion,
+            UsuarioActualizacion = documentacionPostVenta.UsuarioActualizacion
+        };
+
+        ctx.DocumentacionPostVenta.Add(nuevaDocumentacion);
         await ctx.SaveChangesAsync();
 
         return nuevaDocumentacion.Id;
@@ -112,6 +150,43 @@ public class DocumentosRepository : IDocuementosRepository
                 RutaArchivo = x.RutaArchivo,
                 FechaSubida = x.FechaSubida
             })
+            .ToListAsync();
+    }
+
+    public async Task<List<ArchivoPostVentaResponse>> ObtenerArchivosPorDocumentacionPostVentaId(int documentacionPostVentaId)
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+        return await ctx.ArchivosPostVenta
+            .Where(x => x.IdDocumentacion == documentacionPostVentaId)
+            .Select(x => new ArchivoPostVentaResponse
+            {
+                Id = x.Id,
+                IdDocumentacion = x.IdDocumentacion,
+                NombreArchivo = x.NombreArchivo,
+                RutaArchivo = x.RutaArchivo
+            })
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<DocumentacionPostVentaResponse>> ObtenerDocumentacionPostVenta()
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+        return await (from DocumentoPostVenta in ctx.DocumentacionPostVenta.AsNoTracking()
+                      join EstadoDocumento in ctx.EstadosDocumentos.AsNoTracking()
+                          on DocumentoPostVenta.Estado equals EstadoDocumento.Id
+                      join Escribania in ctx.Escribanias.AsNoTracking()
+                        on DocumentoPostVenta.IdEscribania equals Escribania.Id
+                      select new DocumentacionPostVentaResponse
+                      {
+                          Id = DocumentoPostVenta.Id,
+                          IdChasis = DocumentoPostVenta.IdChasis,
+                          Escribania = Escribania.Nombre,
+                          Observacion = DocumentoPostVenta.Observacion,
+                          Estado = EstadoDocumento.Descripcion!,
+                          UsuarioActualizacion = DocumentoPostVenta.UsuarioActualizacion,
+                      })
             .ToListAsync();
     }
 
