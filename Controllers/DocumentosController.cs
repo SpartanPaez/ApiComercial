@@ -326,18 +326,18 @@ public class DocumentosController : BaseApiController
     /// <summary>
     /// Inserta una nueva documentación de post venta.
     /// </summary>
-    /// <param name="documentacionPostVentaRequest"></param>
+    /// <param name="request"></param>
     /// <returns></returns>
     [HttpPost("insertar-documentacion-post-venta")]
     [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> InsertarDocumentacionPostVenta([FromBody] DocumentacionPostVentaRequest documentacionPostVentaRequest)
+    public async Task<ActionResult> InsertarDocumentacionPostVenta([FromBody] DocumentacionPostVentaRequest request)
     {
         try
         {
-            if (documentacionPostVentaRequest == null)
+            if (request == null)
             {
                 return BadRequest(new ErrorResponse
                 {
@@ -346,7 +346,7 @@ public class DocumentosController : BaseApiController
                 });
             }
 
-            var resultado = await _service.InsertarDocumentacionPostVenta(documentacionPostVentaRequest);
+            var resultado = await _service.InsertarDocumentacionPostVenta(request);
             return CreatedAtAction(nameof(ObtenerDocumentacionPostVenta), new { id = resultado }, resultado);
         }
         catch (System.Exception e)
@@ -359,4 +359,54 @@ public class DocumentosController : BaseApiController
             });
         }
     }
+
+    /// <summary>
+    /// Inserta un archivo asociado a la documentación de post venta.
+    /// </summary>
+    [HttpPost("insertar-archivo-documentacion-post-venta")]
+    [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> InsertarArchivoDocumentoPostVenta([FromBody] ArchivoPostVentaRequest request)
+    {
+        try
+        {
+            if (request == null)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "El archivo de post venta no puede ser nulo"
+                });
+            }
+
+            // Crear carpeta en disco si no existe
+            var rutaRelativa = Path.Combine("uploads", "postventa", request.DocumentacionPostVentaId.ToString());
+            var rutaFisica = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", rutaRelativa);
+            Directory.CreateDirectory(rutaFisica);
+
+            // Guardar archivo físico
+            var rutaCompleta = Path.Combine(rutaFisica, request.NombreArchivo!);
+            byte[] archivoBytes = Convert.FromBase64String(request.ArchivoBase64!);
+            await System.IO.File.WriteAllBytesAsync(rutaCompleta, archivoBytes);
+
+            // Ruta pública que se guarda en la base de datos
+            var rutaPublica = Path.Combine("/", rutaRelativa, request.NombreArchivo!).Replace("\\", "/");
+            request.RutaArchivo = rutaPublica;
+
+            var resultado = await _service.InsertarArchivoDocumentoPostVenta(request);
+            return CreatedAtAction(nameof(ObtenerDocumentacionPostVenta), new { id = resultado }, resultado);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al insertar el archivo de post venta");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de inserción del archivo de post venta"
+            });
+        }
+    }
+
 }

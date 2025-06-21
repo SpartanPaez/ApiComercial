@@ -1,0 +1,12 @@
+{
+  "runtime": "Net80",
+  "defaultVariables": {
+    "Configuration": "Debug"
+  },
+  "documentGenerator": {
+    "openApiToOpenApi": {
+      "input": "bin/$(Configuration)/net8.0/ApiComercial.dll",
+      "output": "swagger/openapi.json"
+    }
+  }
+}

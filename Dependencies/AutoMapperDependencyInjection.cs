@@ -53,6 +53,7 @@ namespace ApiComercial.Depedencies
             CreateMap<Venta, InsertarVentaRequest>().ReverseMap();
             CreateMap<Cuota, InsertarCuotasRequest>().ReverseMap();
             CreateMap<DetalleVenta, DetalleVentaRequest>().ReverseMap();
+            CreateMap<Venta, ResponseVenta>().ReverseMap();
         }
     }
 }

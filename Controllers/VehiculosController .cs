@@ -333,9 +333,8 @@ namespace ApiComercial.Controllers
             try
             {
                 var venta = _mapper.Map<Venta>(ventaRequest);
-    
-                var resultado = await _service.InsertVenta(venta);
 
+                var resultado = await _service.InsertVenta(venta);
                 return CreatedAtAction(nameof(GetVentas), new { id = resultado.VentaId }, resultado);
             }
             catch (Exception e)
@@ -364,8 +363,12 @@ namespace ApiComercial.Controllers
             try
             {
                 var detalle = _mapper.Map<DetalleVenta>(ventaDetalleRequest);
-    
+
                 var resultado = await _service.InsertarDetalleVenta(detalle);
+                if (resultado.VentaId > 0)
+                {
+                    return CreatedAtAction(nameof(UpdateVehiculo), new { Estado = "VENDIDO", IdChasis = resultado.IdChasis }, resultado);
+                }
 
                 return Ok(resultado);
             }
@@ -395,7 +398,7 @@ namespace ApiComercial.Controllers
             try
             {
                 var cuota = _mapper.Map<Cuota>(cuotasRequest);
-    
+
                 var resultado = await _service.InsertarCUota(cuota);
 
                 return CreatedAtAction(nameof(GetVentas), new { id = resultado.VentaId }, resultado);

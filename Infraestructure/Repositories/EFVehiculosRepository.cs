@@ -161,8 +161,20 @@ namespace ApiComercial.Infraestructure.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Venta>> GetVentas()
         {
-            return await _my.Ventas
-            .ToListAsync();
+            return await (from ventas in _my.Ventas.AsNoTracking()
+                           join detalleVenta in _my.DetalleVenta.AsNoTracking()
+                               on ventas.VentaId equals detalleVenta.VentaId
+                           select new Venta
+                           {
+                               VentaId = ventas.VentaId,
+                               ClienteId = ventas.ClienteId,
+                               FechaVenta = ventas.FechaVenta,
+                               PrecioTotal = ventas.PrecioTotal,
+                               InteresAnual = ventas.InteresAnual,
+                               CantidadCuotas = ventas.CantidadCuotas,
+                               PrecioTotalCuotas = ventas.PrecioTotalCuotas,
+                           }).
+                             ToListAsync();
         }
         /// <summary>
         /// Inserta ventas

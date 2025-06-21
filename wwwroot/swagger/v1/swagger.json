@@ -1,0 +1,5469 @@
+{
+  "x-generator": "NSwag v14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Api Comercial",
+    "description": "API para la gestión de documentos comerciales",
+    "contact": {
+      "name": "Soporte API",
+      "email": ""
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Clientes": {
+      "get": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Obtiene datos del cliente",
+        "operationId": "Clientes_clientesGET",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseClientes"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Inserta datos de clientes",
+        "operationId": "Clientes_clientesPOST",
+        "requestBody": {
+          "x-name": "parametros",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestDatoCliente"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Clientes/{Id}": {
+      "get": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Obtiene datos del cliente por id del mismo",
+        "operationId": "Clientes_clientesGET2",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseClientes"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Clientes/{id}": {
+      "put": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Actualiza datos del cliente",
+        "operationId": "Clientes_clientePUT",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "parametros",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestDatoCliente"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Elimina datos del cliente por id",
+        "operationId": "Clientes_clienteDELETE",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Documentos/estado-documentos": {
+      "get": {
+        "tags": [
+          "Documentos"
+        ],
+        "summary": "Obtiene el listado de los tipos de documentos disponibles en el sistema.",
+        "operationId": "Documentos_ObtenerDocumentos",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadoDocumentoResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Documentos/insertar-estado-documento": {
+      "post": {
+        "tags": [
+          "Documentos"
+        ],
+        "summary": "Inserta un nuevo tipo documento en el sistema.",
+        "operationId": "Documentos_InsertarDocumento",
+        "requestBody": {
+          "x-name": "documento",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EstadoDocumentoRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Documentos/documentacion-origen": {
+      "get": {
+        "tags": [
+          "Documentos"
+        ],
+        "summary": "Obtiene la lista de la documentación vehicular de origen.",
+        "operationId": "Documentos_ObtenerListadoDocumentacionOrigen",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentacionOrigenResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Documentos/insertar-documentacion-origen": {
+      "post": {
+        "tags": [
+          "Documentos"
+        ],
+        "summary": "Inserta la documentación de origen del vehículo.",
+        "operationId": "Documentos_InsertarDocumentacionOrigen",
+        "requestBody": {
+          "x-name": "documentacionOrigen",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentacionOrigenRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Documentos/subir-archivo-documentacion-origen-base64": {
+      "post": {
+        "tags": [
+          "Documentos"
+        ],
+        "operationId": "Documentos_SubirArchivoBase64",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArchivoDocumentoOrigenBase64Request"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Documentos/documentos/{documentacionOrigenId}/archivos": {
+      "get": {
+        "tags": [
+          "Documentos"
+        ],
+        "operationId": "Documentos_ObtenerArchivosPorDocumentacion",
+        "parameters": [
+          {
+            "name": "documentacionOrigenId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ArchivoDocumentoOrigenResponse"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Documentos/insertar-escribania": {
+      "post": {
+        "tags": [
+          "Documentos"
+        ],
+        "summary": "Inserta una nueva escribanía en el sistema.",
+        "operationId": "Documentos_InsertarEscribania",
+        "requestBody": {
+          "x-name": "escribaniaRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EscribaniaRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Documentos/escribanias": {
+      "get": {
+        "tags": [
+          "Documentos"
+        ],
+        "summary": "Obtiene el listado de escribanías registradas en el sistema.",
+        "operationId": "Documentos_ObtenerEscribanias",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EscribaniaResponse"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Documentos/documentacion-post-venta/{documentacionPostVentaId}/archivos": {
+      "get": {
+        "tags": [
+          "Documentos"
+        ],
+        "summary": "Obtiene los archivos asociados a una documentación de post venta.",
+        "operationId": "Documentos_ObtenerArchivosPorDocumentacionPostVenta",
+        "parameters": [
+          {
+            "name": "documentacionPostVentaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ArchivoPostVentaResponse"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Documentos/documentacion-post-venta": {
+      "get": {
+        "tags": [
+          "Documentos"
+        ],
+        "summary": "Obtiene la lista de la documentación de post venta.",
+        "operationId": "Documentos_ObtenerDocumentacionPostVenta",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentacionPostVentaResponse"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Documentos/insertar-documentacion-post-venta": {
+      "post": {
+        "tags": [
+          "Documentos"
+        ],
+        "summary": "Inserta una nueva documentación de post venta.",
+        "operationId": "Documentos_InsertarDocumentacionPostVenta",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentacionPostVentaRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Documentos/insertar-archivo-documentacion-post-venta": {
+      "post": {
+        "tags": [
+          "Documentos"
+        ],
+        "summary": "Inserta un archivo asociado a la documentación de post venta.",
+        "operationId": "Documentos_InsertarArchivoDocumentoPostVenta",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArchivoPostVentaRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Marcas/marcas": {
+      "get": {
+        "tags": [
+          "Marcas"
+        ],
+        "operationId": "Marcas_GetMarcas",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MarcaAuto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Marcas"
+        ],
+        "operationId": "Marcas_InsertMarca",
+        "requestBody": {
+          "x-name": "marca",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarcaAuto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarcaAuto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Marcas/marcas/{id}": {
+      "get": {
+        "tags": [
+          "Marcas"
+        ],
+        "operationId": "Marcas_GetMarcaPorId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarcaAuto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Marcas"
+        ],
+        "operationId": "Marcas_UpdateMarca",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "marca",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarcaAuto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Marcas"
+        ],
+        "operationId": "Marcas_DeleteMarca",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Modelos/modelos": {
+      "get": {
+        "tags": [
+          "Modelos"
+        ],
+        "operationId": "Modelos_GetModelos",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModeloAuto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Modelos"
+        ],
+        "operationId": "Modelos_InsertModelo",
+        "requestBody": {
+          "x-name": "modelo",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModeloAuto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModeloAuto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Modelos/modelos/{id}": {
+      "get": {
+        "tags": [
+          "Modelos"
+        ],
+        "operationId": "Modelos_GetModeloPorId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModeloAuto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Modelos"
+        ],
+        "operationId": "Modelos_UpdateModelo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "modelo",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModeloAuto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Modelos"
+        ],
+        "operationId": "Modelos_DeleteModelo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/productos": {
+      "get": {
+        "tags": [
+          "Productos"
+        ],
+        "operationId": "Productos_GetProducto",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseProducto"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Productos"
+        ],
+        "operationId": "Productos_InsertProducto",
+        "requestBody": {
+          "x-name": "parametros",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestProducto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseProducto"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Productos"
+        ],
+        "operationId": "Productos_UpdateProducto",
+        "requestBody": {
+          "x-name": "parametros",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResponseProducto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseProducto"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/productos/{ProductoId}": {
+      "delete": {
+        "tags": [
+          "Productos"
+        ],
+        "operationId": "Productos_DeleteProducto",
+        "parameters": [
+          {
+            "name": "ProductoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseProducto"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/productos/vencimiento": {
+      "get": {
+        "tags": [
+          "Productos"
+        ],
+        "operationId": "Productos_GetProductoVencimiento",
+        "parameters": [
+          {
+            "name": "FechaVencimiento",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseProducto"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ciudades/{Id}": {
+      "get": {
+        "tags": [
+          "Referenciales"
+        ],
+        "summary": "Endpoint que consulta las ciudades en base al id del departamento",
+        "operationId": "Referenciales_GetCiudadesPorId",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CiudadResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ciudades": {
+      "get": {
+        "tags": [
+          "Referenciales"
+        ],
+        "summary": "Endpoint que consulta las ciudades en base al id del departamento",
+        "operationId": "Referenciales_GetCiudades",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CiudadResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Referenciales"
+        ],
+        "summary": "Inserta nuevas ciudades",
+        "operationId": "Referenciales_InsertCiudad",
+        "requestBody": {
+          "x-name": "parametros",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCiudad"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestCiudad"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Referenciales"
+        ],
+        "operationId": "Referenciales_UpdateCiudades",
+        "requestBody": {
+          "x-name": "parametros",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CiudadResponse"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/departamentos": {
+      "get": {
+        "tags": [
+          "Referenciales"
+        ],
+        "summary": "Obtiene los departamentos del pais",
+        "operationId": "Referenciales_GeDepartamentoPorId",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartamentoResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Referenciales"
+        ],
+        "summary": "Endpoint para insertar departamentos",
+        "operationId": "Referenciales_InsertDepartamento",
+        "requestBody": {
+          "x-name": "parametros",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestDepartamento"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestDepartamento"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/paises": {
+      "get": {
+        "tags": [
+          "Referenciales"
+        ],
+        "operationId": "Referenciales_GetPais",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaisResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Referenciales"
+        ],
+        "operationId": "Referenciales_InsertPais",
+        "requestBody": {
+          "x-name": "parametros",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestPais"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaisResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/usuarios": {
+      "get": {
+        "tags": [
+          "Referenciales"
+        ],
+        "operationId": "Referenciales_GetUsuarios",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Referenciales"
+        ],
+        "operationId": "Referenciales_InsertUsuarios",
+        "requestBody": {
+          "x-name": "parametros",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestUsuario"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/login": {
+      "post": {
+        "tags": [
+          "Referenciales"
+        ],
+        "operationId": "Referenciales_LoginUsuarios",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/depositos": {
+      "get": {
+        "tags": [
+          "Referenciales"
+        ],
+        "operationId": "Referenciales_GetDepositos",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepositoResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Referenciales"
+        ],
+        "operationId": "Referenciales_InsertDeposito",
+        "requestBody": {
+          "x-name": "parametros",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestDeposito"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepositoResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Referenciales"
+        ],
+        "operationId": "Referenciales_UpdateDeposito",
+        "requestBody": {
+          "x-name": "parametros",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestDeposito"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepositoResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/proveedor": {
+      "post": {
+        "tags": [
+          "Referenciales"
+        ],
+        "summary": "Endpoint que inserta datos del proveedor a la base de datos",
+        "operationId": "Referenciales_InsertProveedor",
+        "requestBody": {
+          "x-name": "parametros",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestProveedor"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseProveedor"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Referenciales"
+        ],
+        "summary": "Muestra el listado de proveedores",
+        "operationId": "Referenciales_GetProveedor",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseProveedor"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/categorias": {
+      "get": {
+        "tags": [
+          "Referenciales"
+        ],
+        "summary": "Obtiene el listado de las categorias",
+        "operationId": "Referenciales_GetCategorias",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCategoria"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/categoria": {
+      "post": {
+        "tags": [
+          "Referenciales"
+        ],
+        "summary": "Endpoint que inserta los datos de categoria",
+        "operationId": "Referenciales_InsertCategoria",
+        "requestBody": {
+          "x-name": "parametros",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestProveedor"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCategoria"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/barrios": {
+      "get": {
+        "tags": [
+          "Referenciales"
+        ],
+        "summary": "Obtiene el listado de barrios",
+        "operationId": "Referenciales_GetBarrios",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseBarrio"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Referenciales"
+        ],
+        "summary": "Inserta nuevas ciudades",
+        "operationId": "Referenciales_InsertBarrio",
+        "requestBody": {
+          "x-name": "parametros",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestBarrio"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestBarrio"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lista-barrios": {
+      "get": {
+        "tags": [
+          "Referenciales"
+        ],
+        "summary": "Obtiene el listado de barrios",
+        "operationId": "Referenciales_GetBarriosLista",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseBarrio"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Vehiculos": {
+      "get": {
+        "tags": [
+          "Vehiculos"
+        ],
+        "summary": "Obtener todos los vehículos.",
+        "operationId": "Vehiculos_GetVehiculos",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseVehiculo"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Vehiculos"
+        ],
+        "summary": "Insertar un nuevo vehículo.",
+        "operationId": "Vehiculos_InsertVehiculo",
+        "requestBody": {
+          "x-name": "parametros",
+          "description": "Datos del vehículo a insertar",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InsertarVehiculoRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Vehiculos/{idChasis}": {
+      "get": {
+        "tags": [
+          "Vehiculos"
+        ],
+        "summary": "Obtener un vehículo por ID de chasis.",
+        "operationId": "Vehiculos_GetVehiculoPorId",
+        "parameters": [
+          {
+            "name": "idChasis",
+            "in": "path",
+            "required": true,
+            "description": "Identificador del chasis del vehículo",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseVehiculo"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Vehiculos"
+        ],
+        "summary": "Actualizar los datos de un vehículo.",
+        "operationId": "Vehiculos_UpdateVehiculo",
+        "parameters": [
+          {
+            "name": "idChasis",
+            "in": "path",
+            "required": true,
+            "description": "Identificador del chasis del vehículo",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "parametros",
+          "description": "Datos del vehículo a actualizar",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestVehiculo"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Vehiculos"
+        ],
+        "summary": "Eliminar un vehículo por ID de chasis.",
+        "operationId": "Vehiculos_DeleteVehiculo",
+        "parameters": [
+          {
+            "name": "idChasis",
+            "in": "path",
+            "required": true,
+            "description": "Identificador del chasis del vehículo a eliminar",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Vehiculos/eliminar/{idChasis}": {
+      "delete": {
+        "tags": [
+          "Vehiculos"
+        ],
+        "summary": "Endpoint alternativo para eliminar vehículos.",
+        "operationId": "Vehiculos_DeleteVehiculoAlternativo",
+        "parameters": [
+          {
+            "name": "idChasis",
+            "in": "path",
+            "required": true,
+            "description": "Identificador del chasis del vehículo a eliminar",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Vehiculos/estados": {
+      "get": {
+        "tags": [
+          "Vehiculos"
+        ],
+        "summary": "Endopoint para consultar estados de vehiculos",
+        "operationId": "Vehiculos_GetEstados",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstadosResponse"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Vehiculos"
+        ],
+        "summary": "Endpoint encargado de insertar los estados para los vehiculos",
+        "operationId": "Vehiculos_InsertEstados",
+        "requestBody": {
+          "x-name": "parametros",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EstadosRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/estado/{estado}": {
+      "get": {
+        "tags": [
+          "Vehiculos"
+        ],
+        "summary": "Endpoint para obtener el conteo de vehículos por estado.",
+        "operationId": "Vehiculos_GetCountByEstado",
+        "parameters": [
+          {
+            "name": "estado",
+            "in": "path",
+            "required": true,
+            "description": "El estado de los vehículos.",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "El número de vehículos que tienen el estado especificado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Vehiculos/total-vehiculos": {
+      "get": {
+        "tags": [
+          "Vehiculos"
+        ],
+        "summary": "Devuelte el total de vehiculos, excluyendo los vendidos.",
+        "operationId": "Vehiculos_GetTotalVehiculos",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Vehiculos/ventas": {
+      "get": {
+        "tags": [
+          "Vehiculos"
+        ],
+        "summary": "Obtener todas las ventas con sus detalles.",
+        "operationId": "Vehiculos_GetVentas",
+        "responses": {
+          "200": {
+            "description": "Una lista de ventas con sus detalles.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseVenta"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Una lista de ventas con sus detalles."
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Vehiculos"
+        ],
+        "summary": "ENdpoint que inserta la cabecera de la venta realizada",
+        "operationId": "Vehiculos_InsertVenta",
+        "requestBody": {
+          "x-name": "ventaRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InsertarVentaRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Vehiculos/detalleVenta": {
+      "post": {
+        "tags": [
+          "Vehiculos"
+        ],
+        "summary": "Endpoint que inserta el detalle de la venta realizada",
+        "operationId": "Vehiculos_InsertarDetalleVentas",
+        "requestBody": {
+          "x-name": "ventaDetalleRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DetalleVentaRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Vehiculos/cuotas": {
+      "post": {
+        "tags": [
+          "Vehiculos"
+        ],
+        "summary": "Endpoint que inserta las cuotas generadas para una venta",
+        "operationId": "Vehiculos_InsertarCuotas",
+        "requestBody": {
+          "x-name": "cuotasRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InsertarCuotasRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Ventas/cabeceraCuota": {
+      "get": {
+        "tags": [
+          "Ventas"
+        ],
+        "operationId": "Ventas_CabeceraCuota",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CabeceraCuotaResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Ventas/{idVenta}/DetalleCuota": {
+      "get": {
+        "tags": [
+          "Ventas"
+        ],
+        "operationId": "Ventas_DetalleCuota",
+        "parameters": [
+          {
+            "name": "idVenta",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetalleCuotaResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Ventas/PagarCuota": {
+      "put": {
+        "tags": [
+          "Ventas"
+        ],
+        "operationId": "Ventas_PagarCuota",
+        "requestBody": {
+          "x-name": "cuota",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Cuota"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cuota"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ResponseClientes": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "clienteId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "clienteCedula": {
+            "type": "string",
+            "description": "Cedula del cliente",
+            "nullable": true
+          },
+          "clienteNombre": {
+            "type": "string",
+            "description": "Nombre del cliente",
+            "nullable": true
+          },
+          "clienteDepartamento": {
+            "type": "string",
+            "description": "Departamento del cliente",
+            "nullable": true
+          },
+          "clienteDireccion": {
+            "type": "string",
+            "description": "Dirección del cliente",
+            "nullable": true
+          },
+          "clientePais": {
+            "type": "string",
+            "description": "Nacionalidad del cliente",
+            "nullable": true
+          },
+          "clienteCiudad": {
+            "type": "string",
+            "description": "Indica la ciudad del cliente",
+            "nullable": true
+          },
+          "clienteBarrio": {
+            "type": "string",
+            "description": "Indica el barrio del cliente",
+            "nullable": true
+          },
+          "clienteCelular": {
+            "type": "string",
+            "description": "indica el numero de telefono celular del cliente",
+            "nullable": true
+          },
+          "clienteCorreo": {
+            "type": "string",
+            "description": "Correo electronico del cliente",
+            "nullable": true
+          },
+          "clienteEstadoCivil": {
+            "type": "string",
+            "description": "Estado civil del cliente",
+            "nullable": true
+          },
+          "clienteEstado": {
+            "type": "string",
+            "description": "Estado del cleinte(Activo o no)",
+            "nullable": true
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "description": "Clase que muestra los errores",
+        "additionalProperties": false,
+        "properties": {
+          "errorType": {
+            "$ref": "#/components/schemas/ErrorType"
+          },
+          "errorDescripcion": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ErrorType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "error_interno_servidor",
+          "validacion_negocio"
+        ],
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "RequestDatoCliente": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "clienteCedula": {
+            "type": "string",
+            "description": "Cedula del cliente",
+            "nullable": true
+          },
+          "clienteNombre": {
+            "type": "string",
+            "description": "Nombre del cliente",
+            "nullable": true
+          },
+          "clienteDepartamento": {
+            "type": "string",
+            "description": "Departamento del cliente",
+            "nullable": true
+          },
+          "clienteDireccion": {
+            "type": "string",
+            "description": "Dirección del cliente",
+            "nullable": true
+          },
+          "clientePais": {
+            "type": "string",
+            "description": "Nacionalidad del cliente",
+            "nullable": true
+          },
+          "clienteCiudad": {
+            "type": "string",
+            "description": "Indica la ciudad del cliente",
+            "nullable": true
+          },
+          "clienteBarrio": {
+            "type": "string",
+            "description": "Indica el barrio del cliente",
+            "nullable": true
+          },
+          "clienteCelular": {
+            "type": "string",
+            "description": "indica el numero de telefono celular del cliente",
+            "nullable": true
+          },
+          "clienteCorreo": {
+            "type": "string",
+            "description": "Correo electronico del cliente",
+            "nullable": true
+          },
+          "clienteEstadoCivil": {
+            "type": "string",
+            "description": "Estado civil del cliente",
+            "nullable": true
+          },
+          "clienteEstado": {
+            "type": "string",
+            "description": "Estado del cleinte(Activo o no)",
+            "nullable": true
+          }
+        }
+      },
+      "EstadoDocumentoResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "orden": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "esFinal": {
+            "type": "boolean"
+          }
+        }
+      },
+      "EstadoDocumentoRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "orden": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "esFinal": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DocumentacionOrigenResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idChasis": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRecepcion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "observacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "registradoPor": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "DocumentacionOrigenRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idChasis": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRecepcion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "observacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "registradoPor": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ArchivoDocumentoOrigenBase64Request": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "documentacionOrigenId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreArchivo": {
+            "type": "string"
+          },
+          "archivoBase64": {
+            "type": "string"
+          }
+        }
+      },
+      "ArchivoDocumentoOrigenResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentacionOrigenId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreArchivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "rutaArchivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaSubida": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "additionalProperties": {
+          "nullable": true
+        },
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "EscribaniaRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "titular": {
+            "type": "string",
+            "nullable": true
+          },
+          "ruc": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefono": {
+            "type": "string",
+            "nullable": true
+          },
+          "direccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "correo": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "EscribaniaResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "titular": {
+            "type": "string",
+            "nullable": true
+          },
+          "ruc": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefono": {
+            "type": "string",
+            "nullable": true
+          },
+          "direccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "correo": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
+            "type": "boolean"
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ArchivoPostVentaResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idDocumentacion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreArchivo": {
+            "type": "string"
+          },
+          "rutaArchivo": {
+            "type": "string"
+          },
+          "tipo": {
+            "type": "string"
+          },
+          "fechaCarga": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "usuarioCarga": {
+            "type": "string"
+          }
+        }
+      },
+      "DocumentacionPostVentaResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idChasis": {
+            "type": "string"
+          },
+          "escribania": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string"
+          },
+          "observacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaActualizacion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "usuarioActualizacion": {
+            "type": "string"
+          }
+        }
+      },
+      "DocumentacionPostVentaRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idChasis": {
+            "type": "string",
+            "nullable": true
+          },
+          "idEscribania": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estado": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "observacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "usuarioActualizacion": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ArchivoPostVentaRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "documentacionPostVentaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreArchivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "rutaArchivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipo": {
+            "type": "string"
+          },
+          "usuarioCarga": {
+            "type": "string",
+            "nullable": true
+          },
+          "archivoBase64": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "MarcaAuto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idMarca": {
+            "type": "integer",
+            "description": "Identificador de la marca de autos (PK)",
+            "format": "int32",
+            "nullable": true
+          },
+          "descripcionMarca": {
+            "type": "string",
+            "description": "Descripción de la marca de autos",
+            "nullable": true
+          }
+        }
+      },
+      "ModeloAuto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idModelo": {
+            "type": "integer",
+            "description": "Identificador del modelo de auto (PK)",
+            "format": "int32",
+            "nullable": true
+          },
+          "idMarca": {
+            "type": "integer",
+            "description": "Identificador de la marca de auto (FK)",
+            "format": "int32"
+          },
+          "nombreMarca": {
+            "type": "string",
+            "description": "Nombre de la marca"
+          },
+          "descripcionModelo": {
+            "type": "string",
+            "description": "Descripción del modelo de auto"
+          }
+        }
+      },
+      "ResponseProducto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "productoId": {
+            "type": "integer",
+            "description": "Codigo identificador del producto",
+            "format": "int32"
+          },
+          "productoLote": {
+            "type": "string",
+            "description": "Numero de lote del producto",
+            "nullable": true
+          },
+          "productoCodigoBarra": {
+            "type": "string",
+            "description": "Codigo de barra del producto",
+            "nullable": true
+          },
+          "productoNombre": {
+            "type": "string",
+            "description": "Nombre del producto",
+            "nullable": true
+          },
+          "productoDescripcion": {
+            "type": "string",
+            "description": "Descripcion del producto",
+            "nullable": true
+          },
+          "idCategoria": {
+            "type": "integer",
+            "description": "Codigo de la categoria del producto",
+            "format": "int32"
+          },
+          "productoCosto": {
+            "type": "integer",
+            "description": "precio de costo del producto",
+            "format": "int32"
+          },
+          "productoPrecio": {
+            "type": "integer",
+            "description": "Preceio de venta del producto",
+            "format": "int32"
+          },
+          "productoExistencia": {
+            "type": "integer",
+            "description": "Cantidad de existencias",
+            "format": "int32"
+          },
+          "depositoId": {
+            "type": "integer",
+            "description": "Id del deposito donde se ubica",
+            "format": "int32"
+          },
+          "productoFechaVencimiento": {
+            "type": "string",
+            "description": "Fecha de vencimiento del producto",
+            "format": "date-time"
+          },
+          "productoFechaAlta": {
+            "type": "string",
+            "description": "Fecha de alta del producto",
+            "format": "date-time"
+          },
+          "usuarioId": {
+            "type": "integer",
+            "description": "Id del usuario que registra",
+            "format": "int32"
+          }
+        }
+      },
+      "RequestProducto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "productoLote": {
+            "type": "string",
+            "description": "Numero de lote del producto",
+            "nullable": true
+          },
+          "productoCodigoBarra": {
+            "type": "string",
+            "description": "Codigo de barra del producto",
+            "nullable": true
+          },
+          "productoNombre": {
+            "type": "string",
+            "description": "Nombre del producto",
+            "nullable": true
+          },
+          "productoDescripcion": {
+            "type": "string",
+            "description": "Descripcion del producto",
+            "nullable": true
+          },
+          "idCategoria": {
+            "type": "integer",
+            "description": "Codigo de la categoria del producto",
+            "format": "int32"
+          },
+          "productoCosto": {
+            "type": "integer",
+            "description": "precio de costo del producto",
+            "format": "int32"
+          },
+          "productoPrecio": {
+            "type": "integer",
+            "description": "Preceio de venta del producto",
+            "format": "int32"
+          },
+          "productoExistencia": {
+            "type": "integer",
+            "description": "Cantidad de existencias",
+            "format": "int32"
+          },
+          "depositoId": {
+            "type": "integer",
+            "description": "Id del deposito donde se ubica",
+            "format": "int32"
+          },
+          "productoFechaVencimiento": {
+            "type": "string",
+            "description": "Fecha de vencimiento del producto",
+            "format": "date-time"
+          },
+          "productoFechaAlta": {
+            "type": "string",
+            "description": "Fecha de alta del producto",
+            "format": "date-time"
+          },
+          "usuarioId": {
+            "type": "integer",
+            "description": "Id del usuario que registra",
+            "format": "int32"
+          }
+        }
+      },
+      "CiudadResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ciudadId": {
+            "type": "integer",
+            "description": "Codigo de la ciudad",
+            "format": "int32"
+          },
+          "departamentoId": {
+            "type": "integer",
+            "description": "Codigo del de departamento asociado",
+            "format": "int32"
+          },
+          "ciudadDesc": {
+            "type": "string",
+            "description": "Nombde de la ciudad",
+            "nullable": true
+          }
+        }
+      },
+      "RequestCiudad": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "departamentoId": {
+            "type": "integer",
+            "description": "Codigo del de departamento asociado",
+            "format": "int32"
+          },
+          "ciudadDesc": {
+            "type": "string",
+            "description": "Nombde de la ciudad",
+            "nullable": true
+          }
+        }
+      },
+      "DepartamentoResponse": {
+        "type": "object",
+        "description": "Datos de los departamentos del pais",
+        "additionalProperties": false,
+        "properties": {
+          "departamentoId": {
+            "type": "integer",
+            "description": "Codigo del departamento",
+            "format": "int32"
+          },
+          "departamentoDesc": {
+            "type": "string",
+            "description": "Nombre del departamento",
+            "nullable": true
+          }
+        }
+      },
+      "RequestDepartamento": {
+        "type": "object",
+        "description": "CLase para insertar departamentos",
+        "additionalProperties": false,
+        "properties": {
+          "departamentoDesc": {
+            "type": "string",
+            "description": "Nombre del departamento",
+            "nullable": true
+          }
+        }
+      },
+      "PaisResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "paisId": {
+            "type": "integer",
+            "description": "Codigo del pais",
+            "format": "int32"
+          },
+          "paisDescripcion": {
+            "type": "string",
+            "description": "Descripción del país",
+            "nullable": true
+          },
+          "paisNacionalidad": {
+            "type": "string",
+            "description": "Nacionalidad del páis",
+            "nullable": true
+          }
+        }
+      },
+      "RequestPais": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "paisDescripcion": {
+            "type": "string",
+            "description": "Descripcion del pais",
+            "nullable": true
+          },
+          "paisNacionalidad": {
+            "type": "string",
+            "description": "Nacionalidad del páis",
+            "nullable": true
+          }
+        }
+      },
+      "UsuarioResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "usuarioId": {
+            "type": "integer",
+            "description": "Codigo identificador del usuario",
+            "format": "int32"
+          },
+          "clienteId": {
+            "type": "integer",
+            "description": "Codigo que asocia a un funcionario(que es cliente ya)",
+            "format": "int32"
+          },
+          "usuarioEstado": {
+            "type": "integer",
+            "description": "Indica si el usuario está activo o no",
+            "format": "int32"
+          },
+          "usuarioNic": {
+            "type": "string",
+            "description": "Nic o user del usuario",
+            "nullable": true
+          },
+          "usuarioPass": {
+            "type": "string",
+            "description": "Contraseña del usuario",
+            "nullable": true
+          },
+          "usuarioFecha": {
+            "type": "string",
+            "description": "Fecha de inserción del usuario",
+            "format": "date-time"
+          }
+        }
+      },
+      "RequestUsuario": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "clienteId": {
+            "type": "integer",
+            "description": "Codigo que asocia a un funcionario(que es cliente ya)",
+            "format": "int32"
+          },
+          "usuarioEstado": {
+            "type": "integer",
+            "description": "Indica si el usuario está activo o no",
+            "format": "int32"
+          },
+          "usuarioNic": {
+            "type": "string",
+            "description": "Nic o user del usuario",
+            "nullable": true
+          },
+          "usuarioPass": {
+            "type": "string",
+            "description": "Contraseña del usuario",
+            "nullable": true
+          },
+          "usuarioFecha": {
+            "type": "string",
+            "description": "Fecha de inserción del usuario",
+            "format": "date-time"
+          }
+        }
+      },
+      "UserLoginModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "DepositoResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "depositoID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "depositoNombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "depositoDireccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "depositoTelefono": {
+            "type": "string",
+            "nullable": true
+          },
+          "ciudadId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "depositoObservaciones": {
+            "type": "string",
+            "nullable": true
+          },
+          "depositoEstado": {
+            "type": "string",
+            "nullable": true
+          },
+          "depositoUsuarioAlta": {
+            "type": "string",
+            "nullable": true
+          },
+          "depositoFechaAlta": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "depositoUsuarioModif": {
+            "type": "string",
+            "nullable": true
+          },
+          "depositoFechaModif": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "RequestDeposito": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "depositoNombre": {
+            "type": "string",
+            "description": "Nombre del depósito",
+            "nullable": true
+          },
+          "depositoDireccion": {
+            "type": "string",
+            "description": "Dirección del depósito",
+            "nullable": true
+          },
+          "depositoTelefono": {
+            "type": "string",
+            "description": "Teléfono del depósito",
+            "nullable": true
+          },
+          "ciudadId": {
+            "type": "integer",
+            "description": "Id de la ciudad",
+            "format": "int32"
+          },
+          "depositoObservaciones": {
+            "type": "string",
+            "description": "Observaciones del depósito",
+            "nullable": true
+          },
+          "depositoEstado": {
+            "type": "string",
+            "description": "Estado del depósito",
+            "nullable": true
+          },
+          "depositoUsuarioAlta": {
+            "type": "string",
+            "description": "Usuario que da de alta el depósito",
+            "nullable": true
+          },
+          "depositoFechaAlta": {
+            "type": "string",
+            "description": "Fecha de alta del depósito",
+            "format": "date-time",
+            "nullable": true
+          },
+          "depositoUsuarioModif": {
+            "type": "string",
+            "description": "Usuario que modifica el depósito",
+            "nullable": true
+          },
+          "depositoFechaModif": {
+            "type": "string",
+            "description": "Fecha de modificación del depósito",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "ResponseProveedor": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "proveedorId": {
+            "type": "integer",
+            "description": "Codigo identificador del proveedor",
+            "format": "int32"
+          },
+          "proveedorRuc": {
+            "type": "string",
+            "description": "Ruc del proveedor",
+            "nullable": true
+          },
+          "proveedorNombre": {
+            "type": "string",
+            "description": "Nombre del proveedor ",
+            "nullable": true
+          },
+          "proveedorDireccion": {
+            "type": "string",
+            "description": "Direccion del proveedor",
+            "nullable": true
+          },
+          "idPais": {
+            "type": "integer",
+            "description": "Pais de origen del proveedor",
+            "format": "int32"
+          },
+          "idCiudad": {
+            "type": "integer",
+            "description": "Ciudad del proveedor",
+            "format": "int32"
+          },
+          "proveedorTelefono": {
+            "type": "string",
+            "description": "Telefono del proveedor",
+            "nullable": true
+          },
+          "proveedorCorreo": {
+            "type": "string",
+            "description": "Correo electronico del proveedor",
+            "nullable": true
+          },
+          "proveedorEstado": {
+            "type": "integer",
+            "description": "Estado del proveedor",
+            "format": "int32"
+          },
+          "proveedorFechaAlta": {
+            "type": "string",
+            "description": "Fecha de alta del proveedor",
+            "format": "date-time"
+          },
+          "proveedorUsuarioAlta": {
+            "type": "string",
+            "description": "Usuario que dio de alta al proveedor",
+            "nullable": true
+          }
+        }
+      },
+      "RequestProveedor": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "proveedorRuc": {
+            "type": "string",
+            "description": "Ruc del proveedor",
+            "nullable": true
+          },
+          "proveedorNombre": {
+            "type": "string",
+            "description": "Nombre del proveedor ",
+            "nullable": true
+          },
+          "proveedorDireccion": {
+            "type": "string",
+            "description": "Direccion del proveedor",
+            "nullable": true
+          },
+          "idPais": {
+            "type": "integer",
+            "description": "Pais de origen del proveedor",
+            "format": "int32"
+          },
+          "idCiudad": {
+            "type": "integer",
+            "description": "Ciudad del proveedor",
+            "format": "int32"
+          },
+          "proveedorTelefono": {
+            "type": "string",
+            "description": "Telefono del proveedor",
+            "nullable": true
+          },
+          "proveedorCorreo": {
+            "type": "string",
+            "description": "Correo electronico del proveedor",
+            "nullable": true
+          },
+          "proveedorEstado": {
+            "type": "integer",
+            "description": "Estado del proveedor",
+            "format": "int32"
+          },
+          "proveedorFechaAlta": {
+            "type": "string",
+            "description": "Fecha de alta del proveedor",
+            "format": "date-time"
+          },
+          "proveedorUsuarioAlta": {
+            "type": "string",
+            "description": "Usuario que dio de alta al proveedor",
+            "nullable": true
+          }
+        }
+      },
+      "ResponseCategoria": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "categoriaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "categoriaDesc": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ResponseBarrio": {
+        "type": "object",
+        "description": "Entidad para la tabla barrios",
+        "additionalProperties": false,
+        "properties": {
+          "idBarrio": {
+            "type": "integer",
+            "description": "codigo del barrio",
+            "format": "int32"
+          },
+          "idCiudad": {
+            "type": "integer",
+            "description": "Id del departamento",
+            "format": "int32"
+          },
+          "ciudadDescripcion": {
+            "type": "string",
+            "description": "Descripcion de ciiudad",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "description": "Descripcion del barrio",
+            "nullable": true
+          }
+        }
+      },
+      "RequestBarrio": {
+        "type": "object",
+        "description": "Clase que envia los datos a la BD",
+        "additionalProperties": false,
+        "properties": {
+          "idCiudad": {
+            "type": "integer",
+            "description": "Id del departamentow",
+            "format": "int32"
+          },
+          "descripcion": {
+            "type": "string",
+            "description": "Descripcion del barrio",
+            "nullable": true
+          }
+        }
+      },
+      "ResponseVehiculo": {
+        "type": "object",
+        "description": "Clase de respuesta de vehiculos",
+        "additionalProperties": false,
+        "properties": {
+          "idChasis": {
+            "type": "string",
+            "description": "Numero de chasis del vehiculo",
+            "nullable": true
+          },
+          "idMarca": {
+            "type": "integer",
+            "description": "Codigo de la marca del vehiculo",
+            "format": "int32",
+            "nullable": true
+          },
+          "marca": {
+            "type": "string",
+            "description": "Marca del vechiculo",
+            "nullable": true
+          },
+          "idModelo": {
+            "type": "integer",
+            "description": "Codigo del modelo",
+            "format": "int32",
+            "nullable": true
+          },
+          "modelo": {
+            "type": "string",
+            "description": "Modelo del vehiculo",
+            "nullable": true
+          },
+          "tipoCar": {
+            "type": "string",
+            "description": "Tipo del vehiculo",
+            "nullable": true
+          },
+          "anoFabricacion": {
+            "type": "string",
+            "description": "Año de fabricación"
+          },
+          "color": {
+            "type": "string",
+            "description": "Color del vehiculo",
+            "nullable": true
+          },
+          "usado": {
+            "type": "string",
+            "nullable": true
+          },
+          "chapa": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "precio": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "InsertarVehiculoRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idChasis": {
+            "type": "string",
+            "description": "Numero de chasis del auto",
+            "nullable": true
+          },
+          "idMarca": {
+            "type": "integer",
+            "description": "Codigo de la marca",
+            "format": "int32"
+          },
+          "idModelo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tipoCar": {
+            "type": "string",
+            "nullable": true
+          },
+          "anoFabricacion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "color": {
+            "type": "string",
+            "nullable": true
+          },
+          "usado": {
+            "type": "string",
+            "nullable": true
+          },
+          "chapa": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "description": "INidica el estado del vehiculo, si es usado o no en PY",
+            "nullable": true
+          },
+          "precio": {
+            "type": "string",
+            "description": "INidica el precio del vehiculo",
+            "nullable": true
+          }
+        }
+      },
+      "RequestVehiculo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idChasis": {
+            "type": "string",
+            "description": "Identificador único del chasis del vehículo",
+            "nullable": true
+          },
+          "idMarca": {
+            "type": "integer",
+            "description": "Identificador de la marca del vehículo",
+            "format": "int32",
+            "nullable": true
+          },
+          "idModelo": {
+            "type": "integer",
+            "description": "Identificador del modelo del vehículo",
+            "format": "int32",
+            "nullable": true
+          },
+          "tipoCar": {
+            "type": "string",
+            "description": "Tipo de carrocería del vehículo",
+            "nullable": true
+          },
+          "anoFabricacion": {
+            "type": "integer",
+            "description": "Año de fabricación del vehículo",
+            "format": "int32"
+          },
+          "color": {
+            "type": "string",
+            "description": "Color del vehículo",
+            "nullable": true
+          }
+        }
+      },
+      "EstadosResponse": {
+        "type": "object",
+        "description": "Muestra los datos de estados",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id del estado",
+            "format": "int32"
+          },
+          "descripcion": {
+            "type": "string",
+            "description": "Descripcion del estado"
+          }
+        }
+      },
+      "EstadosRequest": {
+        "type": "object",
+        "description": "Guarda los estados para vehiculos",
+        "additionalProperties": false,
+        "properties": {
+          "descripcion": {
+            "type": "string",
+            "description": "Descripcion del estado del vehiculo"
+          }
+        }
+      },
+      "ResponseVenta": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ventaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "clienteId": {
+            "type": "integer",
+            "description": "Codigo del cliente que hace la compra",
+            "format": "int32"
+          },
+          "fechaVenta": {
+            "type": "string",
+            "description": "Fecha de la venta",
+            "format": "date-time"
+          },
+          "precioTotal": {
+            "type": "number",
+            "description": "Precio total de las ventas",
+            "format": "decimal",
+            "nullable": true
+          },
+          "interesAnual": {
+            "type": "number",
+            "description": "INteres anual con la que se calculan las cuotas",
+            "format": "decimal",
+            "nullable": true
+          },
+          "cantidadCuotas": {
+            "type": "integer",
+            "description": "Cantidad de cuotas de la venta",
+            "format": "int32"
+          },
+          "precioTotalCuotas": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          }
+        }
+      },
+      "InsertarVentaRequest": {
+        "type": "object",
+        "description": "Para insertar ventas",
+        "additionalProperties": false,
+        "properties": {
+          "ventaId": {
+            "type": "integer",
+            "description": "Indica el id de la venta",
+            "format": "int32"
+          },
+          "clienteId": {
+            "type": "integer",
+            "description": "Indica el codigo del cliente que esta haciendo la compra",
+            "format": "int32"
+          },
+          "fechaVenta": {
+            "type": "string",
+            "description": "Fecha en la que se realiza la compra",
+            "format": "date-time"
+          },
+          "precioTotal": {
+            "type": "number",
+            "description": "Precio total de la venta",
+            "format": "decimal",
+            "nullable": true
+          },
+          "interesAnual": {
+            "type": "number",
+            "description": "Interes anual de la venta",
+            "format": "decimal",
+            "nullable": true
+          },
+          "cantidadCuotas": {
+            "type": "integer",
+            "description": "Cantidad de cuotas generadas para la venta",
+            "format": "int32"
+          },
+          "precioTotalCuotas": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          }
+        }
+      },
+      "DetalleVentaRequest": {
+        "type": "object",
+        "description": "Entidad del detalle de la venta",
+        "additionalProperties": false,
+        "properties": {
+          "ventaId": {
+            "type": "integer",
+            "description": "Id de la venta",
+            "format": "int32"
+          },
+          "idChasis": {
+            "type": "string",
+            "description": "Numero de chasis del vehiculo",
+            "nullable": true
+          },
+          "cantidad": {
+            "type": "integer",
+            "description": "Cantidad",
+            "format": "int32"
+          },
+          "precioUnitario": {
+            "type": "number",
+            "description": "Precio por unidad",
+            "format": "decimal",
+            "nullable": true
+          },
+          "total": {
+            "type": "number",
+            "description": "Precio total con interes",
+            "format": "decimal",
+            "nullable": true
+          }
+        }
+      },
+      "InsertarCuotasRequest": {
+        "type": "object",
+        "description": "SOlicitud de datos para insertar cuotas",
+        "additionalProperties": false,
+        "properties": {
+          "cuotaId": {
+            "type": "integer",
+            "description": "Indica el codigo de la cuota generada",
+            "format": "int32"
+          },
+          "ventaId": {
+            "type": "integer",
+            "description": "GUarda el id de la venta a la que pertenecen las cuotas",
+            "format": "int32"
+          },
+          "numeroCuota": {
+            "type": "integer",
+            "description": "Indica el numero de la cuota",
+            "format": "int32"
+          },
+          "montoCuota": {
+            "type": "integer",
+            "description": "Indica el monto de la cuota a pagar",
+            "format": "int32"
+          },
+          "fechaVencimiento": {
+            "type": "string",
+            "description": "Indica la fecha de vencimiento de la cuota",
+            "format": "date-time"
+          },
+          "estado": {
+            "type": "boolean",
+            "description": "Establece si la cuota esta pagada o no, 0 es pendiente y 1 es pagado"
+          }
+        }
+      },
+      "CabeceraCuotaResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idVenta": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cedulaCliente": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombreCliente": {
+            "type": "string",
+            "nullable": true
+          },
+          "idChasis": {
+            "type": "string",
+            "nullable": true
+          },
+          "marca": {
+            "type": "string",
+            "nullable": true
+          },
+          "anoFabricacion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "precio": {
+            "type": "string",
+            "nullable": true
+          },
+          "interes": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "cantidadCuotas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "precioTotal": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "fechaVenta": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "DetalleCuotaResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "numeroCuota": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "montoCuota": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaVencimiento": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "estado": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Cuota": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "cuotaId": {
+            "type": "integer",
+            "description": "Indica el codigo de la cuota generada",
+            "format": "int32"
+          },
+          "ventaId": {
+            "type": "integer",
+            "description": "GUarda el id de la venta a la que pertenecen las cuotas",
+            "format": "int32"
+          },
+          "numeroCuota": {
+            "type": "integer",
+            "description": "Indica el numero de la cuota",
+            "format": "int32"
+          },
+          "montoCuota": {
+            "type": "integer",
+            "description": "Indica el monto de la cuota a pagar",
+            "format": "int32"
+          },
+          "fechaVencimiento": {
+            "type": "string",
+            "description": "Indica la fecha de vencimiento de la cuota",
+            "format": "date-time"
+          },
+          "fechaPago": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "estado": {
+            "type": "integer",
+            "description": "Establece si la cuota esta pagada o no, 0 es pendiente y 1 es pagado",
+            "format": "int32"
+          }
+        }
+      }
+    }
+  }
+}

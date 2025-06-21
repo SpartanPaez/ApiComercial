@@ -4,72 +4,69 @@ using ApiComercial.Infraestructure.Repositories;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using System.Reflection;
-using Microsoft.OpenApi.Models;
+using NSwag.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configurar la aplicación para escuchar en 0.0.0.0
+// Escuchar en todas las interfaces en el puerto 5000
 builder.WebHost.UseUrls("http://0.0.0.0:5000");
 
-var MyAllowSpecificOrigins = "AllowSpecificOrigins";
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
-// Add services to the container.
+// FluentValidation + MVC
 builder.Services.AddFluentValidation(options =>
 {
-    // Validate child properties and root collection elements
     options.ImplicitlyValidateChildProperties = true;
     options.ImplicitlyValidateRootCollectionElements = true;
-
-    // Automatic registration of validators in assembly
     options.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-})
-.AddControllers();
+}).AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AgregarDocumentacionSwagger();
+
+// AutoMapper / Servicios / Repositorios / Swagger Custom
 builder.Services.AgregarAutoMapper();
 builder.Services.AgregarServicio();
 builder.Services.AgregarRepository();
-builder.Services.AgregarDocumentacionSwagger();
+
 var mappingConfig = new MapperConfiguration(mc =>
 {
     mc.AddProfile(new MappingProfile());
 });
 
-// Configuración de CORS
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(builder =>
-    {
-        builder.AllowAnyOrigin()  // Permitir cualquier origen
-               .AllowAnyHeader()
-               .AllowAnyMethod();
-    });
-});
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    // Aquí puedes agregar configuraciones específicas para el entorno de desarrollo
-}
+app.UseDefaultFiles(); // opcional, busca index.html por defecto
+app.UseStaticFiles();  // sirve archivos de wwwroot/
 
-app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Comercial");
-});
+app.UseOpenApi(); // Expone el JSON: /swagger/apicomercial/swagger.json
+app.UseSwaggerUi();
 
-app.MapGet("/", () => Results.Redirect("swagger", true))
-    .ExcludeFromDescription();
 
-app.UseCors(); // Asegúrate de colocar esto antes de UseAuthorization
+app.UseCors();
 
-// app.UseHttpsRedirection(); // Descomenta esto si usas HTTPS
+// Redirección HTTPS (funciona también con Cloudflare Tunnel)
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
 app.MapControllers();
-app.UseStaticFiles();
+// Redirección de la raíz al Swagger
+app.MapMethods("/", new[] { "GET", "HEAD" }, context =>
+{
+    context.Response.Redirect("/swagger");
+    return Task.CompletedTask;
+});
+
 app.Run();

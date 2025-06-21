@@ -1,58 +1,48 @@
-using System.IO;
-using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace ApiComercial.Depedencies
+using System.Reflection.Metadata;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using NSwag;
+using NSwag.Generation.Processors;
+using NSwag.Generation.Processors.Contexts;
+
+
+namespace ApiComercial.Depedencies;
+
+public static class SwaggerDependencyInjection
 {
-    public static class SwaggerDependencyInjection
+    public static void AgregarDocumentacionSwagger(this IServiceCollection services)
     {
-        public static IServiceCollection AgregarDocumentacionSwagger(this IServiceCollection services)
+        var config = services.GetConfiguration();
+        services.AddOpenApiDocument(options =>
         {
-            return services.AddSwaggerGen(c =>
+            options.PostProcess = document =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
+                document.Info = new OpenApiInfo
                 {
-                    Title       = "Spartan API",
-                    Version     = "v1",
-                    Description = $"Documentación para el uso de la API de sistema de gestión automotor",
+                    Title = "Api Comercial",
+                    Version = "v1",
+                    Description = "API para la gestión de documentos comerciales",
                     Contact = new OpenApiContact
                     {
-                        Email = "Spartanpaez@icloud.com",
-                        Name  = "SpartanDev"
+                        Name = "Soporte API",
+                        Email = "",
                     }
-                });
+                };
+                document.Servers.Clear();
+            };
 
-
-                var xmlFile = Path.ChangeExtension(typeof(Program).Assembly.Location, ".xml");
-                c.IncludeXmlComments(xmlFile);
-                //c.OperationFilter<RemoveVersionParameterFilter>();
-                //c.DocumentFilter<ReplaceVersionWithExactValueInPathFilter>();
-            });
-        }
+        });
     }
-
-    public class RemoveVersionParameterFilter : IOperationFilter
+    public static IConfiguration GetConfiguration(this IServiceCollection services)
     {
-        public void Apply(OpenApiOperation operation, OperationFilterContext context)
-        {
-            var versionParameter = operation.Parameters.Single(p => p.Name == "version");
-            operation.Parameters.Remove(versionParameter);
-        }
+        using var scope = services.BuildServiceProvider().CreateScope();
+        var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+        return configuration;
     }
 
-    public class ReplaceVersionWithExactValueInPathFilter : IDocumentFilter
-    {
-        public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
-        {
-            var paths = new OpenApiPaths();
-            foreach (var path in swaggerDoc.Paths)
-            {
-                paths.Add(path.Key.Replace("v{version}", swaggerDoc.Info.Version), path.Value);
-            }
 
-            swaggerDoc.Paths = paths;
-        }
-    }
+
 }
+

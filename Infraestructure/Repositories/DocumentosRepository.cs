@@ -44,9 +44,11 @@ public class DocumentosRepository : IDocuementosRepository
 
         var nuevoArchivo = new ArchivoPostVenta
         {
-            IdDocumentacion = archivoPostVentaRequest.IdDocumentacion,
-            NombreArchivo = archivoPostVentaRequest.NombreArchivo,
-            RutaArchivo = archivoPostVentaRequest.RutaArchivo
+            IdDocumentacion = archivoPostVentaRequest.DocumentacionPostVentaId,
+            NombreArchivo = archivoPostVentaRequest.NombreArchivo!,
+            RutaArchivo = archivoPostVentaRequest.RutaArchivo!,
+            FechaCarga = DateTime.UtcNow,
+            UsuarioCarga = archivoPostVentaRequest.UsuarioCarga!,
         };
 
         ctx.ArchivosPostVenta.Add(nuevoArchivo);

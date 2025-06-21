@@ -1,18 +1,28 @@
 namespace ApiComercial.Models;
 public class ResponseVenta
 {
-    public int VentaId { get; set; }
-    public DateTime Fecha { get; set; }
-    public decimal? Total { get; set; }
-    public int ClienteId { get; set; } // Identificador del cliente
-    public string? ClienteNombre { get; set; } // Opcional: Nombre del cliente
-    public List<ResponseDetalleVenta?> Detalles { get; set; }
+public int VentaId { get; set; }
+        /// <summary>
+        /// Codigo del cliente que hace la compra
+        /// </summary>
+        public int ClienteId { get; set; } // Foreign Key
+        /// <summary>
+        /// Fecha de la venta
+        /// </summary>
+        public DateTime FechaVenta { get; set; }
+        /// <summary>
+        /// Precio total de las ventas
+        /// </summary>
+        public decimal? PrecioTotal { get; set; }
+        /// <summary>
+        /// INteres anual con la que se calculan las cuotas
+        /// </summary>
+        public decimal? InteresAnual { get; set; }
+        /// <summary>
+        /// Cantidad de cuotas de la venta
+        /// </summary>
+        public int CantidadCuotas { get; set; }
+        public decimal? PrecioTotalCuotas { get; set; }
+
 }
 
-public class ResponseDetalleVenta
-{
-    public int DetalleVentaId { get; set; }
-    public int VehiculoId { get; set; }
-    public decimal PrecioUnitario { get; set; }
-    public int Cantidad { get; set; }
-}

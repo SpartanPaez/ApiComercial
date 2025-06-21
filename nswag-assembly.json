@@ -1,0 +1,20 @@
+{
+  "runtime": "Net80",
+  "defaultVariables": {
+    "Configuration": "Debug"
+  },
+  "commands": [
+    {
+      "assemblyToOpenApi": {
+        "assemblyPaths": [
+          "bin/$(Configuration)/net8.0/ApiComercial.dll"
+        ],
+        "output": "wwwroot/swagger/v1/swagger.json",
+        "defaultUrlTemplate": "api/{controller}/{action}",
+        "referencePaths": [],
+        "useDocumentProvider": false,
+        "isAspNetCore": true
+      }
+    }
+  ]
+}

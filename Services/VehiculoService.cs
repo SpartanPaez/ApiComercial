@@ -98,6 +98,24 @@ namespace ApiComercial.Services
         /// <param name="parametros"></param>
         /// <returns></returns>
         public async Task<DetalleVenta> InsertarDetalleVenta(DetalleVenta parametros)
-        => await _vehiculoRepository.InsertarDetalleVenta(parametros);
+        {
+            // Insertar detalle de venta
+            var detalleInsertado = await _vehiculoRepository.InsertarDetalleVenta(parametros);
+
+            // Si la inserción fue exitosa, actualizar el vehículo
+            if (detalleInsertado.VentaId > 0)
+            {
+                var vehiculo = new Vehiculo
+                {
+                    IdChasis = detalleInsertado.IdChasis,
+                    Estado = "VENDIDO"
+                };
+
+                await UpdateVehiculo(vehiculo);
+            }
+
+            return detalleInsertado;
+        }
+
     }
 }
