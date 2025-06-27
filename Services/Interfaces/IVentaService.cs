@@ -9,4 +9,5 @@ public interface IVentaService
     Task<IEnumerable<DetalleCuotaResponse>> ObtenerDetalleCuotas(int idVenta);
     Task<string?> VerificaEstadoCuota(int idCuota);
     Task<bool> PagarCuota(PagarCuotaRequest cuota);
+    Task<IEnumerable<MediosPagoResponse>> ObtenerMediosPago();
 }

@@ -25,7 +25,32 @@ public class VentasController : BaseApiController
         _service = service;
         _mapper = mapper;
     }
-
+    //Mostrar medios de pago
+    [HttpGet("MediosPago")]
+    [ProducesResponseType(typeof(MediosPagoResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> MediosPago()
+    {
+        try
+        {
+            var resultado = await _service.ObtenerMediosPago();
+            var respuesta = _mapper.Map<IEnumerable<MediosPagoResponse>>(resultado);
+            return Ok(respuesta);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al consultar los medios de pago");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos - medios de pago"
+            });
+        }
+    }
+    
     [HttpGet("cabeceraCuota")]
     [ProducesResponseType(typeof(CabeceraCuotaResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]

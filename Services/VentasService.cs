@@ -1,5 +1,4 @@
-using ApiComercial.Entities;
-using ApiComercial.Entities.Cuotas;
+
 using ApiComercial.Models.Request;
 using ApiComercial.Models.Responses;
 using ApiComercial.Repositories.Interfaces;
@@ -22,6 +21,11 @@ public class VentasService : IVentaService
     public async Task<IEnumerable<DetalleCuotaResponse>> ObtenerDetalleCuotas(int idVenta)
     {
         return await _ventasRepository.ObtenerDetalleCuotas(idVenta);
+    }
+
+    public async Task<IEnumerable<MediosPagoResponse>> ObtenerMediosPago()
+    {
+        return await _ventasRepository.ObtenerMediosPago();
     }
 
     public async Task<bool> PagarCuota(PagarCuotaRequest cuota)

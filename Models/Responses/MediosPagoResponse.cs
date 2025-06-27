@@ -1,6 +1,6 @@
-namespace ApiComercial.Entities.Cuotas;
+namespace ApiComercial.Models.Responses;
 
-public class MediosPago
+public class MediosPagoResponse
 {
     /// <summary>
     /// Id del medio de pago

@@ -3676,6 +3676,59 @@
         }
       }
     },
+    "/api/Ventas/MediosPago": {
+      "get": {
+        "tags": [
+          "Ventas"
+        ],
+        "operationId": "Ventas_MediosPago",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediosPagoResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Ventas/cabeceraCuota": {
       "get": {
         "tags": [
@@ -5347,6 +5400,26 @@
           "estado": {
             "type": "boolean",
             "description": "Establece si la cuota esta pagada o no, 0 es pendiente y 1 es pagado"
+          }
+        }
+      },
+      "MediosPagoResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "medioPagoId": {
+            "type": "integer",
+            "description": "Id del medio de pago",
+            "format": "int32"
+          },
+          "codigo": {
+            "type": "string",
+            "description": "TC, TD, CHEQUE, EFECTIVO, TRANSFER"
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Descripción del medio de pago",
+            "nullable": true
           }
         }
       },

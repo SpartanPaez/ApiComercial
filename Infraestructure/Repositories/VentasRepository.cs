@@ -78,6 +78,21 @@ public class VentasRepository : IVentasRepository
                       .ToListAsync();
     }
 
+    public async Task<IEnumerable<MediosPagoResponse>> ObtenerMediosPago()
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+
+        return await ctx.MediosPago.AsNoTracking()
+            .Select(m => new MediosPagoResponse
+            {
+                MedioPagoId = m.MedioPagoId,
+                Codigo = m.Codigo,
+                Nombre = m.Nombre
+            })
+            .ToListAsync();
+    }
+
     public async Task<bool> PagarCuota(PagarCuotaRequest request)
     {
         // 1. Arrancar el scope y el contexto
