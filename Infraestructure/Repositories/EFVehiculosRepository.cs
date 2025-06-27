@@ -198,6 +198,7 @@ namespace ApiComercial.Infraestructure.Repositories
         /// <exception cref="NotImplementedException"></exception>
         public async Task<Cuota> InsertarCUota(Cuota parametros)
         {
+            parametros.EstadoCodigo = "PENDIENTE";
             _my.Cuota.Add(parametros);
             await _my.SaveChangesAsync();
             return parametros;
