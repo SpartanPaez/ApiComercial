@@ -30,7 +30,7 @@ namespace ApiComercial.Entities
         /// <summary>
         /// Establece si la cuota esta pagada o no, 0 es pendiente y 1 es pagado
         /// </summary>
-        public bool Estado { get; set; }
+        public string? Estado { get; set; }
 
 
     }

@@ -5398,8 +5398,9 @@
             "format": "date-time"
           },
           "estado": {
-            "type": "boolean",
-            "description": "Establece si la cuota esta pagada o no, 0 es pendiente y 1 es pagado"
+            "type": "string",
+            "description": "Establece si la cuota esta pagada o no, 0 es pendiente y 1 es pagado",
+            "nullable": true
           }
         }
       },
