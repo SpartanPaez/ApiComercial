@@ -1,4 +1,5 @@
 using ApiComercial.Entities;
+using ApiComercial.Entities.Cuotas;
 
 
 namespace ApiComercial.Infraestructure.Interfaces

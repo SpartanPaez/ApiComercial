@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ApiComercial.Entities;
 using ApiComercial.Entitie.Documentaciones;
+using ApiComercial.Entities.Cuotas;
 
 namespace ApiComercial.Infraestructure.Data
 {
@@ -104,7 +105,9 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<Escribania> Escribanias { get; set; }
         public DbSet<DocumentacionPostVenta> DocumentacionPostVenta { get; set; }
         public DbSet<ArchivoPostVenta> ArchivosPostVenta { get; set; }
-        
+        public DbSet<MediosPago> MediosPago { get; set; }
+        public DbSet<Pago> Pagos { get; set; }
+
         /// <summary>
         /// Callback que se invoca cuando EF Core está configurando el modelo de datos antes de crear la base de datos. 
         /// </summary>
@@ -133,12 +136,11 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(v => v.VentaId).HasColumnName("VentaId");
                 entity.Property(v => v.MontoCuota).HasColumnName("MontoCuota");
                 entity.Property(v => v.FechaVencimiento).HasColumnName("FechaVencimiento");
-                entity.Property(v => v.Estado).HasColumnName("Estado");
-                entity.Property(v => v.FechaPago).HasColumnName("FechaPago");
+                entity.Property(v => v.EstadoCodigo).HasColumnName("EstadoCodigo");
             });
 
             modelBuilder.Entity<Venta>(entity =>
-                {
+            {
                     entity.ToTable("ventas");
                     entity.HasKey(v => v.VentaId);
                     entity.Property(v => v.VentaId).HasColumnName("VentaId");
@@ -148,8 +150,28 @@ namespace ApiComercial.Infraestructure.Data
                     entity.Property(v => v.InteresAnual).HasColumnName("InteresAnual");
                     entity.Property(v => v.CantidadCuotas).HasColumnName("CantidadCuotas");
                     entity.Property(v => v.PrecioTotalCuotas).HasColumnName("PrecioTotalCuotas");
-                });
+            });
 
+            modelBuilder.Entity<MediosPago>(entity =>
+            {
+                entity.ToTable("mediospago");
+                entity.HasKey(e => e.MedioPagoId);
+                entity.Property(e => e.MedioPagoId).HasColumnName("MedioPagoId").IsRequired();
+                entity.Property(e => e.Codigo).HasColumnName("Codigo").HasMaxLength(10).IsRequired();
+                entity.Property(e => e.Nombre).HasColumnName("Nombre").HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<Pago>(entity =>
+            {
+                entity.ToTable("pagos");
+                entity.HasKey(e => e.PagoId);
+                entity.Property(e => e.PagoId).HasColumnName("PagoId").IsRequired();
+                entity.Property(e => e.CuotaId).HasColumnName("CuotaId").IsRequired();
+                entity.Property(e => e.MedioPagoId).HasColumnName("MedioPagoId");
+                entity.Property(e => e.FechaPago).HasColumnName("FechaPago").IsRequired();
+                entity.Property(e => e.Monto).HasColumnName("Monto").IsRequired();
+                entity.Property(e => e.Referencia).HasColumnName("Referencia").HasMaxLength(100);
+            });
 
             modelBuilder.Entity<Barrio>(entity =>
             {

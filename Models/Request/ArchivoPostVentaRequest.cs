@@ -7,7 +7,7 @@ public class ArchivoPostVentaRequest
     public string? NombreArchivo { get; set; }
 
     public string? RutaArchivo { get; set; }
-    public string Tipo { get; set; }
+    public string? Tipo { get; set; }
 
     public string? UsuarioCarga { get; set; }
 

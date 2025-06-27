@@ -1,4 +1,6 @@
 using ApiComercial.Entities;
+using ApiComercial.Entities.Cuotas;
+using ApiComercial.Models.Request;
 using ApiComercial.Models.Responses;
 using ApiComercial.Repositories.Interfaces;
 using ApiComercial.Services.Interfaces;
@@ -22,10 +24,10 @@ public class VentasService : IVentaService
         return await _ventasRepository.ObtenerDetalleCuotas(idVenta);
     }
 
-    public async Task<bool> PagarCuota(Cuota cuota)
+    public async Task<bool> PagarCuota(PagarCuotaRequest cuota)
     {
-        var validaCuota = await VerificaEstadoCuota(cuota.CuotaId, cuota.VentaId);
-        if (validaCuota >= 0)
+        var validaCuota = await VerificaEstadoCuota(cuota.CuotaId);
+        if (validaCuota == "PENDIENTE")
         {
             return await _ventasRepository.PagarCuota(cuota);
         }
@@ -35,8 +37,8 @@ public class VentasService : IVentaService
         }
     }
 
-    public async Task<int?> VerificaEstadoCuota(int idCuota, int idVenta)
+    public async Task<string?> VerificaEstadoCuota(int idCuota)
     {
-        return await _ventasRepository.VerificaEstadoCuota(idCuota, idVenta);
+        return await _ventasRepository.VerificaEstadoCuota(idCuota);
     }
 }

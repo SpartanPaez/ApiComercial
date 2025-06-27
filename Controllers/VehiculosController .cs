@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using ApiComercial.Entities;
+using ApiComercial.Entities.Cuotas;
 
 namespace ApiComercial.Controllers
 {
@@ -399,7 +400,7 @@ namespace ApiComercial.Controllers
             {
                 var cuota = _mapper.Map<Cuota>(cuotasRequest);
 
-                var resultado = await _service.InsertarCUota(cuota);
+                var resultado = await _service.InsertarCuota(cuota);
 
                 return CreatedAtAction(nameof(GetVentas), new { id = resultado.VentaId }, resultado);
             }

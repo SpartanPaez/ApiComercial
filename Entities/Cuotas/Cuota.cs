@@ -1,7 +1,5 @@
-using System;
+namespace ApiComercial.Entities.Cuotas;
 
-namespace ApiComercial.Entities
-{
     public class Cuota
     {
         /// <summary>
@@ -24,10 +22,9 @@ namespace ApiComercial.Entities
         /// Indica la fecha de vencimiento de la cuota
         /// </summary>
         public DateTime FechaVencimiento { get; set; } 
-        public DateTime? FechaPago { get; set; }
         /// <summary>
         /// Establece si la cuota esta pagada o no, 0 es pendiente y 1 es pagado
         /// </summary>
-        public int Estado { get; set; }
+        public string? EstadoCodigo { get; set; }
     }
-}
+

@@ -1,8 +1,7 @@
 using ApiComercial.Entities;
 using ApiComercial.Interfaces;
 using ApiComercial.Infraestructure.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using ApiComercial.Entities.Cuotas;
 
 namespace ApiComercial.Services
 {
@@ -84,14 +83,6 @@ namespace ApiComercial.Services
         /// <returns></returns>
         public async Task<Venta> InsertVenta(Venta parametros)
         => await _vehiculoRepository.InsertVenta(parametros);
-
-        /// <summary>
-        /// Inserta cuotas de la venta
-        /// </summary>
-        /// <param name="parametros"></param>
-        /// <returns></returns>
-        public async Task<Cuota> InsertarCUota(Cuota parametros)
-        => await _vehiculoRepository.InsertarCUota(parametros);
         /// <summary>
         /// Insertar detalle de la venta
         /// </summary>
@@ -117,5 +108,7 @@ namespace ApiComercial.Services
             return detalleInsertado;
         }
 
+        public async Task<Cuota> InsertarCuota(Cuota parametros)
+         => await _vehiculoRepository.InsertarCUota(parametros);
     }
 }

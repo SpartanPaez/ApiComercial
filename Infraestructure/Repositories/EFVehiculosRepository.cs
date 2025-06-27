@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using ApiComercial.Models;
+using ApiComercial.Entities.Cuotas;
 
 namespace ApiComercial.Infraestructure.Repositories
 {

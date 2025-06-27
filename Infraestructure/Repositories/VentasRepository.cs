@@ -1,5 +1,6 @@
-using ApiComercial.Entities;
+using ApiComercial.Entities.Cuotas;
 using ApiComercial.Infraestructure.Data;
+using ApiComercial.Models.Request;
 using ApiComercial.Models.Responses;
 using ApiComercial.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -62,41 +63,57 @@ public class VentasRepository : IVentasRepository
         var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
 
         return await (from cuotas in ctx.Cuota.AsNoTracking()
+                      join ventas in ctx.Ventas.AsNoTracking()
+                      on cuotas.VentaId equals ventas.VentaId
                       where cuotas.VentaId == idVenta
                       select new DetalleCuotaResponse
                       {
+                          VentaId = cuotas.VentaId,
+                          IdCuota = cuotas.CuotaId,
                           NumeroCuota = cuotas.NumeroCuota,
                           MontoCuota = cuotas.MontoCuota,
                           FechaVencimiento = cuotas.FechaVencimiento,
-                          Estado = cuotas.Estado
+                          EstadoCodigo = cuotas.EstadoCodigo
                       })
                       .ToListAsync();
     }
 
-    public async Task<bool> PagarCuota(Cuota cuota)
+    public async Task<bool> PagarCuota(PagarCuotaRequest request)
     {
-        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        // 1. Arrancar el scope y el contexto
+        await using var scope = _serviceScopeFactory.CreateAsyncScope();
         var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
 
-        cuota.Estado = 0;
-        cuota.FechaPago = DateTime.Now;
-        ctx.Cuota.Update(cuota);
-        var result = await ctx.SaveChangesAsync();
+        // 2. Cargar la cuota que vamos a pagar
+        var cuota = await ctx.Cuota
+            .FirstOrDefaultAsync(c => c.CuotaId == request.CuotaId);
+        if (cuota is null)
+            throw new KeyNotFoundException($"No existe cuota con Id {request.CuotaId}");
 
-        return result > 0;
-
+        // 3. Insertar un pago en la tabla Pagos
+        var pago = new Pago
+        {
+            CuotaId = request.CuotaId,
+            MedioPagoId = request.MedioPagoId,
+            Monto = request.MontoPagado,
+            Referencia = request.Referencia,
+            FechaPago = DateTime.UtcNow
+        };
+        ctx.Pagos.Add(pago);
+        cuota.EstadoCodigo = "PAGADO";
+        var cambios = await ctx.SaveChangesAsync();
+        return cambios > 0;
     }
 
-    public async Task<int?> VerificaEstadoCuota(int idCuota, int idVenta)
+    public async Task<string?> VerificaEstadoCuota(int idCuota)
     {
         using var scope = _serviceScopeFactory.CreateAsyncScope();
         var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
 
         return await (from cuotas in ctx.Cuota.AsNoTracking()
                       where cuotas.CuotaId == idCuota
-                      && cuotas.VentaId == idVenta
-                      && cuotas.Estado == 1
-                      select (int?)cuotas.Estado)
+                      && cuotas.EstadoCodigo == "PENDIENTE"
+                      select cuotas.EstadoCodigo)
                       .FirstOrDefaultAsync();
     }
 }

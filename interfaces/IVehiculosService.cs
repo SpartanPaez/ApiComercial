@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices;
 using ApiComercial.Entities;
+using ApiComercial.Entities.Cuotas;
 
 namespace ApiComercial.Interfaces
 {
@@ -85,7 +86,7 @@ namespace ApiComercial.Interfaces
         /// </summary>
         /// <param name="parametros"></param>
         /// <returns></returns>
-        Task<Cuota> InsertarCUota(Cuota parametros);
+        Task<Cuota> InsertarCuota(Cuota parametros);
         /// <summary>
         /// Insertar el detalle de la venta
         /// </summary>

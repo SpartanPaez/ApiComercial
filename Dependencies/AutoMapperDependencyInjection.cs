@@ -3,6 +3,7 @@ using ApiComercial.interfaces;
 using ApiComercial.Entities;
 using ApiComercial.Models;
 using Microsoft.Extensions.DependencyInjection;
+using ApiComercial.Entities.Cuotas;
 namespace ApiComercial.Depedencies
 {
     public static class AutoMapperDependencyInjection

@@ -3805,7 +3805,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Cuota"
+                "$ref": "#/components/schemas/PagarCuotaRequest"
               }
             }
           },
@@ -3818,7 +3818,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Cuota"
+                  "$ref": "#/components/schemas/PagarCuotaRequest"
                 }
               }
             }
@@ -4355,7 +4355,8 @@
             "nullable": true
           },
           "tipo": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "usuarioCarga": {
             "type": "string",
@@ -5405,6 +5406,14 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
+          "ventaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idCuota": {
+            "type": "integer",
+            "format": "int32"
+          },
           "numeroCuota": {
             "type": "integer",
             "format": "int32"
@@ -5417,50 +5426,35 @@
             "type": "string",
             "format": "date-time"
           },
-          "estado": {
-            "type": "integer",
-            "format": "int32"
+          "estadoCodigo": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
-      "Cuota": {
+      "PagarCuotaRequest": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "cuotaId": {
             "type": "integer",
-            "description": "Indica el codigo de la cuota generada",
+            "description": "Id del medio de pago",
             "format": "int32"
           },
-          "ventaId": {
+          "medioPagoId": {
             "type": "integer",
-            "description": "GUarda el id de la venta a la que pertenecen las cuotas",
+            "description": "Monto a pagar",
             "format": "int32"
           },
-          "numeroCuota": {
+          "montoPagado": {
             "type": "integer",
-            "description": "Indica el numero de la cuota",
+            "description": "Fecha de pago",
             "format": "int32"
           },
-          "montoCuota": {
-            "type": "integer",
-            "description": "Indica el monto de la cuota a pagar",
-            "format": "int32"
-          },
-          "fechaVencimiento": {
+          "referencia": {
             "type": "string",
-            "description": "Indica la fecha de vencimiento de la cuota",
-            "format": "date-time"
-          },
-          "fechaPago": {
-            "type": "string",
-            "format": "date-time",
+            "description": "Observaciones del pago",
             "nullable": true
-          },
-          "estado": {
-            "type": "integer",
-            "description": "Establece si la cuota esta pagada o no, 0 es pendiente y 1 es pagado",
-            "format": "int32"
           }
         }
       }

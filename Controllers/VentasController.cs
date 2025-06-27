@@ -1,5 +1,7 @@
 using ApiComercial.Entities;
+using ApiComercial.Entities.Cuotas;
 using ApiComercial.Models;
+using ApiComercial.Models.Request;
 using ApiComercial.Models.Responses;
 using ApiComercial.Services.Interfaces;
 using AutoMapper;
@@ -75,16 +77,15 @@ public class VentasController : BaseApiController
     }
 
     [HttpPut("PagarCuota")]
-    [ProducesResponseType(typeof(Cuota), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PagarCuotaRequest), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> PagarCuota(Cuota cuota)
+    public async Task<ActionResult> PagarCuota(PagarCuotaRequest cuota)
     {
         try
         {
-            var request = Mapper.Map<Cuota>(cuota);
             var resultado = await _service.PagarCuota(cuota);
             return Ok(resultado);
         }
