@@ -2,11 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using ApiComercial.Models;
 using AutoMapper;
 using ApiComercial.Interfaces;
-using ApiComercial.Controllers;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
 using ApiComercial.Entities;
 using ApiComercial.Entities.Cuotas;
 
@@ -366,9 +361,9 @@ namespace ApiComercial.Controllers
                 var detalle = _mapper.Map<DetalleVenta>(ventaDetalleRequest);
 
                 var resultado = await _service.InsertarDetalleVenta(detalle);
-                if (resultado.VentaId > 0)
+                if (resultado.VentaId > 0 && resultado.IdChasis != null)
                 {
-                    return CreatedAtAction(nameof(UpdateVehiculo), new { Estado = "VENDIDO", IdChasis = resultado.IdChasis }, resultado);
+                    await _service.UpdateVehiculoEstado(resultado.IdChasis, "VENDIDO");
                 }
 
                 return Ok(resultado);

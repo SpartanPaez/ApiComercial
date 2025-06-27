@@ -32,6 +32,7 @@ namespace ApiComercial.Interfaces
         /// <param name="parametros">Los nuevos parámetros del vehículo.</param>
         /// <returns>El vehículo actualizado.</returns>
         Task<Vehiculo> UpdateVehiculo(Vehiculo parametros);
+        Task<string> UpdateVehiculoEstado(string idChasis, string estado);
 
         /// <summary>
         /// Verifica si un vehículo existe en la base de datos.

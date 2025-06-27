@@ -2,10 +2,6 @@ using ApiComercial.Entities;
 using ApiComercial.Infraestructure.Interfaces;
 using ApiComercial.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-using ApiComercial.Models;
 using ApiComercial.Entities.Cuotas;
 
 namespace ApiComercial.Infraestructure.Repositories
@@ -80,6 +76,18 @@ namespace ApiComercial.Infraestructure.Repositories
             await _my.SaveChangesAsync();
 
             return parametros;
+        }
+        // actualizar estados   
+        public async Task<string> UpdateVehiculoEstado(string idChasis, string estado)
+        {
+            var vehiculo = await _my.Vehiculos.FirstOrDefaultAsync(v => v.IdChasis == idChasis);
+            if (vehiculo == null)
+                return "Vehículo no encontrado";
+
+            vehiculo.Estado = estado;
+            _my.Vehiculos.Update(vehiculo);
+            await _my.SaveChangesAsync();
+            return "Estado actualizado correctamente";
         }
 
 
