@@ -28,6 +28,11 @@ public class VentasService : IVentaService
         return await _ventasRepository.ObtenerMediosPago();
     }
 
+    public Task<IEnumerable<VentasResponse>> ObtenerVentasContado()
+    {
+        return _ventasRepository.ObtenerVentasContado();
+    }
+
     public async Task<bool> PagarCuota(PagarCuotaRequest cuota)
     {
         var validaCuota = await VerificaEstadoCuota(cuota.CuotaId);

@@ -3676,6 +3676,63 @@
         }
       }
     },
+    "/api/Ventas/VentasContado": {
+      "get": {
+        "tags": [
+          "Ventas"
+        ],
+        "summary": "Consulta las ventas al contado",
+        "operationId": "Ventas_VentasContado",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VentasResponse"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Ventas/MediosPago": {
       "get": {
         "tags": [
@@ -5401,6 +5458,48 @@
             "type": "string",
             "description": "Establece si la cuota esta pagada o no, 0 es pendiente y 1 es pagado",
             "nullable": true
+          }
+        }
+      },
+      "VentasResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ventaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idCliente": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cedulaCliente": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombreCliente": {
+            "type": "string",
+            "nullable": true
+          },
+          "idChasis": {
+            "type": "string",
+            "nullable": true
+          },
+          "marca": {
+            "type": "string",
+            "nullable": true
+          },
+          "anoFabricacion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "precio": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaCompra": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },

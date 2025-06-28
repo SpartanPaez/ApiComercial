@@ -25,6 +25,39 @@ public class VentasController : BaseApiController
         _service = service;
         _mapper = mapper;
     }
+
+    /// <summary>
+    /// Consulta las ventas al contado
+    /// </summary>
+    [HttpGet("VentasContado")]
+    [ProducesResponseType(typeof(IEnumerable<VentasResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> VentasContado()
+    {
+        try
+        {
+            var resultado = await _service.ObtenerVentasContado();
+            if (resultado == null || !resultado.Any())
+            {
+                return NoContent();
+            }
+            var respuesta = _mapper.Map<IEnumerable<VentasResponse>>(resultado);
+            return Ok(respuesta);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al consultar las ventas al contado");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos - ventas al contado"
+            });
+        }
+    }
+
     //Mostrar medios de pago
     [HttpGet("MediosPago")]
     [ProducesResponseType(typeof(MediosPagoResponse), StatusCodes.Status200OK)]

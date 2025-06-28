@@ -65,6 +65,36 @@ public class VentasRepository : IVentasRepository
                       .ToListAsync();
     }
 
+    public async Task<IEnumerable<VentasResponse>> ObtenerVentasContado()
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+        return await (from ventas in ctx.Ventas.AsNoTracking()
+                      join detalleventas in ctx.DetalleVenta.AsNoTracking()
+                      on ventas.VentaId equals detalleventas.VentaId
+                      join clientes in ctx.Clientes.AsNoTracking()
+                      on ventas.ClienteId equals clientes.ClienteId
+                      join autos in ctx.Vehiculos.AsNoTracking()
+                      on detalleventas.IdChasis equals autos.IdChasis
+                      join marcas in ctx.Marcas.AsNoTracking()
+                      on autos.IdMarca equals marcas.IdMarca
+                      where ventas.CantidadCuotas == 0 // Ventas al contado
+                      select new VentasResponse
+                      {
+                          VentaId = ventas.VentaId,
+                          IdCliente = clientes.ClienteId,
+                          CedulaCliente = clientes.ClienteCedula,
+                          NombreCliente = clientes.ClienteNombre,
+                          IdChasis = detalleventas.IdChasis,
+                          Marca = marcas.DescripcionMarca,
+                          AnoFabricacion = autos.AnoFabricacion,
+                          Precio = autos.Precio,
+                          FechaCompra = ventas.FechaVenta
+                      })
+                      .ToListAsync();
+
+    }
+
     public async Task<IEnumerable<DetalleCuotaResponse>> ObtenerDetalleCuotas(int idVenta)
     {
         using var scope = _serviceScopeFactory.CreateAsyncScope();
