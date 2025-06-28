@@ -13,10 +13,12 @@ namespace ApiComercial.Infraestructure.Repositories
     {
         private readonly MysqlContext _my;
         private readonly string? _mysqlconnection;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
 
-        public EFVehiculosRepository(MysqlContext my, IConfiguration configuration)
+        public EFVehiculosRepository(MysqlContext my, IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
         {
+            _serviceScopeFactory = serviceScopeFactory;
             _my = my;
             _mysqlconnection = configuration.GetConnectionString("Default");
 
@@ -80,14 +82,18 @@ namespace ApiComercial.Infraestructure.Repositories
         // actualizar estados   
         public async Task<string> UpdateVehiculoEstado(string idChasis, string estado)
         {
-            var vehiculo = await _my.Vehiculos.FirstOrDefaultAsync(v => v.IdChasis == idChasis);
-            if (vehiculo == null)
-                return "Vehículo no encontrado";
+            await using var scope = _serviceScopeFactory.CreateAsyncScope();
+            var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
 
+            var vehiculo = await ctx.Vehiculos.FirstOrDefaultAsync(v => v.IdChasis == idChasis);
+            if (vehiculo == null)
+            {
+                throw new Exception($"Vehículo con ID de chasis {idChasis} no encontrado.");
+            }
             vehiculo.Estado = estado;
-            _my.Vehiculos.Update(vehiculo);
-            await _my.SaveChangesAsync();
-            return "Estado actualizado correctamente";
+            ctx.Vehiculos.Update(vehiculo);
+            await ctx.SaveChangesAsync();
+            return vehiculo.Estado;
         }
 
 
@@ -121,9 +127,11 @@ namespace ApiComercial.Infraestructure.Repositories
                 .ToListAsync();
         }
 
-        public Task<Vehiculo> GetVehiculoPorId(string idChasis)
+        public async Task<Vehiculo> GetVehiculoPorId(string idChasis)
         {
-            throw new NotImplementedException();
+            return await _my.Vehiculos
+                .Where(v => v.IdChasis == idChasis)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Estados>> GetEstados()
@@ -149,7 +157,7 @@ namespace ApiComercial.Infraestructure.Repositories
         public async Task<int> GetCountByEstado(string estado)
         {
             var cleanEstado = estado.ToUpperInvariant().Trim();
-            
+
             return await _my.Vehiculos.AsNoTracking()
                 .Where(v => v.Estado!.ToUpper().Trim() == cleanEstado)
                 .CountAsync();
@@ -171,18 +179,18 @@ namespace ApiComercial.Infraestructure.Repositories
         public async Task<IEnumerable<Venta>> GetVentas()
         {
             return await (from ventas in _my.Ventas.AsNoTracking()
-                           join detalleVenta in _my.DetalleVenta.AsNoTracking()
-                               on ventas.VentaId equals detalleVenta.VentaId
-                           select new Venta
-                           {
-                               VentaId = ventas.VentaId,
-                               ClienteId = ventas.ClienteId,
-                               FechaVenta = ventas.FechaVenta,
-                               PrecioTotal = ventas.PrecioTotal,
-                               InteresAnual = ventas.InteresAnual,
-                               CantidadCuotas = ventas.CantidadCuotas,
-                               PrecioTotalCuotas = ventas.PrecioTotalCuotas,
-                           }).
+                          join detalleVenta in _my.DetalleVenta.AsNoTracking()
+                              on ventas.VentaId equals detalleVenta.VentaId
+                          select new Venta
+                          {
+                              VentaId = ventas.VentaId,
+                              ClienteId = ventas.ClienteId,
+                              FechaVenta = ventas.FechaVenta,
+                              PrecioTotal = ventas.PrecioTotal,
+                              InteresAnual = ventas.InteresAnual,
+                              CantidadCuotas = ventas.CantidadCuotas,
+                              PrecioTotalCuotas = ventas.PrecioTotalCuotas,
+                          }).
                              ToListAsync();
         }
         /// <summary>

@@ -93,18 +93,6 @@ namespace ApiComercial.Services
             // Insertar detalle de venta
             var detalleInsertado = await _vehiculoRepository.InsertarDetalleVenta(parametros);
 
-            // Si la inserción fue exitosa, actualizar el vehículo
-            if (detalleInsertado.VentaId > 0)
-            {
-                var vehiculo = new Vehiculo
-                {
-                    IdChasis = detalleInsertado.IdChasis,
-                    Estado = "VENDIDO"
-                };
-
-                await UpdateVehiculo(vehiculo);
-            }
-
             return detalleInsertado;
         }
 
@@ -112,23 +100,6 @@ namespace ApiComercial.Services
          => await _vehiculoRepository.InsertarCUota(parametros);
 
         public async Task<string> UpdateVehiculoEstado(string idChasis, string estado)
-        {
-            // Verificar si el vehículo existe
-            if (await _vehiculoRepository.ExisteVehiculo(idChasis))
-            {
-                // Actualizar el estado del vehículo
-                var vehiculo = new Vehiculo
-                {
-                    IdChasis = idChasis,
-                    Estado = estado
-                };
-                await _vehiculoRepository.UpdateVehiculo(vehiculo);
-                return $"Vehículo con ID {idChasis} actualizado a estado {estado}.";
-            }
-            else
-            {
-                return $"Vehículo con ID {idChasis} no encontrado.";
-            }
-        }
+         => await _vehiculoRepository.UpdateVehiculoEstado(idChasis, estado);
     }
 }

@@ -21,6 +21,7 @@ namespace ApiComercial.Infraestructure.Interfaces
         /// <returns></returns>
         Task<Vehiculo> GetVehiculoPorId(string idChasis);
         Task<Vehiculo> InsertVehiculo(Vehiculo parametros);
+        Task<string> UpdateVehiculoEstado(string idChasis, string estado);
         Task<Vehiculo> UpdateVehiculo(Vehiculo parametros);
         Task<bool> ExisteVehiculo(string idChasis);
         Task<bool> DeleteVehiculo(string idChasis);
