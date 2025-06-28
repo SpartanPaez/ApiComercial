@@ -5473,6 +5473,19 @@
           "fechaVenta": {
             "type": "string",
             "format": "date-time"
+          },
+          "cantidadCuotasPagadas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPagado": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalRestante": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
           }
         }
       },

@@ -13,4 +13,7 @@ public class CabeceraCuotaResponse
     public int CantidadCuotas { get; set; }
     public decimal? PrecioTotal { get; set; }
     public DateTime FechaVenta { get; set; }
+    public int CantidadCuotasPagadas { get; set; }
+    public int TotalPagado { get; set; }
+    public decimal? TotalRestante { get; set; }
 }

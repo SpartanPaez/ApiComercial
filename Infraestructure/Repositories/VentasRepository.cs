@@ -39,6 +39,8 @@ public class VentasRepository : IVentasRepository
                       on detalleventas.IdChasis equals autos.IdChasis
                       join marcas in ctx.Marcas.AsNoTracking()
                       on autos.IdMarca equals marcas.IdMarca
+                      join cuotas in ctx.Cuota.AsNoTracking()
+                      on ventas.VentaId equals cuotas.VentaId into cuotasVenta
                       where ventas.CantidadCuotas > 0
                       select new CabeceraCuotaResponse
                       {
@@ -52,7 +54,13 @@ public class VentasRepository : IVentasRepository
                           Interes = ventas.InteresAnual,
                           CantidadCuotas = ventas.CantidadCuotas,
                           PrecioTotal = ventas.PrecioTotalCuotas,
-                          FechaVenta = ventas.FechaVenta
+                          FechaVenta = ventas.FechaVenta,
+                          // NUEVO: Cuotas pagadas
+                          CantidadCuotasPagadas = cuotasVenta.Count(c => c.EstadoCodigo == "PAGADO"),
+                          // NUEVO: Total pagado (si pagas por cuota)
+                          TotalPagado = cuotasVenta.Where(c => c.EstadoCodigo == "PAGADO").Sum(c => c.MontoCuota),
+                          // NUEVO: Total restante (precio total - pagado)
+                          TotalRestante = ventas.PrecioTotalCuotas - cuotasVenta.Where(c => c.EstadoCodigo == "PAGADO").Sum(c => c.MontoCuota)
                       })
                       .ToListAsync();
     }
