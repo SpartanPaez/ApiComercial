@@ -1,6 +1,7 @@
 using ApiComercial.Infraestructure.Data;
 using ApiComercial.Infraestructure.interfaces;
 using ApiComercial.Infraestructure.Interfaces;
+using ApiComercial.Infraestructure.Repositories.Interfaces;
 using ApiComercial.Interfaces;
 using ApiComercial.Repositories.Interfaces;
 using ApiComercial.Services;
@@ -35,6 +36,7 @@ namespace ApiComercial.Infraestructure.Repositories
             services.AddScoped<IMarcaModeloService, MarcaModeloService>();
             services.AddTransient<IVentasRepository, VentasRepository>();
             services.AddTransient<IDocuementosRepository, DocumentosRepository>();
+            services.AddScoped<ICatalogoFotoAutoRepository, CatalogoFotoAutoRepository>();
 
                                                                     
             return services;

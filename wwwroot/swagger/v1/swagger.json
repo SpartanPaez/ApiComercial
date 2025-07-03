@@ -11,6 +11,72 @@
     "version": "v1"
   },
   "paths": {
+    "/api/CatalogoAutos/auto-foto": {
+      "post": {
+        "tags": [
+          "CatalogoAutos"
+        ],
+        "operationId": "CatalogoAutos_SubirArchivoFotoBase64",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FotoAutoBase64Request"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Clientes": {
       "get": {
         "tags": [
@@ -3972,6 +4038,50 @@
   },
   "components": {
     "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "description": "Clase que muestra los errores",
+        "additionalProperties": false,
+        "properties": {
+          "errorType": {
+            "$ref": "#/components/schemas/ErrorType"
+          },
+          "errorDescripcion": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ErrorType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "error_interno_servidor",
+          "validacion_negocio"
+        ],
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "FotoAutoBase64Request": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idChasis": {
+            "type": "string"
+          },
+          "nombreArchivo": {
+            "type": "string"
+          },
+          "archivoBase64": {
+            "type": "string"
+          },
+          "esPrincipal": {
+            "type": "boolean"
+          }
+        }
+      },
       "ResponseClientes": {
         "type": "object",
         "additionalProperties": false,
@@ -4037,32 +4147,6 @@
             "nullable": true
           }
         }
-      },
-      "ErrorResponse": {
-        "type": "object",
-        "description": "Clase que muestra los errores",
-        "additionalProperties": false,
-        "properties": {
-          "errorType": {
-            "$ref": "#/components/schemas/ErrorType"
-          },
-          "errorDescripcion": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "ErrorType": {
-        "type": "integer",
-        "description": "",
-        "x-enumNames": [
-          "error_interno_servidor",
-          "validacion_negocio"
-        ],
-        "enum": [
-          0,
-          1
-        ]
       },
       "RequestDatoCliente": {
         "type": "object",

@@ -4,6 +4,8 @@ using ApiComercial.Entities;
 using ApiComercial.Models;
 using Microsoft.Extensions.DependencyInjection;
 using ApiComercial.Entities.Cuotas;
+using Entities.Catalogo;
+using ApiComercial.Models.Request.Catalogo;
 namespace ApiComercial.Depedencies
 {
     public static class AutoMapperDependencyInjection
@@ -55,6 +57,7 @@ namespace ApiComercial.Depedencies
             CreateMap<Cuota, InsertarCuotasRequest>().ReverseMap();
             CreateMap<DetalleVenta, DetalleVentaRequest>().ReverseMap();
             CreateMap<Venta, ResponseVenta>().ReverseMap();
+            CreateMap<AutoFoto, FotoAutoBase64Request>().ReverseMap();
         }
     }
 }

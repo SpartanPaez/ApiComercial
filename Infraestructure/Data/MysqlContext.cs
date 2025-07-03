@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using ApiComercial.Entities;
 using ApiComercial.Entitie.Documentaciones;
 using ApiComercial.Entities.Cuotas;
+using Entities.Catalogo;
 
 namespace ApiComercial.Infraestructure.Data
 {
@@ -107,6 +108,7 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<ArchivoPostVenta> ArchivosPostVenta { get; set; }
         public DbSet<MediosPago> MediosPago { get; set; }
         public DbSet<Pago> Pagos { get; set; }
+        public DbSet<AutoFoto> AutoFotos { get; set; } // Tabla para fotos de autos
 
         /// <summary>
         /// Callback que se invoca cuando EF Core está configurando el modelo de datos antes de crear la base de datos. 
@@ -141,15 +143,15 @@ namespace ApiComercial.Infraestructure.Data
 
             modelBuilder.Entity<Venta>(entity =>
             {
-                    entity.ToTable("ventas");
-                    entity.HasKey(v => v.VentaId);
-                    entity.Property(v => v.VentaId).HasColumnName("VentaId");
-                    entity.Property(v => v.ClienteId).HasColumnName("ClienteId");
-                    entity.Property(v => v.FechaVenta).HasColumnName("FechaVenta");
-                    entity.Property(v => v.PrecioTotal).HasColumnName("PrecioTotal");
-                    entity.Property(v => v.InteresAnual).HasColumnName("InteresAnual");
-                    entity.Property(v => v.CantidadCuotas).HasColumnName("CantidadCuotas");
-                    entity.Property(v => v.PrecioTotalCuotas).HasColumnName("PrecioTotalCuotas");
+                entity.ToTable("ventas");
+                entity.HasKey(v => v.VentaId);
+                entity.Property(v => v.VentaId).HasColumnName("VentaId");
+                entity.Property(v => v.ClienteId).HasColumnName("ClienteId");
+                entity.Property(v => v.FechaVenta).HasColumnName("FechaVenta");
+                entity.Property(v => v.PrecioTotal).HasColumnName("PrecioTotal");
+                entity.Property(v => v.InteresAnual).HasColumnName("InteresAnual");
+                entity.Property(v => v.CantidadCuotas).HasColumnName("CantidadCuotas");
+                entity.Property(v => v.PrecioTotalCuotas).HasColumnName("PrecioTotalCuotas");
             });
 
             modelBuilder.Entity<MediosPago>(entity =>
@@ -450,6 +452,16 @@ namespace ApiComercial.Infraestructure.Data
                entity.Property(e => e.FechaCarga).HasColumnName("fecha_carga");
                entity.Property(e => e.UsuarioCarga).HasColumnName("usuario_carga").HasMaxLength(100);
            });
+            modelBuilder.Entity<AutoFoto>(entity =>
+            {
+                entity.ToTable("auto_fotos"); // nombre exacto de la tabla en MySQL
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.IdChasis).HasColumnName("id_chasis").HasMaxLength(50).IsRequired();
+                entity.Property(e => e.UrlFoto).HasColumnName("url_foto").HasMaxLength(255).IsRequired();
+                entity.Property(e => e.EsPrincipal).HasColumnName("es_principal").HasDefaultValue(false);
+            });
+
         }
     }
 }
