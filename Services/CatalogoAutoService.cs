@@ -3,6 +3,8 @@ using ApiComercial.Models.Request.Catalogo;
 using ApiComercial.Models.Responses.Catalogo;
 using ApiComercial.Services.Interfaces.Catalogo;
 using Entities.Catalogo;
+using Models.Request.Catalogo;
+using Models.Responses.Catalogo;
 
 namespace ApiComercial.Services.Catalogo;
 
@@ -13,6 +15,34 @@ public class CatalogoAutoService : ICatalogoAutoService
     {
         _fotoAutoRepository = fotoAutoRepository;
     }
+
+    public async Task<int> AgregarCaracteristicaAsync(AutoCaracteristicaRequest request)
+    {
+
+        return await _fotoAutoRepository.InsertarCaracteristica(request);   
+    }
+
+    public async Task<string> AgregarEspecificacionAsync(AutoEspecificacionRequest request)
+    {
+       return await _fotoAutoRepository.InsertarEspecificacion(request);
+    }
+
+    public async Task<List<AutoCaracteristicaResponse>> ObtenerCaracteristicasAsync(string idChasis)
+    {
+
+        return await _fotoAutoRepository.ObtenerCaracteristicasPorChasis(idChasis);
+    }
+
+    public async Task<AutoDetalleViewModel> ObtenerDetalleAutoAsync(string idChasis)
+    {
+        return await _fotoAutoRepository.ObtenerDetalleAutoAsync(idChasis);
+    }
+
+    public async Task<List<AutoEspecificacionResponse>> ObtenerEspecificacionesAsync(string idChasis)
+    {
+        return await _fotoAutoRepository.ObtenerEspecificacion(idChasis);
+    }
+
     public async Task<FotoAutoResponse> subirFoto(FotoAutoBase64Request request)
     {
         var rutaRelativa = Path.Combine("uploads", "autos", request.IdChasis);

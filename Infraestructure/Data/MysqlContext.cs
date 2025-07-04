@@ -109,6 +109,8 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<MediosPago> MediosPago { get; set; }
         public DbSet<Pago> Pagos { get; set; }
         public DbSet<AutoFoto> AutoFotos { get; set; } // Tabla para fotos de autos
+        public DbSet<AutoCaracteristica> AutoCaracteristicas { get; set; } // Tabla para caracteristicas de autos
+        public DbSet<AutoEspecificacion> AutoEspecificaciones { get; set; } // Tabla para especificaciones de autos
 
         /// <summary>
         /// Callback que se invoca cuando EF Core está configurando el modelo de datos antes de crear la base de datos. 
@@ -117,6 +119,7 @@ namespace ApiComercial.Infraestructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
 
             modelBuilder.Entity<DetalleVenta>(entity =>
             {
@@ -460,6 +463,25 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.IdChasis).HasColumnName("id_chasis").HasMaxLength(50).IsRequired();
                 entity.Property(e => e.UrlFoto).HasColumnName("url_foto").HasMaxLength(255).IsRequired();
                 entity.Property(e => e.EsPrincipal).HasColumnName("es_principal").HasDefaultValue(false);
+            });
+
+            modelBuilder.Entity<AutoCaracteristica>(entity =>
+            {
+                entity.ToTable("auto_caracteristicas"); // nombre exacto de la tabla en MySQL
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.IdChasis).HasColumnName("id_chasis").HasMaxLength(50).IsRequired();
+                entity.Property(e => e.Caracteristica).HasColumnName("caracteristica").HasMaxLength(255).IsRequired();
+            });
+
+            modelBuilder.Entity<AutoEspecificacion>(entity =>
+            {
+                entity.ToTable("auto_especificaciones"); // nombre exacto de la tabla en MySQL
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.IdChasis).HasColumnName("id_chasis").HasMaxLength(50).IsRequired();
+                entity.Property(e => e.Clave).HasColumnName("clave").HasMaxLength(255).IsRequired();
+                entity.Property(e => e.Valor).HasColumnName("valor").HasMaxLength(255).IsRequired();
             });
 
         }
