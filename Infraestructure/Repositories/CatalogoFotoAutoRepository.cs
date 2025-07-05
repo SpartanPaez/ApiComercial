@@ -136,4 +136,5 @@ public class CatalogoFotoAutoRepository : ICatalogoFotoAutoRepository
             })
             .ToListAsync();
     }
+    
 }

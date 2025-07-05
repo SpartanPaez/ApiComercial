@@ -38,10 +38,13 @@ public class CatalogoAutoService : ICatalogoAutoService
         return await _fotoAutoRepository.ObtenerDetalleAutoAsync(idChasis);
     }
 
+
+
     public async Task<List<AutoEspecificacionResponse>> ObtenerEspecificacionesAsync(string idChasis)
     {
         return await _fotoAutoRepository.ObtenerEspecificacion(idChasis);
     }
+    
 
     public async Task<FotoAutoResponse> subirFoto(FotoAutoBase64Request request)
     {

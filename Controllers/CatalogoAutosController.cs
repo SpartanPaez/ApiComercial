@@ -162,7 +162,7 @@ public class CatalogoAutosController : BaseApiController
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<AutoDetalleViewModel>> ObtenerDetalleAuto(string idChasis )
+    public async Task<ActionResult<AutoDetalleViewModel>> ObtenerDetalleAuto(string idChasis)
     {
         try
         {
@@ -182,6 +182,6 @@ public class CatalogoAutosController : BaseApiController
                 ErrorDescripcion = "Ocurrió un error al obtener el detalle del auto"
             });
         }
-    }   
-
+    }
+   
 }
