@@ -5,6 +5,9 @@ using ApiComercial.interfaces;
 using ApiComercial.Entities;
 using ApiComercial.Helpers;
 using Microsoft.AspNetCore.Cors;
+using ApiComercial.Entities.Referenciales;
+using ApiComercial.Models.Responses.Referenciales;
+using ApiComercial.Models.Request.Referenciales;
 
 namespace ApiComercial.Controllers
 {
@@ -469,7 +472,7 @@ namespace ApiComercial.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-        public async Task <ActionResult> GetCategorias()
+        public async Task<ActionResult> GetCategorias()
         {
             try
             {
@@ -479,7 +482,7 @@ namespace ApiComercial.Controllers
             }
             catch (System.Exception e)
             {
-                 _Logger.LogError(e, "Ocurrió un error al momento de consultar los datos");
+                _Logger.LogError(e, "Ocurrió un error al momento de consultar los datos");
                 return StatusCode(500, new ErrorResponse
                 {
                     ErrorType = Enums.ErrorType.validacion_negocio,
@@ -527,7 +530,7 @@ namespace ApiComercial.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-        public async Task <ActionResult> GetBarrios(int id)
+        public async Task<ActionResult> GetBarrios(int id)
         {
             try
             {
@@ -537,7 +540,7 @@ namespace ApiComercial.Controllers
             }
             catch (System.Exception e)
             {
-                 _Logger.LogError(e, "Ocurrió un error al momento de consultar los datos");
+                _Logger.LogError(e, "Ocurrió un error al momento de consultar los datos");
                 return StatusCode(500, new ErrorResponse
                 {
                     ErrorType = Enums.ErrorType.validacion_negocio,
@@ -546,7 +549,7 @@ namespace ApiComercial.Controllers
             }
         }
 
-                /// <summary>
+        /// <summary>
         /// Obtiene el listado de barrios
         /// </summary>
         /// <returns></returns>
@@ -556,7 +559,7 @@ namespace ApiComercial.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-        public async Task <ActionResult> GetBarriosLista()
+        public async Task<ActionResult> GetBarriosLista()
         {
             try
             {
@@ -566,7 +569,7 @@ namespace ApiComercial.Controllers
             }
             catch (System.Exception e)
             {
-                 _Logger.LogError(e, "Ocurrió un error al momento de consultar los datos");
+                _Logger.LogError(e, "Ocurrió un error al momento de consultar los datos");
                 return StatusCode(500, new ErrorResponse
                 {
                     ErrorType = Enums.ErrorType.validacion_negocio,
@@ -604,6 +607,66 @@ namespace ApiComercial.Controllers
                 });
             }
 
+        }
+
+        //bancos
+        /// <summary>
+        /// Endpoint que inserta los datos de banco
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        [HttpPost("bancos")]
+        [ProducesResponseType(typeof(BancoRequest), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> InsertBanco(BancoRequest parametros)
+        {
+            try
+            {
+                var resquet = Mapper.Map<Banco>(parametros);
+            var resultado = await _service.InsertarBanco(resquet);
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al intentar insertar los datos de banco");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.error_interno_servidor,
+                    ErrorDescripcion = "Ocurrió un error al intentar insertar los datos de banco"
+                });
+            }
+        }
+
+        /// <summary>
+        /// Endpoint que obtiene el listado de bancos
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("bancos")]
+        [ProducesResponseType(typeof(BancoResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetBancos()
+        {
+            try
+            {
+                var resultado = await _service.GetBancos();
+                var respuesta = Mapper.Map<IEnumerable<BancoResponse>>(resultado);
+                return Ok(respuesta);
+            }
+            catch (System.Exception e)
+            {
+                _Logger.LogError(e, "Ocurrió un error al momento de consultar los datos");
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorType = Enums.ErrorType.validacion_negocio,
+                    ErrorDescripcion = "Ocurrió un error al momento de consultar los datos"
+                });
+            }
         }
     }
 }

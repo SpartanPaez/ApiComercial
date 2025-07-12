@@ -29,26 +29,33 @@ public class CatalogoAutosController : BaseApiController
         _mapper = mapper;
     }
 
-    [HttpPost("auto-foto")]
-    [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+    [HttpPost("auto-fotos")]
+    [ProducesResponseType(typeof(List<FotoAutoResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> SubirArchivoFotoBase64([FromBody] FotoAutoBase64Request request)
+    public async Task<ActionResult> SubirArchivosFotoBase64([FromBody] List<FotoAutoBase64Request> requests)
     {
         try
         {
-            var response = await _service.subirFoto(request);
-            return Ok(response);
+            var responses = new List<FotoAutoResponse>();
+
+            foreach (var request in requests)
+            {
+                var response = await _service.subirFoto(request);
+                responses.Add(response);
+            }
+
+            return Ok(responses); // Devuelve una lista con los resultados
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error al guardar la foto del auto");
+            _logger.LogError(ex, "Error al guardar las fotos del auto");
             return StatusCode(500, new ErrorResponse
             {
                 ErrorType = Enums.ErrorType.error_interno_servidor,
-                ErrorDescripcion = "Ocurrió un error al guardar la foto"
+                ErrorDescripcion = "Ocurrió un error al guardar las fotos"
             });
         }
     }
@@ -183,5 +190,5 @@ public class CatalogoAutosController : BaseApiController
             });
         }
     }
-   
+
 }

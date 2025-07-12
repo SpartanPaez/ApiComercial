@@ -1,6 +1,8 @@
 using ApiComercial.Entities;
 using ApiComercial.interfaces;
 using ApiComercial.Infraestructure.interfaces;
+using ApiComercial.Entities.Referenciales;
+using ApiComercial.Models.Responses.Referenciales;
 
 namespace ApiComercial.Services
 {
@@ -134,6 +136,16 @@ namespace ApiComercial.Services
         public Task<IEnumerable<Ciudad>> GetCiudades()
         {
             return _referenciaRepository.GetCiudades();
+        }
+
+        public async Task<Banco> InsertarBanco(Banco parametros)
+        {
+            return await _referenciaRepository.InsertarBanco(parametros);
+        }
+
+        public async Task<IEnumerable<BancoResponse>> GetBancos()
+        {
+            return await _referenciaRepository.GetBancos();
         }
     }
 }

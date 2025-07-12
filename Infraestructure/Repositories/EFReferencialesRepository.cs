@@ -1,6 +1,8 @@
 using ApiComercial.Entities;
+using ApiComercial.Entities.Referenciales;
 using ApiComercial.Infraestructure.Data;
 using ApiComercial.Infraestructure.interfaces;
+using ApiComercial.Models.Responses.Referenciales;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiComercial.Infraestructure.Repositories
@@ -225,6 +227,24 @@ namespace ApiComercial.Infraestructure.Repositories
         public async Task<IEnumerable<Ciudad>> GetCiudades()
         {
             return await _my.Ciudades.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<Banco> InsertarBanco(Banco parametros)
+        {
+            await _my.Bancos.AddAsync(parametros);
+            await _my.SaveChangesAsync();
+            return parametros;
+        }
+
+        public async Task<IEnumerable<BancoResponse>> GetBancos()
+        {
+            var bancos = await _my.Bancos.AsNoTracking().ToListAsync();
+            return bancos.Select(b => new BancoResponse
+            {
+                IdBanco = b.IdBanco,
+                NombreBanco = b.NombreBanco,
+                Estado = b.Estado
+            });
         }
     }
 }

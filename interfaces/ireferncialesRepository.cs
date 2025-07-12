@@ -1,5 +1,7 @@
 using System.Runtime.CompilerServices;
 using ApiComercial.Entities;
+using ApiComercial.Entities.Referenciales;
+using ApiComercial.Models.Responses.Referenciales;
 
 namespace ApiComercial.Infraestructure.interfaces
 {
@@ -60,6 +62,8 @@ namespace ApiComercial.Infraestructure.interfaces
         /// </summary>
         /// <returns></returns>/
         Task<IEnumerable<Ciudad>> GetCiudades();
+        Task<Banco> InsertarBanco(Banco parametros);
+        Task<IEnumerable<BancoResponse>> GetBancos();
 
     }
 }

@@ -1,4 +1,6 @@
 using ApiComercial.Entities;
+using ApiComercial.Entities.Referenciales;
+using ApiComercial.Models.Responses.Referenciales;
 
 namespace ApiComercial.interfaces
 {
@@ -76,11 +78,13 @@ namespace ApiComercial.interfaces
         /// Inserta barrios
         /// </summary>
         /// <returns></returns>
-        Task <Barrio> InsertatBarrio(Barrio parametros);
+        Task<Barrio> InsertatBarrio(Barrio parametros);
         /// <summary>
         /// Tarea para enlistar todaas las ciudades
         /// </summary>
         /// <returns></returns>/
-         Task<IEnumerable<Ciudad>> GetCiudades();
+        Task<IEnumerable<Ciudad>> GetCiudades();
+        Task<Banco> InsertarBanco(Banco parametros);
+        Task<IEnumerable<BancoResponse>> GetBancos();
     }
 }

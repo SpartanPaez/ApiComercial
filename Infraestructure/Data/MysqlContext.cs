@@ -3,6 +3,7 @@ using ApiComercial.Entities;
 using ApiComercial.Entitie.Documentaciones;
 using ApiComercial.Entities.Cuotas;
 using Entities.Catalogo;
+using ApiComercial.Entities.Referenciales;
 
 namespace ApiComercial.Infraestructure.Data
 {
@@ -111,6 +112,7 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<AutoFoto> AutoFotos { get; set; } // Tabla para fotos de autos
         public DbSet<AutoCaracteristica> AutoCaracteristicas { get; set; } // Tabla para caracteristicas de autos
         public DbSet<AutoEspecificacion> AutoEspecificaciones { get; set; } // Tabla para especificaciones de autos
+        public DbSet<Banco> Bancos { get; set; } 
 
         /// <summary>
         /// Callback que se invoca cuando EF Core está configurando el modelo de datos antes de crear la base de datos. 
@@ -120,6 +122,14 @@ namespace ApiComercial.Infraestructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Banco>(entity =>
+            {
+                entity.ToTable("bancos", "ventas");
+                entity.HasKey(e => e.IdBanco);
+                entity.Property(e => e.IdBanco).HasColumnName("idbanco");
+                entity.Property(e => e.NombreBanco).HasColumnName("nombre_banco").HasMaxLength(100);
+                entity.Property(e => e.Estado).HasColumnName("estado").HasMaxLength(20);
+            });
 
             modelBuilder.Entity<DetalleVenta>(entity =>
             {

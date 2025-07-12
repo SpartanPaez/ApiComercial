@@ -7,6 +7,7 @@ namespace ApiComercial.Services.Interfaces.Catalogo;
 
 public interface ICatalogoAutoService
 {
+    Task<List<FotoAutoResponse>> MostrarFotosAutos(string idChasis);
     Task<FotoAutoResponse> subirFoto(FotoAutoBase64Request request);
     Task<int> AgregarCaracteristicaAsync(AutoCaracteristicaRequest request);
     Task<List<AutoCaracteristicaResponse>> ObtenerCaracteristicasAsync(string idChasis);

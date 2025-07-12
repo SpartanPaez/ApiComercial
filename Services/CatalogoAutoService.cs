@@ -27,6 +27,11 @@ public class CatalogoAutoService : ICatalogoAutoService
        return await _fotoAutoRepository.InsertarEspecificacion(request);
     }
 
+    public Task<List<FotoAutoResponse>> MostrarFotosAutos(string idChasis)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<List<AutoCaracteristicaResponse>> ObtenerCaracteristicasAsync(string idChasis)
     {
 
