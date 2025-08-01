@@ -4,8 +4,6 @@ using ApiComercial.Infraestructure.Repositories;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using System.Reflection;
-using NSwag.AspNetCore;
-using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 

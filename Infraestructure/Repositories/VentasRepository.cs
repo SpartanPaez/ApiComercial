@@ -111,7 +111,8 @@ public class VentasRepository : IVentasRepository
                           NumeroCuota = cuotas.NumeroCuota,
                           MontoCuota = cuotas.MontoCuota,
                           FechaVencimiento = cuotas.FechaVencimiento,
-                          EstadoCodigo = cuotas.EstadoCodigo
+                          EstadoCodigo = cuotas.EstadoCodigo,
+                          EsRefuerzo = cuotas.EsRefuerzo
                       })
                       .ToListAsync();
     }

@@ -8,4 +8,5 @@ public class DetalleCuotaResponse
     public int MontoCuota { get; set; }
     public DateTime FechaVencimiento { get; set; }
     public string? EstadoCodigo { get; set; }
+    public bool EsRefuerzo { get; set; }
 }

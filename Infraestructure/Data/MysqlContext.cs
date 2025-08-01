@@ -152,6 +152,7 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(v => v.MontoCuota).HasColumnName("MontoCuota");
                 entity.Property(v => v.FechaVencimiento).HasColumnName("FechaVencimiento");
                 entity.Property(v => v.EstadoCodigo).HasColumnName("EstadoCodigo");
+                entity.Property(v => v.EsRefuerzo).HasColumnName("EsRefuerzo");
             });
 
             modelBuilder.Entity<Venta>(entity =>

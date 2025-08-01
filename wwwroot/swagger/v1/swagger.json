@@ -6317,6 +6317,9 @@
           "estadoCodigo": {
             "type": "string",
             "nullable": true
+          },
+          "esRefuerzo": {
+            "type": "boolean"
           }
         }
       },
