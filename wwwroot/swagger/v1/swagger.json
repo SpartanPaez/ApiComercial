@@ -3571,7 +3571,7 @@
         "tags": [
           "Vehiculos"
         ],
-        "summary": "Actualizar los datos de un vehículo.",
+        "summary": "Actualizar los datos de un vehículo en su totalidad.",
         "operationId": "Vehiculos_UpdateVehiculo",
         "parameters": [
           {
@@ -4448,6 +4448,136 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/PagarCuotaRequest"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Ventas/{idVenta}/Refuerzos": {
+      "get": {
+        "tags": [
+          "Ventas"
+        ],
+        "operationId": "Ventas_ObtenerRefuerzos",
+        "parameters": [
+          {
+            "name": "idVenta",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefuerzoResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Ventas/InsertarRefuerzo": {
+      "post": {
+        "tags": [
+          "Ventas"
+        ],
+        "operationId": "Ventas_InsertarRefuerzo",
+        "requestBody": {
+          "x-name": "parametros",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefuerzoRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefuerzoResponse"
                 }
               }
             }
@@ -5976,6 +6106,10 @@
             "type": "string",
             "description": "Color del vehículo",
             "nullable": true
+          },
+          "precio": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -6160,6 +6294,9 @@
             "type": "string",
             "description": "Establece si la cuota esta pagada o no, 0 es pendiente y 1 es pagado",
             "nullable": true
+          },
+          "esRefuerzo": {
+            "type": "boolean"
           }
         }
       },
@@ -6320,6 +6457,21 @@
           },
           "esRefuerzo": {
             "type": "boolean"
+          },
+          "idRefuerzo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "montoRefuerzo": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "fechaVencimientoRefuerzo": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         }
       },
@@ -6346,6 +6498,49 @@
             "type": "string",
             "description": "Observaciones del pago",
             "nullable": true
+          }
+        }
+      },
+      "RefuerzoResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "refuerzoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ventaId": {
+            "type": "integer",
+            "description": "Id de la cuota a la que se le aplica el refuerzo",
+            "format": "int32"
+          },
+          "montoRefuerzo": {
+            "type": "number",
+            "description": "Monto del refuerzo",
+            "format": "decimal"
+          },
+          "fechaVencimiento": {
+            "type": "string",
+            "description": "Fecha de vencimiento del refuerzo",
+            "format": "date-time"
+          }
+        }
+      },
+      "RefuerzoRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ventaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "montoRefuerzo": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "fechaVencimiento": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       }

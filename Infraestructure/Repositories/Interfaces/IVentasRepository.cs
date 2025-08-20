@@ -16,6 +16,8 @@ public interface IVentasRepository
     Task<IEnumerable<DetalleCuotaResponse>> ObtenerDetalleCuotas(int idVenta);
     Task<string?> VerificaEstadoCuota(int idCuota);
     Task<bool> PagarCuota(PagarCuotaRequest cuota);
+    Task<bool> InsertarRefuerzo(RefuerzoRequest parametros);
+    Task<IEnumerable<RefuerzoResponse>> ObtenerRefuerzos(int idVenta);
     Task<IEnumerable<MediosPagoResponse>> ObtenerMediosPago();
     Task<IEnumerable<VentasResponse>> ObtenerVentasContado();
 }   

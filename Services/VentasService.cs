@@ -13,6 +13,12 @@ public class VentasService : IVentaService
     {
         _ventasRepository = ventasRepository;
     }
+
+    public async Task<bool> InsertarRefuerzo(RefuerzoRequest refuerzo)
+    {
+        return await _ventasRepository.InsertarRefuerzo(refuerzo);
+    }
+
     public async Task<IEnumerable<CabeceraCuotaResponse>> ObtenerCabeceraCuotas()
     {
         return await _ventasRepository.ObtenerCabeceraCuotas();
@@ -26,6 +32,11 @@ public class VentasService : IVentaService
     public async Task<IEnumerable<MediosPagoResponse>> ObtenerMediosPago()
     {
         return await _ventasRepository.ObtenerMediosPago();
+    }
+
+    public async Task<IEnumerable<RefuerzoResponse>> ObtenerRefuerzos(int idVenta)
+    {
+        return await _ventasRepository.ObtenerRefuerzos(idVenta);
     }
 
     public Task<IEnumerable<VentasResponse>> ObtenerVentasContado()

@@ -1,8 +1,6 @@
 using AutoMapper;
-using ApiComercial.interfaces;
 using ApiComercial.Entities;
 using ApiComercial.Models;
-using Microsoft.Extensions.DependencyInjection;
 using ApiComercial.Entities.Cuotas;
 using Entities.Catalogo;
 using ApiComercial.Models.Request.Catalogo;

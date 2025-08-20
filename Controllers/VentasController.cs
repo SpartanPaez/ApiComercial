@@ -1,5 +1,4 @@
-using ApiComercial.Entities;
-using ApiComercial.Entities.Cuotas;
+
 using ApiComercial.Models;
 using ApiComercial.Models.Request;
 using ApiComercial.Models.Responses;
@@ -83,7 +82,7 @@ public class VentasController : BaseApiController
             });
         }
     }
-    
+
     [HttpGet("cabeceraCuota")]
     [ProducesResponseType(typeof(CabeceraCuotaResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -154,6 +153,56 @@ public class VentasController : BaseApiController
             {
                 ErrorType = Enums.ErrorType.error_interno_servidor,
                 ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos - cuotas cabecera"
+            });
+        }
+    }
+    //para obtener refuerzos
+    [HttpGet("{idVenta}/Refuerzos")]
+    [ProducesResponseType(typeof(RefuerzoResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> ObtenerRefuerzos(int idVenta)
+    {
+        try
+        {
+            var resultado = await _service.ObtenerRefuerzos(idVenta);
+            var respuesta = _mapper.Map<IEnumerable<RefuerzoResponse>>(resultado);
+            return Ok(respuesta);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al consultar los refuerzos");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos - refuerzos"
+            });
+        }
+    }
+
+    //para insertar refuerzo
+    [HttpPost("InsertarRefuerzo")]
+    [ProducesResponseType(typeof(RefuerzoResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> InsertarRefuerzo(RefuerzoRequest parametros)
+    {
+        try
+        {
+            var resultado = await _service.InsertarRefuerzo(parametros);
+            return Ok(resultado);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al insertar el refuerzo");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de inserción del refuerzo"
             });
         }
     }

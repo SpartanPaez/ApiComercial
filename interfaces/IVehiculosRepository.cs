@@ -74,5 +74,11 @@ namespace ApiComercial.Infraestructure.Interfaces
         /// <param name="parametros"></param>
         /// <returns></returns>
         Task<DetalleVenta> InsertarDetalleVenta(DetalleVenta parametros);
+        /// <summary>
+        /// Actualiza un vehículo existente.
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        Task<Vehiculo> UpdateVehiculos(Vehiculo parametros);
     }
 }

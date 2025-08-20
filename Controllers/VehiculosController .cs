@@ -116,7 +116,7 @@ namespace ApiComercial.Controllers
 
         }
         /// <summary>
-        /// Actualizar los datos de un vehículo.
+        /// Actualizar los datos de un vehículo en su totalidad.
         /// </summary>
         /// <param name="idChasis">Identificador del chasis del vehículo</param>
         /// <param name="parametros">Datos del vehículo a actualizar</param>
@@ -130,7 +130,7 @@ namespace ApiComercial.Controllers
         {
             var request = _mapper.Map<Vehiculo>(parametros);
             request.IdChasis = idChasis;
-            var resultado = await _service.UpdateVehiculo(request);
+            var resultado = await _service.UpdateVehiculos(request);
             return Ok(resultado);
         }
 

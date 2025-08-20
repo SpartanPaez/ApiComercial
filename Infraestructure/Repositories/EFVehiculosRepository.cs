@@ -231,5 +231,23 @@ namespace ApiComercial.Infraestructure.Repositories
             await _my.SaveChangesAsync();
             return parametros;
         }
+
+        public async Task<Vehiculo> UpdateVehiculos(Vehiculo parametros)
+        {
+            var vehiculo = await _my.Vehiculos.FindAsync(parametros.IdChasis)!;
+            vehiculo.IdMarca = parametros.IdMarca;
+            vehiculo.IdModelo = parametros.IdModelo;
+            vehiculo.TipoCar = parametros.TipoCar;
+            vehiculo.Color = parametros.Color;
+            vehiculo.Usado = parametros.Usado;
+            vehiculo.Chapa = parametros.Chapa;
+            vehiculo.Estado = parametros.Estado;
+            vehiculo.AnoFabricacion = parametros.AnoFabricacion;
+            vehiculo.Precio = parametros.Precio;
+
+            _my.Vehiculos.Update(vehiculo);
+            await _my.SaveChangesAsync();
+            return vehiculo;
+        }
     }
 }

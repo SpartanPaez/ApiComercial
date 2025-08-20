@@ -101,5 +101,8 @@ namespace ApiComercial.Services
 
         public async Task<string> UpdateVehiculoEstado(string idChasis, string estado)
          => await _vehiculoRepository.UpdateVehiculoEstado(idChasis, estado);
+
+        public async Task<Vehiculo> UpdateVehiculos(Vehiculo parametros)
+        => await _vehiculoRepository.UpdateVehiculos(parametros);
     }
 }

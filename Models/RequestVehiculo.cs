@@ -1,4 +1,3 @@
-using System;
 
 namespace ApiComercial.Models
 {
@@ -33,5 +32,6 @@ namespace ApiComercial.Models
         /// Color del vehículo
         /// </summary>
         public string? Color { get; set; }
+        public string? Precio { get; set; }
     }
 }

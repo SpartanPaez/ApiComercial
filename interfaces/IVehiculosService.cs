@@ -31,7 +31,6 @@ namespace ApiComercial.Interfaces
         /// </summary>
         /// <param name="parametros">Los nuevos parámetros del vehículo.</param>
         /// <returns>El vehículo actualizado.</returns>
-        Task<Vehiculo> UpdateVehiculo(Vehiculo parametros);
         Task<string> UpdateVehiculoEstado(string idChasis, string estado);
 
         /// <summary>
@@ -94,6 +93,11 @@ namespace ApiComercial.Interfaces
         /// <param name="parametros"></param>
         /// <returns></returns>
         Task<DetalleVenta> InsertarDetalleVenta(DetalleVenta parametros);
-
+        /// <summary>
+        /// Actualiza datos del vehiculo
+        /// </summary>
+        /// <param name="parametros"></param>
+        /// <returns></returns>
+        Task<Vehiculo> UpdateVehiculos(Vehiculo parametros);
     }
 }

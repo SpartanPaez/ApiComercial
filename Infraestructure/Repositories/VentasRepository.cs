@@ -170,4 +170,38 @@ public class VentasRepository : IVentasRepository
                       select cuotas.EstadoCodigo)
                       .FirstOrDefaultAsync();
     }
+
+    public async Task<bool> InsertarRefuerzo(RefuerzoRequest parametros)
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+
+        var refuerzo = new Refuerzo
+        {
+            VentaId = parametros.VentaId,
+            MontoRefuerzo = parametros.MontoRefuerzo,
+            FechaVencimiento = parametros.FechaVencimiento
+        };
+
+        ctx.Refuerzos.Add(refuerzo);
+        var cambios = await ctx.SaveChangesAsync();
+        return cambios > 0;
+    }
+
+    public async Task<IEnumerable<RefuerzoResponse>> ObtenerRefuerzos(int idVenta)
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+
+        return await ctx.Refuerzos.AsNoTracking()
+            .Where(r => r.VentaId == idVenta)
+            .Select(r => new RefuerzoResponse
+            {
+                RefuerzoId = r.RefuerzoId,
+                VentaId = r.VentaId,
+                MontoRefuerzo = r.MontoRefuerzo,
+                FechaVencimiento = r.FechaVencimiento
+            })
+            .ToListAsync();
+    }
 }

@@ -109,10 +109,11 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<ArchivoPostVenta> ArchivosPostVenta { get; set; }
         public DbSet<MediosPago> MediosPago { get; set; }
         public DbSet<Pago> Pagos { get; set; }
-        public DbSet<AutoFoto> AutoFotos { get; set; } // Tabla para fotos de autos
-        public DbSet<AutoCaracteristica> AutoCaracteristicas { get; set; } // Tabla para caracteristicas de autos
-        public DbSet<AutoEspecificacion> AutoEspecificaciones { get; set; } // Tabla para especificaciones de autos
+        public DbSet<AutoFoto> AutoFotos { get; set; } 
+        public DbSet<AutoCaracteristica> AutoCaracteristicas { get; set; }
+        public DbSet<AutoEspecificacion> AutoEspecificaciones { get; set; }
         public DbSet<Banco> Bancos { get; set; } 
+        public DbSet<Refuerzo> Refuerzos { get; set; }
 
         /// <summary>
         /// Callback que se invoca cuando EF Core está configurando el modelo de datos antes de crear la base de datos. 
@@ -121,6 +122,16 @@ namespace ApiComercial.Infraestructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Refuerzo>(entity =>
+            {
+                entity.ToTable("refuerzos", "ventas");
+                entity.HasKey(e => e.RefuerzoId);
+                entity.Property(e => e.RefuerzoId).HasColumnName("RefuerzosId");
+                entity.Property(e => e.VentaId).HasColumnName("VentaId");
+                entity.Property(e => e.MontoRefuerzo).HasColumnName("MontoRefuerzo");
+                entity.Property(e => e.FechaVencimiento).HasColumnName("FechaVencimiento");
+            });
 
             modelBuilder.Entity<Banco>(entity =>
             {

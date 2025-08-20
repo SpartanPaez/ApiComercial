@@ -190,7 +190,7 @@ namespace ApiComercial.Infraestructure.Repositories
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<IEnumerable<Barrio>> GetBarrio(int id)
-        => await _my.Barrios.AsNoTracking().Where(c => c.IdBarrio == id).ToListAsync();
+        => await _my.Barrios.AsNoTracking().Where(c => c.IdCiudad == id).ToListAsync();
         /// <summary>
         /// Consulta SQL que obtiene un listado de barrios
         /// </summary>
