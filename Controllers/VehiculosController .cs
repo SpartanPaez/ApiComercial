@@ -150,21 +150,7 @@ namespace ApiComercial.Controllers
             return Ok(resultado);
         }
 
-        /// <summary>
-        /// Endpoint alternativo para eliminar vehículos.
-        /// </summary>
-        /// <param name="idChasis">Identificador del chasis del vehículo a eliminar</param>
-        /// <returns></returns>
-        [HttpDelete("eliminar/{idChasis}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> DeleteVehiculoAlternativo(string idChasis)
-        {
-            var resultado = await _service.DeleteVehiculo(idChasis);
-            return Ok(resultado);
-        }
+    
         /// <summary>
         /// Endopoint para consultar estados de vehiculos
         /// </summary>

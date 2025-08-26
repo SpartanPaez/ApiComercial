@@ -74,6 +74,7 @@ namespace ApiComercial.interfaces
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<Barrio>> GetBarrios();
+        Task<bool> VerificarBarrio(string nombre, int idCiudad);
         /// <summary>
         /// Inserta barrios
         /// </summary>

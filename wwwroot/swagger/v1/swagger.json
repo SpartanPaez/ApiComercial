@@ -3689,62 +3689,6 @@
         }
       }
     },
-    "/api/Vehiculos/eliminar/{idChasis}": {
-      "delete": {
-        "tags": [
-          "Vehiculos"
-        ],
-        "summary": "Endpoint alternativo para eliminar vehículos.",
-        "operationId": "Vehiculos_DeleteVehiculoAlternativo",
-        "parameters": [
-          {
-            "name": "idChasis",
-            "in": "path",
-            "required": true,
-            "description": "Identificador del chasis del vehículo a eliminar",
-            "schema": {
-              "type": "string"
-            },
-            "x-position": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/Vehiculos/estados": {
       "get": {
         "tags": [
@@ -6018,6 +5962,14 @@
           "precio": {
             "type": "string",
             "nullable": true
+          },
+          "despacho": {
+            "type": "string",
+            "nullable": true
+          },
+          "costo": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -6068,6 +6020,14 @@
             "type": "string",
             "description": "INidica el precio del vehiculo",
             "nullable": true
+          },
+          "despacho": {
+            "type": "string",
+            "nullable": true
+          },
+          "costo": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -6107,7 +6067,27 @@
             "description": "Color del vehículo",
             "nullable": true
           },
+          "usado": {
+            "type": "string",
+            "nullable": true
+          },
+          "chapa": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
           "precio": {
+            "type": "string",
+            "nullable": true
+          },
+          "despacho": {
+            "type": "string",
+            "nullable": true
+          },
+          "costo": {
             "type": "string",
             "nullable": true
           }

@@ -1,4 +1,5 @@
 namespace ApiComercial.Entities;
+
 public class Vehiculo
 {
     /// <summary>
@@ -16,4 +17,6 @@ public class Vehiculo
     public string? Chapa { get; set; }
     public string? Estado { get; set; }
     public string? Precio { get; set; }
+    public string? Despacho { get; set; }
+    public string? Costo { get; set; }
 }

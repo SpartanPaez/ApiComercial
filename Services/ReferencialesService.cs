@@ -147,5 +147,13 @@ namespace ApiComercial.Services
         {
             return await _referenciaRepository.GetBancos();
         }
+
+        public async Task<bool> VerificarBarrio(string nombre, int idCiudad)
+        {
+            var existe = await _referenciaRepository.VerificarBarrio(nombre, idCiudad);
+            if (existe)
+                throw new ApiComercial.Exceptions.DuplicateResourceException("Ya existe un barrio con ese nombre en la ciudad indicada.");
+            return existe;
+        }
     }
 }

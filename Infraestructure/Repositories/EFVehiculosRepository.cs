@@ -46,7 +46,9 @@ namespace ApiComercial.Infraestructure.Repositories
                                        Usado = v.Usado,
                                        Chapa = v.Chapa,
                                        Estado = v.Estado,
-                                       Precio = v.Precio
+                                       Precio = v.Precio,
+                                       Despacho = v.Despacho,
+                                       Costo = v.Costo
                                    }).ToListAsync();
             return vehiculos;
         }
@@ -71,7 +73,9 @@ namespace ApiComercial.Infraestructure.Repositories
                 Usado = parametros.Usado,
                 Chapa = parametros.Chapa,
                 Estado = parametros.Estado,
-                Precio = parametros.Precio
+                Precio = parametros.Precio,
+                Despacho = parametros.Despacho,
+                Costo = parametros.Costo
             };
 
             await _my.Vehiculos.AddAsync(nuevoVehiculo);
@@ -235,7 +239,7 @@ namespace ApiComercial.Infraestructure.Repositories
         public async Task<Vehiculo> UpdateVehiculos(Vehiculo parametros)
         {
             var vehiculo = await _my.Vehiculos.FindAsync(parametros.IdChasis)!;
-            vehiculo.IdMarca = parametros.IdMarca;
+            vehiculo!.IdMarca = parametros.IdMarca;
             vehiculo.IdModelo = parametros.IdModelo;
             vehiculo.TipoCar = parametros.TipoCar;
             vehiculo.Color = parametros.Color;
@@ -244,6 +248,8 @@ namespace ApiComercial.Infraestructure.Repositories
             vehiculo.Estado = parametros.Estado;
             vehiculo.AnoFabricacion = parametros.AnoFabricacion;
             vehiculo.Precio = parametros.Precio;
+            vehiculo.Despacho = parametros.Despacho;
+            vehiculo.Costo = parametros.Costo;
 
             _my.Vehiculos.Update(vehiculo);
             await _my.SaveChangesAsync();

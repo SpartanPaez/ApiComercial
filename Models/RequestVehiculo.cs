@@ -32,6 +32,11 @@ namespace ApiComercial.Models
         /// Color del vehículo
         /// </summary>
         public string? Color { get; set; }
+        public string? Usado { get; set; }
+        public string? Chapa { get; set; }
+        public string? Estado { get; set; }
         public string? Precio { get; set; }
+        public string? Despacho { get; set; }
+        public string? Costo { get; set; }
     }
 }

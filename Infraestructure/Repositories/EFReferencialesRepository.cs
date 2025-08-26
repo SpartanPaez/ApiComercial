@@ -246,5 +246,10 @@ namespace ApiComercial.Infraestructure.Repositories
                 Estado = b.Estado
             });
         }
+
+        public async Task<bool> VerificarBarrio(string nombre, int idCiudad)
+        {
+            return await _my.Barrios.AnyAsync(b => b.Descripcion == nombre && b.IdCiudad == idCiudad);
+        }
     }
 }

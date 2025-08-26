@@ -48,6 +48,28 @@ var app = builder.Build();
 app.UseDefaultFiles(); // opcional, busca index.html por defecto
 app.UseStaticFiles();  // sirve archivos de wwwroot/
 
+// Custom exception handler para mapear DuplicateResourceException a 409
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        var exFeature = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>();
+        var ex = exFeature?.Error;
+        if (ex is ApiComercial.Exceptions.DuplicateResourceException)
+        {
+            context.Response.StatusCode = StatusCodes.Status409Conflict;
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsJsonAsync(new { message = ex.Message });
+            return;
+        }
+
+        // fallback: 500
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsJsonAsync(new { message = ex?.Message ?? "Internal Server Error" });
+    });
+});
+
 app.UseOpenApi(); // Expone el JSON: /swagger/apicomercial/swagger.json
 app.UseSwaggerUi();
 

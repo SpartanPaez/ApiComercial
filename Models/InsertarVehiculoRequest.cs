@@ -22,4 +22,6 @@ public class InsertarVehiculoRequest
     /// INidica el precio del vehiculo
     /// </summary>
     public string? Precio { get; set; }
+    public string? Despacho { get; set; }
+    public string? Costo { get; set; }
 }

@@ -591,20 +591,43 @@ namespace ApiComercial.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> InsertBarrio(RequestBarrio parametros)
         {
+            if (parametros == null)
+                return BadRequest(new ErrorResponse { ErrorType = Enums.ErrorType.validacion_negocio, ErrorDescripcion = "Parámetros de entrada inválidos." });
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
+                try
+                {
+                    var nombre = parametros.Descripcion ?? string.Empty;
+                    var existe = await _service.VerificarBarrio(nombre, parametros.IdCiudad);
+                    if (existe)
+                        return Conflict(new { code = "DUPLICATE", message = "Ya existe un barrio con ese nombre en la ciudad indicada." });
+                }
+                catch (ApiComercial.Exceptions.DuplicateResourceException dex)
+                {
+
+                    return Conflict(new { code = "DUPLICATE", message = dex.Message });
+                }
+
                 var request = Mapper.Map<Barrio>(parametros);
                 var resultado = await _service.InsertatBarrio(request);
-                return Ok();
+
+                var response = Mapper.Map<ResponseBarrio>(resultado);
+                return Created(string.Empty, response);
+            }
+            catch (ApiComercial.Exceptions.DuplicateResourceException)
+            {
+                // Re-lanzar para que el middleware central maneje y devuelva 409
+                throw;
             }
             catch (System.Exception e)
             {
                 _Logger.LogError(e, "Ocurrió un error al insertar los registros de barrio");
-                return StatusCode(500, new ErrorResponse
-                {
-                    ErrorType = Enums.ErrorType.error_interno_servidor,
-                    ErrorDescripcion = "Ocurrió un error al insertar los registros del barrio"
-                });
+                // Re-lanzar para que el middleware central devuelva 500 con el formato global
+                throw;
             }
 
         }

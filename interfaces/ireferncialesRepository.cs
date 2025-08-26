@@ -57,6 +57,8 @@ namespace ApiComercial.Infraestructure.interfaces
         /// <returns></returns>
         Task<Barrio> InsertatBarrio(Barrio parametros);
 
+        Task<bool> VerificarBarrio(string nombre, int idCiudad);
+
         /// <summary>
         /// Tarea para enlistar todaas las ciudades
         /// </summary>

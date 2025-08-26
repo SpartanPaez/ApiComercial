@@ -255,6 +255,10 @@ namespace ApiComercial.Infraestructure.Data
                      .HasColumnName("chapa");
                 entity.Property(e => e.Estado)
                      .HasColumnName("estado");
+                entity.Property(e => e.Costo)
+                     .HasColumnName("costo");
+                entity.Property(e => e.Despacho)
+                     .HasColumnName("despacho_monto");
                 entity.Ignore(e => e.Marca);
                 entity.Ignore(e => e.Modelo);
             });
