@@ -1,12 +1,14 @@
 using ApiComercial.Entities;
 using ApiComercial.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ApiComercial.Controllers
 {
-    [ApiController]
+[ApiController]
+[Authorize]
     [Route("api/[controller]")]
     public class MarcasController : ControllerBase
     {

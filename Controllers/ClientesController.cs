@@ -3,13 +3,15 @@ using ApiComercial.Models;
 using AutoMapper;
 using ApiComercial.interfaces;
 using ApiComercial.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ApiComercial.Controllers
 {
     /// <summary>
     /// 
     /// </summary>
-    [ApiController]
+[ApiController]
+[Authorize]
     [Route("api/[controller]")]
     public class ClientesController : BaseApiController
     {
@@ -45,7 +47,7 @@ namespace ApiComercial.Controllers
             try
             {
                 var resultado = await _service.GetDatoCliente();
-                var respuesta = Mapper.Map<IEnumerable<ResponseClientes>>(resultado);
+                var respuesta = _mapper.Map<IEnumerable<ResponseClientes>>(resultado);
                 return Ok(respuesta);
             }
             catch (System.Exception e)
@@ -56,9 +58,7 @@ namespace ApiComercial.Controllers
                     ErrorType = Enums.ErrorType.error_interno_servidor,
                     ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos"
                 });
-
             }
-
         }
         /// <summary>
         /// Obtiene datos del cliente por id del mismo

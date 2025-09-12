@@ -1,14 +1,15 @@
-
 using ApiComercial.Models;
 using ApiComercial.Models.Request;
 using ApiComercial.Models.Responses;
 using ApiComercial.Services.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiComercial.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class VentasController : BaseApiController
 {
@@ -205,5 +206,30 @@ public class VentasController : BaseApiController
                 ErrorDescripcion = "Ocurrió un error en el proceso de inserción del refuerzo"
             });
         }
+    }
+    //Eliminar venta a cuotas
+    [HttpDelete("EliminarVentaCuotas/{idVenta}")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> EliminarVentaCuotas(int idVenta)
+    {
+        try
+        {
+            var resultado = await _service.EliminarVentaCuotas(idVenta);
+            return Ok(resultado);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al eliminar la venta a cuotas");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de eliminación de la venta a cuotas"
+            });
+        }
+
     }
 }

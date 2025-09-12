@@ -4,10 +4,12 @@ using ApiComercial.Models.Responses;
 using ApiComercial.Repositories.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ApiComercial.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class DocumentosController : BaseApiController
 {

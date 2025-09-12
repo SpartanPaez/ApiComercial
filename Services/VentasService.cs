@@ -61,4 +61,8 @@ public class VentasService : IVentaService
     {
         return await _ventasRepository.VerificaEstadoCuota(idCuota);
     }
+    public async Task<bool> EliminarVentaCuotas(int idVenta)
+    {
+        return await _ventasRepository.EliminarVentaCuotas(idVenta);
+    }
 }

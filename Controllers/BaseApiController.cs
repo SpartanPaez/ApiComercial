@@ -7,7 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 namespace ApiComercial.Controllers
 {
     //[Authorize]
-    [ApiController]
+[ApiController]
+[Authorize]
     [Route("v{version:apiVersion}/api/[controller]/[action]")]
     public abstract class BaseApiController : Controller
     {

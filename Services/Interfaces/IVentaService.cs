@@ -13,4 +13,5 @@ public interface IVentaService
     Task<IEnumerable<RefuerzoResponse>> ObtenerRefuerzos(int idVenta);
     Task<IEnumerable<MediosPagoResponse>> ObtenerMediosPago();
     Task<IEnumerable<VentasResponse>> ObtenerVentasContado();
+    Task<bool> EliminarVentaCuotas(int idVenta);
 }

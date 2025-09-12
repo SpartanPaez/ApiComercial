@@ -20,12 +20,15 @@ namespace ApiComercial
             services.AddTransient<IDocumentoService, DocumentoService>();
             services.AddScoped<ICatalogoAutoService, CatalogoAutoService>();
 
-
             // Agregar el servicio y repositorio para Marcas y Modelos
             services.AddTransient<IMarcaModeloService, MarcaModeloService>();
             services.AddTransient<IMarcaModeloRepository, MarcaModeloRepository>();
             services.AddTransient<IVentaService, VentasService>();
             services.AddTransient<IVentasRepository, VentasRepository>();
+
+            // Auth Service y Repository
+            services.AddScoped<ApiComercial.interfaces.IAuthService, ApiComercial.Services.AuthService>();
+            services.AddScoped<ApiComercial.interfaces.IAuthRepository, ApiComercial.Infraestructure.Data.AuthRepository>();
 
             return services;
         }

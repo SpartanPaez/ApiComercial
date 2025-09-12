@@ -6,6 +6,7 @@ using ApiComercial.Models.Responses.Catalogo;
 using ApiComercial.Repositories.Interfaces;
 using ApiComercial.Services.Interfaces.Catalogo;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.Request.Catalogo;
 using Models.Responses.Catalogo;
@@ -13,6 +14,7 @@ using Models.Responses.Catalogo;
 namespace ApiComercial.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class CatalogoAutosController : BaseApiController
 {

@@ -17,9 +17,11 @@ namespace ApiComercial.Infraestructure.Repositories
         }
         public async Task <IEnumerable<Cliente>> GetDatoCliente()
         =>  await _my.Clientes.ToListAsync();
-        public async Task <Cliente> GetClientePorId(int Id)
+        
+        
+        public async Task<Cliente> GetClientePorId(int Id)
         => await _my.Clientes.AsNoTracking()
-                 .Where(c => c.ClienteId== Id)
+                 .Where(c => c.ClienteId == Id)
                  .FirstOrDefaultAsync();
 
         public async Task<Cliente> InsertCliente(Cliente parametros)

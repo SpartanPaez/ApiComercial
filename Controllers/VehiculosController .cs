@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using ApiComercial.Models;
 using AutoMapper;
 using ApiComercial.Interfaces;
@@ -8,6 +9,7 @@ using ApiComercial.Entities.Cuotas;
 namespace ApiComercial.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class VehiculosController : BaseApiController
     {

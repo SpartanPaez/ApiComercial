@@ -204,4 +204,44 @@ public class VentasRepository : IVentasRepository
             })
             .ToListAsync();
     }
+
+    public async Task<bool> EliminarVentaCuotas(int idVenta)
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+        using var transaction = await ctx.Database.BeginTransactionAsync();
+        try
+        {
+            // 1. Eliminar pagos de las cuotas de la venta
+            var cuotas = await ctx.Cuota.Where(c => c.VentaId == idVenta).ToListAsync();
+            var cuotaIds = cuotas.Select(c => c.CuotaId).ToList();
+            var pagos = await ctx.Pagos.Where(p => cuotaIds.Contains(p.CuotaId)).ToListAsync();
+            ctx.Pagos.RemoveRange(pagos);
+
+            // 2. Eliminar cuotas
+            ctx.Cuota.RemoveRange(cuotas);
+
+            // 3. Eliminar refuerzos
+            var refuerzos = await ctx.Refuerzos.Where(r => r.VentaId == idVenta).ToListAsync();
+            ctx.Refuerzos.RemoveRange(refuerzos);
+
+            // 4. Eliminar detalles de venta
+            var detalles = await ctx.DetalleVenta.Where(d => d.VentaId == idVenta).ToListAsync();
+            ctx.DetalleVenta.RemoveRange(detalles);
+
+            // 5. Eliminar la venta
+            var venta = await ctx.Ventas.FirstOrDefaultAsync(v => v.VentaId == idVenta);
+            if (venta != null)
+                ctx.Ventas.Remove(venta);
+
+            await ctx.SaveChangesAsync();
+            await transaction.CommitAsync();
+            return true;
+        }
+        catch (Exception)
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
+    }
 }

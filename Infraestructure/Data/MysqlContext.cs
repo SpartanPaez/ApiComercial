@@ -284,14 +284,13 @@ namespace ApiComercial.Infraestructure.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Usuario>(entity =>
             {
-                entity.ToTable("USUARIOS", "ventas");
-                entity.HasKey(e => new { e.UsuarioId });
-                entity.Property(e => e.UsuarioId).HasColumnName("UsuarioId");
-                entity.Property(e => e.ClienteId).HasColumnName("ClienteId");
-                entity.Property(e => e.UsuarioEstado).HasColumnName("UsuarioEstado");
-                entity.Property(e => e.UsuarioNic).HasColumnName("UsuarioNic");
-                entity.Property(e => e.UsuarioPass).HasColumnName("UsuarioPass");
-                entity.Property(e => e.UsuarioFecha).HasColumnName("UsuarioFecha");
+                entity.ToTable("usuarios", "ventas");
+                entity.HasKey(e => e.UsuarioId);
+                entity.Property(e => e.UsuarioId).HasColumnName("UsuarioId").IsRequired();
+                entity.Property(e => e.UsuarioNic).HasColumnName("UsuarioNic").HasMaxLength(100).IsRequired();
+                entity.Property(e => e.UsuarioPass).HasColumnName("UsuarioPass").HasMaxLength(100).IsRequired();
+                entity.Property(e => e.UsuarioEstado).HasColumnName("UsuarioEstado").HasMaxLength(100).IsRequired();
+                entity.Property(e => e.UsuarioFecha).HasColumnName("UsuarioFecha").HasMaxLength(100).IsRequired();
             });
 
             base.OnModelCreating(modelBuilder);
