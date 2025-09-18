@@ -1,6 +1,7 @@
 using ApiComercial.Entities.Cuotas;
 using ApiComercial.Models.Request;
 using ApiComercial.Models.Responses;
+using ApiComercial.Models.Responses.Pagos;
 
 namespace ApiComercial.Repositories.Interfaces;
 /// <summary>
@@ -21,4 +22,6 @@ public interface IVentasRepository
     Task<IEnumerable<MediosPagoResponse>> ObtenerMediosPago();
     Task<IEnumerable<VentasResponse>> ObtenerVentasContado();
     Task<bool> EliminarVentaCuotas(int idVenta);
+    Task<IEnumerable<ListaAtrasoResponse>> ObtenerListaAtrasos();
+    Task<int> CantidadCuotasAtrasadas();
 }   

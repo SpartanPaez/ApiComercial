@@ -1,6 +1,7 @@
 using ApiComercial.Models;
 using ApiComercial.Models.Request;
 using ApiComercial.Models.Responses;
+using ApiComercial.Models.Responses.Pagos;
 using ApiComercial.Services.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -231,5 +232,57 @@ public class VentasController : BaseApiController
             });
         }
 
+    }
+
+    [HttpGet("ListaAtrasos")]
+    [ProducesResponseType(typeof(IEnumerable<ListaAtrasoResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> ObtenerListaAtrasos()
+    {
+        try
+        {
+            var resultado = await _service.ObtenerListaAtrasos();
+            if (resultado == null || !resultado.Any())
+            {
+                return NoContent();
+            }
+            var respuesta = _mapper.Map<IEnumerable<ListaAtrasoResponse>>(resultado);
+            return Ok(respuesta);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al consultar la lista de atrasos");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos - lista de atrasos"
+            });
+        }
+    }
+    [HttpGet("CantidadCuotasAtrasadas")]
+    [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> CantidadCuotasAtrasadas()
+    {
+        try
+        {
+            var resultado = await _service.CantidadCuotasAtrasadas();
+            return Ok(resultado);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al consultar la cantidad de cuotas atrasadas");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos - cantidad de cuotas atrasadas"
+            });
+        }
     }
 }

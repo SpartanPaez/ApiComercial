@@ -1,6 +1,7 @@
 
 using ApiComercial.Models.Request;
 using ApiComercial.Models.Responses;
+using ApiComercial.Models.Responses.Pagos;
 using ApiComercial.Repositories.Interfaces;
 using ApiComercial.Services.Interfaces;
 
@@ -64,5 +65,14 @@ public class VentasService : IVentaService
     public async Task<bool> EliminarVentaCuotas(int idVenta)
     {
         return await _ventasRepository.EliminarVentaCuotas(idVenta);
+    }
+
+    public async Task<IEnumerable<ListaAtrasoResponse>> ObtenerListaAtrasos()
+    {
+        return await _ventasRepository.ObtenerListaAtrasos();
+    }
+    public async Task<int> CantidadCuotasAtrasadas()
+    {
+        return await _ventasRepository.CantidadCuotasAtrasadas();
     }
 }

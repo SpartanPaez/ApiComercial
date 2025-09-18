@@ -2,6 +2,7 @@ using ApiComercial.Entities.Cuotas;
 using ApiComercial.Infraestructure.Data;
 using ApiComercial.Models.Request;
 using ApiComercial.Models.Responses;
+using ApiComercial.Models.Responses.Pagos;
 using ApiComercial.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -243,5 +244,51 @@ public class VentasRepository : IVentasRepository
             await transaction.RollbackAsync();
             throw;
         }
+    }
+
+    public async Task<IEnumerable<ListaAtrasoResponse>> ObtenerListaAtrasos()
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+
+        var fechaActual = DateTime.Now;
+
+        return await (from cuotas in ctx.Cuota.AsNoTracking()
+                      join ventas in ctx.Ventas.AsNoTracking()
+                      on cuotas.VentaId equals ventas.VentaId
+                      join detalleventas in ctx.DetalleVenta.AsNoTracking()
+                      on ventas.VentaId equals detalleventas.VentaId
+                      join clientes in ctx.Clientes.AsNoTracking()
+                      on ventas.ClienteId equals clientes.ClienteId
+                      join autos in ctx.Vehiculos.AsNoTracking()
+                      on detalleventas.IdChasis equals autos.IdChasis
+                      join marcas in ctx.Marcas.AsNoTracking()
+                      on autos.IdMarca equals marcas.IdMarca
+                      join modelos in ctx.Modelos.AsNoTracking()
+                      on autos.IdModelo equals modelos.IdModelo
+                      where cuotas.EstadoCodigo == "PENDIENTE" && cuotas.FechaVencimiento < fechaActual
+                      group cuotas by new { ventas.VentaId, clientes.ClienteCedula, clientes.ClienteNombre, detalleventas.IdChasis, marcas.DescripcionMarca, modelos.DescripcionModelo } into g
+                      select new ListaAtrasoResponse
+                      {
+                          VentaId = g.Key.VentaId,
+                          NumeroCuota = g.Count(), 
+                          CedulaCliente = g.Key.ClienteCedula,
+                          NombreCliente = g.Key.ClienteNombre,
+                          IdChasis = g.Key.IdChasis,
+                          Marca = g.Key.DescripcionMarca,
+                          Modelo = g.Key.DescripcionModelo,
+                          CantidadCuotasAtrasadas = g.Count().ToString()
+                      }).ToListAsync();
+    }
+
+    public async Task<int> CantidadCuotasAtrasadas()
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+
+        var fechaActual = DateTime.Now;
+
+        return await ctx.Cuota.AsNoTracking()
+            .CountAsync(c => c.EstadoCodigo == "PENDIENTE" && c.FechaVencimiento < fechaActual);
     }
 }

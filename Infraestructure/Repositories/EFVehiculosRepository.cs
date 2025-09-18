@@ -30,7 +30,7 @@ namespace ApiComercial.Infraestructure.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Vehiculo>> GetVehiculos()
         {
-            var vehiculos = await (from v in _my.Vehiculos
+            var vehiculos = await (from v in _my.Vehiculos.AsNoTracking()
                                    join m in _my.Marcas on v.IdMarca equals m.IdMarca
                                    join mo in _my.Modelos on v.IdModelo equals mo.IdModelo
                                    select new Vehiculo

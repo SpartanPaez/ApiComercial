@@ -77,7 +77,7 @@ public class CatalogoFotoAutoRepository : ICatalogoFotoAutoRepository
     public async Task<AutoDetalleViewModel> ObtenerDetalleAutoAsync(string idChasis)
     {
         // 1. Consulta los datos básicos del vehículo
-        var vehiculo = await (from v in _context.Vehiculos
+        var vehiculo = await (from v in _context.Vehiculos.AsNoTracking()
                               join m in _context.Marcas on v.IdMarca equals m.IdMarca
                               join mo in _context.Modelos on v.IdModelo equals mo.IdModelo
                               where v.IdChasis == idChasis && v.Estado != "VENDIDO"
