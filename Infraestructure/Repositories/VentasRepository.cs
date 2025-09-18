@@ -155,7 +155,13 @@ public class VentasRepository : IVentasRepository
             FechaPago = DateTime.UtcNow
         };
         ctx.Pagos.Add(pago);
-        cuota.EstadoCodigo = "PAGADO";
+
+        // 4. Solo marcar como PAGADO si el monto pagado es suficiente
+        if (request.MontoPagado >= cuota.MontoCuota)
+        {
+            cuota.EstadoCodigo = "PAGADO";
+        }
+
         var cambios = await ctx.SaveChangesAsync();
         return cambios > 0;
     }
