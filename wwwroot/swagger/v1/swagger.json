@@ -6766,6 +6766,10 @@
             "type": "string",
             "nullable": true
           },
+          "celular": {
+            "type": "string",
+            "nullable": true
+          },
           "idChasis": {
             "type": "string",
             "nullable": true

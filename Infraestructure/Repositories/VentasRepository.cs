@@ -1,3 +1,4 @@
+using ApiComercial.Controllers;
 using ApiComercial.Entities.Cuotas;
 using ApiComercial.Infraestructure.Data;
 using ApiComercial.Models.Request;
@@ -156,10 +157,14 @@ public class VentasRepository : IVentasRepository
         };
         ctx.Pagos.Add(pago);
 
-        // 4. Solo marcar como PAGADO si el monto pagado es suficiente
-        if (request.MontoPagado >= cuota.MontoCuota)
+        // 4. Actualizar el monto de la cuota restando el pago
+        cuota.MontoCuota -= request.MontoPagado;
+
+        // 5. Marcar como PAGADO solo si el monto restante es 0 o negativo
+        if (cuota.MontoCuota <= 0)
         {
             cuota.EstadoCodigo = "PAGADO";
+            cuota.MontoCuota = 0; // Asegurar que no sea negativo
         }
 
         var cambios = await ctx.SaveChangesAsync();
@@ -224,24 +229,28 @@ public class VentasRepository : IVentasRepository
             var cuotaIds = cuotas.Select(c => c.CuotaId).ToList();
             var pagos = await ctx.Pagos.Where(p => cuotaIds.Contains(p.CuotaId)).ToListAsync();
             ctx.Pagos.RemoveRange(pagos);
+            await ctx.SaveChangesAsync(); // Guardar cambios para eliminar pagos primero
 
             // 2. Eliminar cuotas
             ctx.Cuota.RemoveRange(cuotas);
+            await ctx.SaveChangesAsync(); // Guardar cambios para eliminar cuotas
 
             // 3. Eliminar refuerzos
             var refuerzos = await ctx.Refuerzos.Where(r => r.VentaId == idVenta).ToListAsync();
             ctx.Refuerzos.RemoveRange(refuerzos);
+            await ctx.SaveChangesAsync(); // Guardar cambios para eliminar refuerzos
 
             // 4. Eliminar detalles de venta
             var detalles = await ctx.DetalleVenta.Where(d => d.VentaId == idVenta).ToListAsync();
             ctx.DetalleVenta.RemoveRange(detalles);
+            await ctx.SaveChangesAsync(); // Guardar cambios para eliminar detalles
 
             // 5. Eliminar la venta
             var venta = await ctx.Ventas.FirstOrDefaultAsync(v => v.VentaId == idVenta);
             if (venta != null)
                 ctx.Ventas.Remove(venta);
+            await ctx.SaveChangesAsync(); // Guardar cambios para eliminar venta
 
-            await ctx.SaveChangesAsync();
             await transaction.CommitAsync();
             return true;
         }
@@ -273,13 +282,14 @@ public class VentasRepository : IVentasRepository
                       join modelos in ctx.Modelos.AsNoTracking()
                       on autos.IdModelo equals modelos.IdModelo
                       where cuotas.EstadoCodigo == "PENDIENTE" && cuotas.FechaVencimiento < fechaActual
-                      group cuotas by new { ventas.VentaId, clientes.ClienteCedula, clientes.ClienteNombre, detalleventas.IdChasis, marcas.DescripcionMarca, modelos.DescripcionModelo } into g
+                      group cuotas by new { ventas.VentaId, clientes.ClienteCedula, clientes.ClienteNombre, clientes.ClienteCelular, detalleventas.IdChasis, marcas.DescripcionMarca, modelos.DescripcionModelo } into g
                       select new ListaAtrasoResponse
                       {
                           VentaId = g.Key.VentaId,
                           NumeroCuota = g.Count(), 
                           CedulaCliente = g.Key.ClienteCedula,
                           NombreCliente = g.Key.ClienteNombre,
+                          Celular = g.Key.ClienteCelular,
                           IdChasis = g.Key.IdChasis,
                           Marca = g.Key.DescripcionMarca,
                           Modelo = g.Key.DescripcionModelo,
