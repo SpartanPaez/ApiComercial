@@ -1,4 +1,3 @@
-using ApiComercial.Controllers;
 using ApiComercial.Entities.Cuotas;
 using ApiComercial.Infraestructure.Data;
 using ApiComercial.Models.Request;
@@ -159,6 +158,7 @@ public class VentasRepository : IVentasRepository
 
         // 4. Actualizar el monto de la cuota restando el pago
         cuota.MontoCuota -= request.MontoPagado;
+        cuota.FechaPago = request.FechaPago;
 
         // 5. Marcar como PAGADO solo si el monto restante es 0 o negativo
         if (cuota.MontoCuota <= 0)

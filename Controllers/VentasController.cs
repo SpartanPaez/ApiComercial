@@ -158,6 +158,7 @@ public class VentasController : BaseApiController
             });
         }
     }
+    
     //para obtener refuerzos
     [HttpGet("{idVenta}/Refuerzos")]
     [ProducesResponseType(typeof(RefuerzoResponse), StatusCodes.Status200OK)]

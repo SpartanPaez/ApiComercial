@@ -6700,6 +6700,11 @@
             "type": "string",
             "description": "Observaciones del pago",
             "nullable": true
+          },
+          "fechaPago": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         }
       },

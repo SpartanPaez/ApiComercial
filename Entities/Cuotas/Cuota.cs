@@ -26,6 +26,7 @@ public class Cuota
     /// Establece si la cuota esta pagada o no, 0 es pendiente y 1 es pagado
     /// </summary>
     public string? EstadoCodigo { get; set; }
-    public bool EsRefuerzo { get; set; }
+    public bool EsRefuerzo { get; set; } 
+    public DateTime? FechaPago { get; set; }
 }
 

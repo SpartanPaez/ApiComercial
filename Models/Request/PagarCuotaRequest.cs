@@ -1,4 +1,5 @@
 namespace ApiComercial.Models.Request;
+
 public class PagarCuotaRequest
 {
     /// <summary>
@@ -17,4 +18,5 @@ public class PagarCuotaRequest
     /// Observaciones del pago
     /// </summary>
     public string? Referencia { get; set; }
+    public DateTime? FechaPago { get; set; }
 }
