@@ -286,4 +286,44 @@ public class VentasController : BaseApiController
             });
         }
     }
+
+    [HttpGet("Reporte")]
+    [ProducesResponseType(typeof(ReporteVentasResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> Reporte([FromQuery] ReporteVentasRequest request)
+    {
+        try
+        {
+            var lista = await _service.ObtenerReporteVentasAsync(request);
+            if (lista == null || !lista.Any())
+            {
+                return NoContent();
+            }
+
+            var totalVentas = lista.Sum(v => v.PrecioVenta);
+            var totalGanancias = lista.Sum(v => v.Ganancia);
+
+            var respuesta = new ReporteVentasResponse
+            {
+                Ventas = lista,
+                TotalVentas = totalVentas,
+                TotalGanancias = totalGanancias,
+                CantidadVentas = lista.Count
+            };
+
+            return Ok(respuesta);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al generar el reporte de ventas");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos - reporte de ventas"
+            });
+        }
+    }
 }

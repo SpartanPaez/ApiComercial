@@ -17,4 +17,5 @@ public interface IVentaService
     Task<bool> EliminarVentaCuotas(int idVenta);
     Task<IEnumerable<ListaAtrasoResponse>> ObtenerListaAtrasos();
     Task<int> CantidadCuotasAtrasadas();
+    Task<List<ReporteVentaResponse>> ObtenerReporteVentasAsync(ReporteVentasRequest request);
 }

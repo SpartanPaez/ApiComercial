@@ -1,4 +1,3 @@
-
 using ApiComercial.Models.Request;
 using ApiComercial.Models.Responses;
 using ApiComercial.Models.Responses.Pagos;
@@ -74,5 +73,10 @@ public class VentasService : IVentaService
     public async Task<int> CantidadCuotasAtrasadas()
     {
         return await _ventasRepository.CantidadCuotasAtrasadas();
+    }
+
+    public async Task<List<ReporteVentaResponse>> ObtenerReporteVentasAsync(ReporteVentasRequest request)
+    {
+        return await _ventasRepository.ObtenerReporteVentasAsync(request);
     }
 }

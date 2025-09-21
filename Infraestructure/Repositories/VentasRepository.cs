@@ -307,4 +307,62 @@ public class VentasRepository : IVentasRepository
         return await ctx.Cuota.AsNoTracking()
             .CountAsync(c => c.EstadoCodigo == "PENDIENTE" && c.FechaVencimiento < fechaActual);
     }
+
+    public async Task<List<ReporteVentaResponse>> ObtenerReporteVentasAsync(ReporteVentasRequest request)
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+
+        var query = from venta in ctx.Ventas.AsNoTracking()
+                    join detalle in ctx.DetalleVenta.AsNoTracking() on venta.VentaId equals detalle.VentaId
+                    join vehiculo in ctx.Vehiculos.AsNoTracking() on detalle.IdChasis equals vehiculo.IdChasis
+                    join cliente in ctx.Clientes.AsNoTracking() on venta.ClienteId equals cliente.ClienteId
+                    join marca in ctx.Marcas.AsNoTracking() on vehiculo.IdMarca equals marca.IdMarca
+                    join modelo in ctx.Modelos.AsNoTracking() on vehiculo.IdModelo equals modelo.IdModelo
+                    select new {
+                        venta,
+                        detalle,
+                        vehiculo,
+                        cliente,
+                        marca,
+                        modelo,
+                        CostoString = vehiculo.Costo
+                    };
+
+        if (request.FechaInicio.HasValue)
+            query = query.Where(x => x.venta.FechaVenta >= request.FechaInicio.Value);
+        if (request.FechaFin.HasValue)
+            query = query.Where(x => x.venta.FechaVenta <= request.FechaFin.Value);
+        if (request.ClienteId.HasValue)
+            query = query.Where(x => x.cliente.ClienteId == request.ClienteId.Value);
+        if (request.MarcaId.HasValue)
+            query = query.Where(x => x.marca.IdMarca == request.MarcaId.Value);
+        if (request.ModeloId.HasValue)
+            query = query.Where(x => x.modelo.IdModelo == request.ModeloId.Value);
+        if (request.SoloContado.HasValue && request.SoloContado.Value)
+            query = query.Where(x => x.venta.CantidadCuotas == 0);
+
+        var tempList = await query.ToListAsync();
+
+        var result = tempList.Select(x => {
+            decimal costo = 0;
+            decimal.TryParse(x.CostoString, out costo);
+            var precioVenta = x.detalle.PrecioUnitario ?? 0;
+            return new ReporteVentaResponse
+            {
+                VentaId = x.venta.VentaId,
+                FechaVenta = x.venta.FechaVenta,
+                ClienteNombre = x.cliente.ClienteNombre ?? string.Empty,
+                Marca = x.marca.DescripcionMarca ?? string.Empty,
+                Modelo = x.modelo.DescripcionModelo ?? string.Empty,
+                PrecioVenta = precioVenta,
+                Costo = costo,
+                Ganancia = precioVenta - costo,
+                EsContado = x.venta.CantidadCuotas == 0,
+                Estado = x.vehiculo.Estado ?? string.Empty
+            };
+        }).ToList();
+
+        return result;
+    }
 }
