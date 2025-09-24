@@ -114,6 +114,10 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<AutoEspecificacion> AutoEspecificaciones { get; set; }
         public DbSet<Banco> Bancos { get; set; } 
         public DbSet<Refuerzo> Refuerzos { get; set; }
+        /// <summary>
+        /// Representa la tabla de co-deudores de ventas
+        /// </summary>
+        public DbSet<VentaCoDeudor> VentaCoDeudor { get; set; }
 
         /// <summary>
         /// Callback que se invoca cuando EF Core está configurando el modelo de datos antes de crear la base de datos. 
@@ -510,6 +514,15 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.Valor).HasColumnName("valor").HasMaxLength(255).IsRequired();
             });
 
+            modelBuilder.Entity<VentaCoDeudor>(entity =>
+            {
+                entity.ToTable("VentaCoDeudor");
+                entity.HasKey(e => e.VentaCoDeudorId);
+                entity.Property(e => e.VentaCoDeudorId).HasColumnName("VentaCoDeudorId");
+                entity.Property(e => e.VentaId).HasColumnName("VentaId");
+                entity.Property(e => e.ClienteId).HasColumnName("ClienteId");
+                entity.Property(e => e.FechaAgregado).HasColumnName("FechaAgregado");
+            });
         }
     }
 }

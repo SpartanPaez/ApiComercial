@@ -79,4 +79,9 @@ public class VentasService : IVentaService
     {
         return await _ventasRepository.ObtenerReporteVentasAsync(request);
     }
+
+    public async Task<int> InsertarCoDeudor(VentaCoDeudorRequest request)
+    {
+        return await _ventasRepository.InsertarCoDeudor(request);
+    }
 }

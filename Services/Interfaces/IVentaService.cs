@@ -18,4 +18,5 @@ public interface IVentaService
     Task<IEnumerable<ListaAtrasoResponse>> ObtenerListaAtrasos();
     Task<int> CantidadCuotasAtrasadas();
     Task<List<ReporteVentaResponse>> ObtenerReporteVentasAsync(ReporteVentasRequest request);
+    Task<int> InsertarCoDeudor(VentaCoDeudorRequest request);
 }

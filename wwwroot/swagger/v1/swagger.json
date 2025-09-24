@@ -4595,6 +4595,72 @@
         }
       }
     },
+    "/api/Ventas/InsertarCoDeudor": {
+      "post": {
+        "tags": [
+          "Ventas"
+        ],
+        "operationId": "Ventas_InsertarCoDeudor",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VentaCoDeudorRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Ventas/EliminarVentaCuotas/{idVenta}": {
       "delete": {
         "tags": [
@@ -6862,6 +6928,20 @@
           "fechaVencimiento": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "VentaCoDeudorRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ventaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "clienteId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },

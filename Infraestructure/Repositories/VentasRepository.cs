@@ -1,3 +1,4 @@
+using ApiComercial.Entities;
 using ApiComercial.Entities.Cuotas;
 using ApiComercial.Infraestructure.Data;
 using ApiComercial.Models.Request;
@@ -364,5 +365,23 @@ public class VentasRepository : IVentasRepository
         }).ToList();
 
         return result;
+    }
+
+    public async Task<int> InsertarCoDeudor(VentaCoDeudorRequest request)
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+
+        var coDeudor = new VentaCoDeudor
+        {
+            VentaId = request.VentaId,
+            ClienteId = request.ClienteId,
+            FechaAgregado = DateTime.Now
+        };
+
+        ctx.VentaCoDeudor.Add(coDeudor);
+        await ctx.SaveChangesAsync();
+
+        return coDeudor.VentaCoDeudorId;
     }
 }
