@@ -32,7 +32,8 @@ public class VentasRepository : IVentasRepository
         using var scope = _serviceScopeFactory.CreateAsyncScope();
         var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
 
-        return await (from ventas in ctx.Ventas.AsNoTracking()
+        // Primero obtenemos las cabeceras de cuotas
+        var cabeceras = await (from ventas in ctx.Ventas.AsNoTracking()
                       join detalleventas in ctx.DetalleVenta.AsNoTracking()
                       on ventas.VentaId equals detalleventas.VentaId
                       join clientes in ctx.Clientes.AsNoTracking()
@@ -62,9 +63,41 @@ public class VentasRepository : IVentasRepository
                           // NUEVO: Total pagado (si pagas por cuota)
                           TotalPagado = cuotasVenta.Where(c => c.EstadoCodigo == "PAGADO").Sum(c => c.MontoCuota),
                           // NUEVO: Total restante (precio total - pagado)
-                          TotalRestante = ventas.PrecioTotalCuotas - cuotasVenta.Where(c => c.EstadoCodigo == "PAGADO").Sum(c => c.MontoCuota)
+                          TotalRestante = ventas.PrecioTotalCuotas - cuotasVenta.Where(c => c.EstadoCodigo == "PAGADO").Sum(c => c.MontoCuota),
+                          CoDeudores = new List<CoDeudorResponse>()
                       })
                       .ToListAsync();
+
+        // Luego obtenemos los co-deudores para cada venta
+        var ventaIds = cabeceras.Select(c => c.IdVenta).Distinct().ToList();
+        var coDeudores = await (from cd in ctx.VentaCoDeudor.AsNoTracking()
+                               join cl in ctx.Clientes.AsNoTracking()
+                               on cd.ClienteId equals cl.ClienteId
+                               where ventaIds.Contains(cd.VentaId)
+                               select new 
+                               {
+                                   VentaId = cd.VentaId,
+                                   ClienteId = cd.ClienteId,
+                                   CedulaCliente = cl.ClienteCedula,
+                                   NombreCliente = cl.ClienteNombre,
+                                   FechaAgregado = cd.FechaAgregado
+                               }).ToListAsync();
+        
+        // Asignamos los co-deudores a cada cabecera
+        foreach (var cabecera in cabeceras)
+        {
+            cabecera.CoDeudores = coDeudores
+                .Where(cd => cd.VentaId == cabecera.IdVenta)
+                .Select(cd => new CoDeudorResponse
+                {
+                    ClienteId = cd.ClienteId,
+                    CedulaCliente = cd.CedulaCliente,
+                    NombreCliente = cd.NombreCliente,
+                    FechaAgregado = cd.FechaAgregado
+                }).ToList();
+        }
+
+        return cabeceras;
     }
 
     public async Task<IEnumerable<VentasResponse>> ObtenerVentasContado()

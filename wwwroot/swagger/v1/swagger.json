@@ -6806,6 +6806,35 @@
             "type": "number",
             "format": "decimal",
             "nullable": true
+          },
+          "coDeudores": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CoDeudorResponse"
+            }
+          }
+        }
+      },
+      "CoDeudorResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "clienteId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cedulaCliente": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombreCliente": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaAgregado": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },

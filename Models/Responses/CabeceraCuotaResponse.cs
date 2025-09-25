@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ApiComercial.Models.Responses;
 
 public class CabeceraCuotaResponse
@@ -16,4 +18,5 @@ public class CabeceraCuotaResponse
     public int CantidadCuotasPagadas { get; set; }
     public int TotalPagado { get; set; }
     public decimal? TotalRestante { get; set; }
+    public List<CoDeudorResponse>? CoDeudores { get; set; }
 }
