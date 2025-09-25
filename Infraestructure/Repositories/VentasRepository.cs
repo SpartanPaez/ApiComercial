@@ -80,6 +80,8 @@ public class VentasRepository : IVentasRepository
                                    ClienteId = cd.ClienteId,
                                    CedulaCliente = cl.ClienteCedula,
                                    NombreCliente = cl.ClienteNombre,
+                                   Telefono = cl.ClienteCelular,
+                                   Direccion = cl.ClienteDireccion,
                                    FechaAgregado = cd.FechaAgregado
                                }).ToListAsync();
         
@@ -93,6 +95,8 @@ public class VentasRepository : IVentasRepository
                     ClienteId = cd.ClienteId,
                     CedulaCliente = cd.CedulaCliente,
                     NombreCliente = cd.NombreCliente,
+                    Telefono = cd.Telefono,
+                    Direccion = cd.Direccion,
                     FechaAgregado = cd.FechaAgregado
                 }).ToList();
         }
