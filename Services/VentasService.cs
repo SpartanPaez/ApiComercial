@@ -84,4 +84,8 @@ public class VentasService : IVentaService
     {
         return await _ventasRepository.InsertarCoDeudor(request);
     }
+    public async Task<int> PagarRefuerzo(int refuerzoId)
+    {
+        return await _ventasRepository.PagarRefuerzo(refuerzoId);
+    }
 }

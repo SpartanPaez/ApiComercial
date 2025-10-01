@@ -15,4 +15,5 @@ public class Refuerzo
     /// Fecha de vencimiento del refuerzo
     /// </summary>
     public DateTime FechaVencimiento { get; set; }
+    public string? Estado { get; set; }
 }

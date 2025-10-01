@@ -50,6 +50,8 @@ public class VentasRepository : IVentasRepository
                           IdVenta = ventas.VentaId,
                           CedulaCliente = clientes.ClienteCedula,
                           NombreCliente = clientes.ClienteNombre,
+                          Telefono = clientes.ClienteCelular,
+                          Direccion = clientes.ClienteDireccion,
                           IdChasis = detalleventas.IdChasis,
                           Marca = marcas.DescripcionMarca,
                           AnoFabricacion = autos.AnoFabricacion,
@@ -420,5 +422,27 @@ public class VentasRepository : IVentasRepository
         await ctx.SaveChangesAsync();
 
         return coDeudor.VentaCoDeudorId;
+    }
+
+    public async Task<int> PagarRefuerzo(int refuerzoId)
+    {
+        var request = new RefuerzoRequest
+        {
+            VentaId = refuerzoId,
+            MontoRefuerzo = 0,
+            FechaVencimiento = DateTime.Now
+        };
+        {
+            using var scope = _serviceScopeFactory.CreateAsyncScope();
+            var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+
+            var refuerzo = await ctx.Refuerzos.FindAsync(refuerzoId);
+            if (refuerzo == null) return 0;
+
+            refuerzo.Estado = "1";
+            await ctx.SaveChangesAsync();
+
+            return refuerzo.RefuerzoId;
+        }
     }
 }

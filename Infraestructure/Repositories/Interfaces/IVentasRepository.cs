@@ -26,4 +26,5 @@ public interface IVentasRepository
     Task<int> CantidadCuotasAtrasadas();
     Task<List<ReporteVentaResponse>> ObtenerReporteVentasAsync(ReporteVentasRequest request);
     Task<int> InsertarCoDeudor(VentaCoDeudorRequest request);
+    Task<int> PagarRefuerzo(int refuerzoId);
 }   

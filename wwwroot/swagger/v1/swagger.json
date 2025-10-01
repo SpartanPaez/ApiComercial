@@ -4949,6 +4949,71 @@
           }
         }
       }
+    },
+    "/api/Ventas/PagarRefuerzo": {
+      "post": {
+        "tags": [
+          "Ventas"
+        ],
+        "operationId": "Ventas_PagarRefuerzo",
+        "parameters": [
+          {
+            "name": "refuerzoId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -6760,6 +6825,14 @@
             "type": "string",
             "nullable": true
           },
+          "telefono": {
+            "type": "string",
+            "nullable": true
+          },
+          "direccion": {
+            "type": "string",
+            "nullable": true
+          },
           "idChasis": {
             "type": "string",
             "nullable": true
@@ -6829,6 +6902,14 @@
             "nullable": true
           },
           "nombreCliente": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefono": {
+            "type": "string",
+            "nullable": true
+          },
+          "direccion": {
             "type": "string",
             "nullable": true
           },

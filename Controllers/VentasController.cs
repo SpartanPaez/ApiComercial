@@ -352,4 +352,30 @@ public class VentasController : BaseApiController
             });
         }
     }
+
+    [HttpPost("PagarRefuerzo")]
+    [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> PagarRefuerzo(int refuerzoId)
+    {
+        try
+        {
+            var resultado = await _service.PagarRefuerzo(refuerzoId);
+            return Ok(resultado);
+        }
+        catch (System.Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al pagar el refuerzo");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de pago del refuerzo"
+            });
+        }
+    }
+
+    
 }
