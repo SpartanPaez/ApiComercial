@@ -28,6 +28,7 @@ namespace ApiComercial.Entities.Cuotas
         /// </summary>
         /// <value></value>
         public string? Referencia { get; set; }
+        public int IdBanco { get; set; }
 
     }
 }

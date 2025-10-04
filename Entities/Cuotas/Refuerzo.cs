@@ -1,3 +1,5 @@
+using Org.BouncyCastle.Utilities.IO.Pem;
+
 namespace ApiComercial.Entities.Cuotas;
 
 public class Refuerzo
@@ -16,4 +18,7 @@ public class Refuerzo
     /// </summary>
     public DateTime FechaVencimiento { get; set; }
     public string? Estado { get; set; }
+    public int MedioPagoId { get; set; }
+    public string? Referencia { get; set; }
+    public int IdBanco { get; set; }
 }

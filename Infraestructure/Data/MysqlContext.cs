@@ -136,6 +136,9 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.MontoRefuerzo).HasColumnName("MontoRefuerzo");
                 entity.Property(e => e.FechaVencimiento).HasColumnName("FechaVencimiento");
                 entity.Property(e => e.Estado).HasColumnName("Estado");
+                entity.Property(e => e.MedioPagoId).HasColumnName("MedioPagoId");
+                entity.Property(e => e.Referencia).HasColumnName("Referencia");
+                entity.Property(e => e.IdBanco).HasColumnName("IdBanco");
             });
 
             modelBuilder.Entity<Banco>(entity =>
@@ -204,6 +207,7 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.FechaPago).HasColumnName("FechaPago").IsRequired();
                 entity.Property(e => e.Monto).HasColumnName("Monto").IsRequired();
                 entity.Property(e => e.Referencia).HasColumnName("Referencia").HasMaxLength(100);
+                entity.Property(e => e.IdBanco).HasColumnName("idbanco");
             });
 
             modelBuilder.Entity<Barrio>(entity =>
