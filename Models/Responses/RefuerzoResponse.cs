@@ -14,5 +14,5 @@ public class RefuerzoResponse
     /// <summary>
     /// Fecha de vencimiento del refuerzo
     /// </summary>
-    public DateTime FechaVencimiento { get; set; }
+    public DateTime? FechaVencimiento { get; set; }
 }

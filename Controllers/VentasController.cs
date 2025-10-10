@@ -1,5 +1,6 @@
 using ApiComercial.Models;
 using ApiComercial.Models.Request;
+using ApiComercial.Models.Request.Refuerzos;
 using ApiComercial.Models.Responses;
 using ApiComercial.Models.Responses.Pagos;
 using ApiComercial.Services.Interfaces;
@@ -359,11 +360,11 @@ public class VentasController : BaseApiController
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> PagarRefuerzo(int refuerzoId)
+    public async Task<ActionResult> PagarRefuerzo(PagarRefuerzoRequest parametros)
     {
         try
         {
-            var resultado = await _service.PagarRefuerzo(refuerzoId);
+            var resultado = await _service.PagarRefuerzo(parametros);
             return Ok(resultado);
         }
         catch (System.Exception e)
@@ -373,6 +374,32 @@ public class VentasController : BaseApiController
             {
                 ErrorType = Enums.ErrorType.error_interno_servidor,
                 ErrorDescripcion = "Ocurrió un error en el proceso de pago del refuerzo"
+            });
+        }
+    }
+
+    [HttpPost("ReportePagos")]
+    [ProducesResponseType(typeof(ReportePagosResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> ReportePagos([FromBody] ReportePagosRequest request)
+    {
+        try
+        {
+            var resultado = await _service.ObtenerReportePagosAsync(request);
+            if (resultado == null || resultado.Items == null || resultado.Items.Count == 0)
+                return NoContent();
+            return Ok(resultado);
+        }
+        catch (Exception e)
+        {
+            _Logger.LogError(e, "Ocurrió un error al generar el reporte de pagos");
+            return StatusCode(500, new ErrorResponse
+            {
+                ErrorType = Enums.ErrorType.error_interno_servidor,
+                ErrorDescripcion = "Ocurrió un error en el proceso de consulta de datos - reporte de pagos"
             });
         }
     }

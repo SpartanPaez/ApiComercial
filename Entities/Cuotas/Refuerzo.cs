@@ -14,11 +14,16 @@ public class Refuerzo
     /// </summary>
     public decimal MontoRefuerzo { get; set; }
     /// <summary>
+    /// Monto original del refuerzo (no varía). MontoRefuerzo representa el saldo actual.
+    /// </summary>
+    public decimal? MontoOriginal { get; set; }
+    /// <summary>
     /// Fecha de vencimiento del refuerzo
     /// </summary>
-    public DateTime FechaVencimiento { get; set; }
+    public DateTime? FechaVencimiento { get; set; }
     public string? Estado { get; set; }
-    public int MedioPagoId { get; set; }
+    public int? MedioPagoId { get; set; }
     public string? Referencia { get; set; }
-    public int IdBanco { get; set; }
+    public int? IdBanco { get; set; }
+    public DateTime? FechaPago { get; set; }
 }

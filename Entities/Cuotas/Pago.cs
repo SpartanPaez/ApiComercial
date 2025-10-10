@@ -14,7 +14,7 @@ namespace ApiComercial.Entities.Cuotas
         /// Id del medio de pago utilizado
         /// </summary>
         /// <value></value>
-        public int MedioPagoId { get; set; }
+        public int? MedioPagoId { get; set; }
         /// <summary>
         /// Fecha de vencimiento de la cuota
         /// </summary>
@@ -28,7 +28,7 @@ namespace ApiComercial.Entities.Cuotas
         /// </summary>
         /// <value></value>
         public string? Referencia { get; set; }
-        public int IdBanco { get; set; }
+        public int? IdBanco { get; set; }
 
     }
 }

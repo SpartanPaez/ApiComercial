@@ -4,6 +4,8 @@ using ApiComercial.Entitie.Documentaciones;
 using ApiComercial.Entities.Cuotas;
 using Entities.Catalogo;
 using ApiComercial.Entities.Referenciales;
+using Org.BouncyCastle.Crypto.Digests;
+using ApiComercial.Entities.Recepcion;
 
 namespace ApiComercial.Infraestructure.Data
 {
@@ -112,8 +114,9 @@ namespace ApiComercial.Infraestructure.Data
         public DbSet<AutoFoto> AutoFotos { get; set; } 
         public DbSet<AutoCaracteristica> AutoCaracteristicas { get; set; }
         public DbSet<AutoEspecificacion> AutoEspecificaciones { get; set; }
-        public DbSet<Banco> Bancos { get; set; } 
-        public DbSet<Refuerzo> Refuerzos { get; set; }
+    public DbSet<Banco> Bancos { get; set; } 
+    public DbSet<Refuerzo> Refuerzos { get; set; }
+    public DbSet<PagoRefuerzo> PagosRefuerzos { get; set; }
         /// <summary>
         /// Representa la tabla de co-deudores de ventas
         /// </summary>
@@ -134,11 +137,26 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.RefuerzoId).HasColumnName("RefuerzosId");
                 entity.Property(e => e.VentaId).HasColumnName("VentaId");
                 entity.Property(e => e.MontoRefuerzo).HasColumnName("MontoRefuerzo");
+                entity.Property(e => e.MontoOriginal).HasColumnName("MontoOriginal");
                 entity.Property(e => e.FechaVencimiento).HasColumnName("FechaVencimiento");
                 entity.Property(e => e.Estado).HasColumnName("Estado");
                 entity.Property(e => e.MedioPagoId).HasColumnName("MedioPagoId");
                 entity.Property(e => e.Referencia).HasColumnName("Referencia");
                 entity.Property(e => e.IdBanco).HasColumnName("IdBanco");
+                entity.Property(e => e.FechaPago).HasColumnName("FechaPago");
+            });
+
+            modelBuilder.Entity<PagoRefuerzo>(entity =>
+            {
+                entity.ToTable("pagos_refuerzos", "ventas");
+                entity.HasKey(e => e.PagoRefuerzoId);
+                entity.Property(e => e.PagoRefuerzoId).HasColumnName("PagoRefuerzoId");
+                entity.Property(e => e.RefuerzoId).HasColumnName("RefuerzosId");
+                entity.Property(e => e.FechaPago).HasColumnName("FechaPago");
+                entity.Property(e => e.Monto).HasColumnName("Monto");
+                entity.Property(e => e.MedioPagoId).HasColumnName("MedioPagoId");
+                entity.Property(e => e.IdBanco).HasColumnName("IdBanco");
+                entity.Property(e => e.Referencia).HasColumnName("Referencia");
             });
 
             modelBuilder.Entity<Banco>(entity =>
@@ -203,11 +221,11 @@ namespace ApiComercial.Infraestructure.Data
                 entity.HasKey(e => e.PagoId);
                 entity.Property(e => e.PagoId).HasColumnName("PagoId").IsRequired();
                 entity.Property(e => e.CuotaId).HasColumnName("CuotaId").IsRequired();
-                entity.Property(e => e.MedioPagoId).HasColumnName("MedioPagoId");
+                entity.Property(e => e.MedioPagoId).HasColumnName("MedioPagoId").IsRequired(false);
                 entity.Property(e => e.FechaPago).HasColumnName("FechaPago").IsRequired();
                 entity.Property(e => e.Monto).HasColumnName("Monto").IsRequired();
                 entity.Property(e => e.Referencia).HasColumnName("Referencia").HasMaxLength(100);
-                entity.Property(e => e.IdBanco).HasColumnName("idbanco");
+                entity.Property(e => e.IdBanco).HasColumnName("idbanco").IsRequired(false);
             });
 
             modelBuilder.Entity<Barrio>(entity =>
@@ -527,6 +545,28 @@ namespace ApiComercial.Infraestructure.Data
                 entity.Property(e => e.VentaId).HasColumnName("VentaId");
                 entity.Property(e => e.ClienteId).HasColumnName("ClienteId");
                 entity.Property(e => e.FechaAgregado).HasColumnName("FechaAgregado");
+            });
+
+            modelBuilder.Entity<DetalleRecepcion>(entity =>
+            {
+                entity.ToTable("DetalleRecepcion");
+                entity.HasKey(e => e.DetalleRecepcionId);
+                entity.Property(e => e.DetalleRecepcionId).HasColumnName("IdDetalle");
+                entity.Property(e => e.RecepcionId).HasColumnName("IdRecepcion").IsRequired();
+                entity.Property(e => e.IdItem).HasColumnName("IdItem").HasMaxLength(50).IsRequired();
+                entity.Property(e => e.Estado).HasColumnName("estado").HasMaxLength(50).IsRequired();
+                entity.Property(e => e.Observacion).HasColumnName("observacion").HasMaxLength(500);
+            });
+            modelBuilder.Entity<Recepcion>(entity =>
+            {
+                entity.ToTable("recepcion");
+                entity.HasKey(e => e.RecepcionId);
+                entity.Property(e => e.RecepcionId).HasColumnName("idrecepcion");
+                entity.Property(e => e.Chasis).HasColumnName("chasis").HasMaxLength(50).IsRequired();
+                entity.Property(e => e.FechaRegistro).HasColumnName("fecha").IsRequired();
+                entity.Property(e => e.RecibidoPor).HasColumnName("recibidopor").HasMaxLength(100).IsRequired();
+                entity.Property(e => e.EntregadoPor).HasColumnName("entregadopor").HasMaxLength(100);
+                entity.Property(e => e.Observacion).HasColumnName("observacion").HasMaxLength(500);
             });
         }
     }

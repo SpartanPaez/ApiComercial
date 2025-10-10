@@ -1,11 +1,12 @@
 using ApiComercial.Entities;
 using ApiComercial.Entities.Cuotas;
 using ApiComercial.Infraestructure.Data;
-using ApiComercial.Models.Request;
+using ApiComercial.Models.Request.Refuerzos;
 using ApiComercial.Models.Responses;
 using ApiComercial.Models.Responses.Pagos;
 using ApiComercial.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using ApiComercial.Models.Request;
 
 namespace ApiComercial.Infraestructure.Repositories;
 
@@ -145,6 +146,7 @@ public class VentasRepository : IVentasRepository
                       join ventas in ctx.Ventas.AsNoTracking()
                       on cuotas.VentaId equals ventas.VentaId
                       where cuotas.VentaId == idVenta
+                      orderby cuotas.FechaVencimiento ascending, cuotas.NumeroCuota ascending
                       select new DetalleCuotaResponse
                       {
                           VentaId = cuotas.VentaId,
@@ -197,14 +199,14 @@ public class VentasRepository : IVentasRepository
         ctx.Pagos.Add(pago);
 
         // 4. Actualizar el monto de la cuota restando el pago
-        cuota.MontoCuota -= request.MontoPagado;
         cuota.FechaPago = request.FechaPago;
+        cuota.MontoCuota -= request.MontoPagado;
 
         // 5. Marcar como PAGADO solo si el monto restante es 0 o negativo
         if (cuota.MontoCuota <= 0)
         {
             cuota.EstadoCodigo = "PAGADO";
-            cuota.MontoCuota = 0; // Asegurar que no sea negativo
+            cuota.MontoCuota = 0;
         }
 
         var cambios = await ctx.SaveChangesAsync();
@@ -247,6 +249,7 @@ public class VentasRepository : IVentasRepository
 
         return await ctx.Refuerzos.AsNoTracking()
             .Where(r => r.VentaId == idVenta)
+            .OrderBy(r => r.FechaVencimiento)
             .Select(r => new RefuerzoResponse
             {
                 RefuerzoId = r.RefuerzoId,
@@ -424,25 +427,278 @@ public class VentasRepository : IVentasRepository
         return coDeudor.VentaCoDeudorId;
     }
 
-    public async Task<int> PagarRefuerzo(int refuerzoId)
+    public async Task<int> PagarRefuerzo(PagarRefuerzoRequest parametros)
     {
-        var request = new RefuerzoRequest
-        {
-            VentaId = refuerzoId,
-            MontoRefuerzo = 0,
-            FechaVencimiento = DateTime.Now
-        };
-        {
-            using var scope = _serviceScopeFactory.CreateAsyncScope();
-            var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+        if (parametros.Monto <= 0)
+            throw new ArgumentException("El monto a pagar debe ser mayor a 0", nameof(parametros.Monto));
 
-            var refuerzo = await ctx.Refuerzos.FindAsync(refuerzoId);
-            if (refuerzo == null) return 0;
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
 
-            refuerzo.Estado = "1";
-            await ctx.SaveChangesAsync();
+        var refuerzo = await ctx.Refuerzos.FirstOrDefaultAsync(r => r.RefuerzoId == parametros.RefuerzoId);
+        if (refuerzo == null)
+            throw new KeyNotFoundException($"No existe refuerzo con Id {parametros.RefuerzoId}");
 
+        // Si ya está pagado, no procesar nuevamente
+        if (refuerzo.Estado == "1")
             return refuerzo.RefuerzoId;
+
+        // Validar que el pago no supere el saldo pendiente
+        if (parametros.Monto > refuerzo.MontoRefuerzo)
+            throw new InvalidOperationException($"El monto a pagar ({parametros.Monto:N0}) no puede superar el saldo pendiente del refuerzo ({refuerzo.MontoRefuerzo:N0}).");
+
+        // Registrar historial del pago del refuerzo
+        var pagoRef = new PagoRefuerzo
+        {
+            RefuerzoId = refuerzo.RefuerzoId,
+            FechaPago = DateTime.UtcNow,
+            Monto = parametros.Monto,
+            MedioPagoId = parametros.MedioPagoId,
+            IdBanco = parametros.IdBanco,
+            Referencia = parametros.Referencia
+        };
+        ctx.PagosRefuerzos.Add(pagoRef);
+
+        // Restar el pago del saldo del refuerzo
+        refuerzo.MontoRefuerzo -= parametros.Monto;
+        if (refuerzo.MontoRefuerzo <= 0)
+        {
+            refuerzo.MontoRefuerzo = 0; // no permitir negativos
+            refuerzo.Estado = "1"; // pagado
         }
+
+        // Guardar metadatos del último pago
+        refuerzo.MedioPagoId = parametros.MedioPagoId;
+        refuerzo.Referencia = parametros.Referencia;
+        refuerzo.IdBanco = parametros.IdBanco;
+        refuerzo.FechaPago = DateTime.UtcNow;
+
+        await ctx.SaveChangesAsync();
+        return refuerzo.RefuerzoId;
+    }
+
+    public async Task<ReportePagosResponse> ObtenerReportePagosAsync(ReportePagosRequest request)
+    {
+        using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
+
+        var fechaHoy = DateTime.Today;
+
+        var items = new List<ReportePagoItem>();
+
+        // 1) Cuotas + Pagos
+        if (request.IncluirCuotas)
+        {
+            var cuotasQuery = from cuota in ctx.Cuota.AsNoTracking()
+                               join venta in ctx.Ventas.AsNoTracking() on cuota.VentaId equals venta.VentaId
+                               join cliente in ctx.Clientes.AsNoTracking() on venta.ClienteId equals cliente.ClienteId
+                               select new { cuota, venta, cliente };
+
+            if (request.ClienteId.HasValue)
+                cuotasQuery = cuotasQuery.Where(x => x.venta.ClienteId == request.ClienteId.Value);
+
+            // Filtrado por vencimiento si corresponde
+            if (string.Equals(request.TipoRango, "Vencimiento", StringComparison.OrdinalIgnoreCase) &&
+                request.FechaInicio.HasValue && request.FechaFin.HasValue)
+            {
+                var ini = request.FechaInicio.Value.Date;
+                var fin = request.FechaFin.Value.Date.AddDays(1).AddTicks(-1);
+                cuotasQuery = cuotasQuery.Where(x => x.cuota.FechaVencimiento >= ini && x.cuota.FechaVencimiento <= fin);
+            }
+
+            var cuotasList = await cuotasQuery.ToListAsync();
+
+            var cuotaIds = cuotasList.Select(x => x.cuota.CuotaId).ToList();
+            var pagosCuotas = await ctx.Pagos.AsNoTracking()
+                .Where(p => cuotaIds.Contains(p.CuotaId))
+                .ToListAsync();
+
+            foreach (var x in cuotasList)
+            {
+                var pagosDeCuota = pagosCuotas.Where(p => p.CuotaId == x.cuota.CuotaId);
+                var montoOriginal = Convert.ToDecimal(x.cuota.MontoCuota);
+                var pagadoTotal = pagosDeCuota.Sum(p => p.Monto);
+                decimal pagadoEnRango = 0;
+                var tipoRango = (request.TipoRango ?? "Todos").Trim();
+                if ((string.Equals(tipoRango, "Pago", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(tipoRango, "Todos", StringComparison.OrdinalIgnoreCase))
+                    && request.FechaInicio.HasValue && request.FechaFin.HasValue)
+                {
+                    var ini = request.FechaInicio.Value.Date;
+                    var fin = request.FechaFin.Value.Date.AddDays(1).AddTicks(-1);
+                    pagadoEnRango = pagosDeCuota.Where(p => p.FechaPago >= ini && p.FechaPago <= fin)
+                                                .Sum(p => p.Monto);
+                }
+
+                var saldo = montoOriginal - pagadoTotal;
+                var fechaPrimerPago = pagosDeCuota.Any() ? pagosDeCuota.Min(p => p.FechaPago) : (DateTime?)null;
+                var fechaUltimoPago = pagosDeCuota.Any() ? pagosDeCuota.Max(p => p.FechaPago) : (DateTime?)null;
+
+                var estado = pagadoTotal <= 0 ? "PENDIENTE" : (pagadoTotal < montoOriginal ? "PARCIAL" : "PAGADO");
+
+                int? diasAtraso = null, diasAnticipo = null, diasVencidosActual = null;
+                if (fechaUltimoPago.HasValue)
+                {
+                    var diff = (fechaUltimoPago.Value.Date - x.cuota.FechaVencimiento.Date).Days;
+                    if (diff > 0) diasAtraso = diff;
+                    if (diff < 0) diasAnticipo = Math.Abs(diff);
+                }
+                if (estado != "PAGADO" && x.cuota.FechaVencimiento.Date < fechaHoy)
+                {
+                    diasVencidosActual = (fechaHoy - x.cuota.FechaVencimiento.Date).Days;
+                }
+
+                items.Add(new ReportePagoItem
+                {
+                    Tipo = "Cuota",
+                    VentaId = x.venta.VentaId,
+                    ClienteId = x.cliente.ClienteId,
+                    ClienteNombre = x.cliente.ClienteNombre ?? string.Empty,
+                    CuotaId = x.cuota.CuotaId,
+                    NumeroCuota = x.cuota.NumeroCuota,
+                    RefuerzoId = null,
+                    MontoOriginal = montoOriginal,
+                    MontoPagadoTotal = pagadoTotal,
+                    MontoPagadoEnRango = pagadoEnRango,
+                    SaldoPendiente = saldo,
+                    FechaVencimiento = x.cuota.FechaVencimiento,
+                    FechaPrimerPago = fechaPrimerPago,
+                    FechaUltimoPago = fechaUltimoPago,
+                    Estado = estado,
+                    DiasAtrasoAlCancelar = diasAtraso,
+                    DiasAnticipoAlCancelar = diasAnticipo,
+                    DiasVencidosActual = diasVencidosActual
+                });
+            }
+        }
+
+        // 2) Refuerzos + PagosRefuerzos
+        if (request.IncluirRefuerzos)
+        {
+            var refQuery = from r in ctx.Refuerzos.AsNoTracking()
+                           join v in ctx.Ventas.AsNoTracking() on r.VentaId equals v.VentaId
+                           join c in ctx.Clientes.AsNoTracking() on v.ClienteId equals c.ClienteId
+                           select new { r, v, c };
+
+            if (request.ClienteId.HasValue)
+                refQuery = refQuery.Where(x => x.v.ClienteId == request.ClienteId.Value);
+
+            if (string.Equals(request.TipoRango, "Vencimiento", StringComparison.OrdinalIgnoreCase) &&
+                request.FechaInicio.HasValue && request.FechaFin.HasValue)
+            {
+                var ini = request.FechaInicio.Value.Date;
+                var fin = request.FechaFin.Value.Date.AddDays(1).AddTicks(-1);
+                refQuery = refQuery.Where(x => x.r.FechaVencimiento >= ini && x.r.FechaVencimiento <= fin);
+            }
+
+            var refList = await refQuery.ToListAsync();
+
+            var refIds = refList.Select(x => x.r.RefuerzoId).ToList();
+            var pagosRef = await ctx.PagosRefuerzos.AsNoTracking()
+                .Where(p => refIds.Contains(p.RefuerzoId))
+                .ToListAsync();
+
+            foreach (var x in refList)
+            {
+                var pagos = pagosRef.Where(p => p.RefuerzoId == x.r.RefuerzoId);
+                var montoOriginal = x.r.MontoOriginal ?? x.r.MontoRefuerzo; // fallback por si no se pudo backfillear
+                var pagadoTotal = pagos.Sum(p => p.Monto);
+                decimal pagadoEnRango = 0;
+                var tipoRangoRef = (request.TipoRango ?? "Todos").Trim();
+                if ((string.Equals(tipoRangoRef, "Pago", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(tipoRangoRef, "Todos", StringComparison.OrdinalIgnoreCase))
+                    && request.FechaInicio.HasValue && request.FechaFin.HasValue)
+                {
+                    var ini = request.FechaInicio.Value.Date;
+                    var fin = request.FechaFin.Value.Date.AddDays(1).AddTicks(-1);
+                    pagadoEnRango = pagos.Where(p => p.FechaPago >= ini && p.FechaPago <= fin)
+                                         .Sum(p => p.Monto);
+                }
+
+                var saldo = (montoOriginal) - pagadoTotal;
+                var fechaPrimerPago = pagos.Any() ? pagos.Min(p => p.FechaPago) : (DateTime?)null;
+                var fechaUltimoPago = pagos.Any() ? pagos.Max(p => p.FechaPago) : (DateTime?)null;
+
+                var estado = pagadoTotal <= 0 ? "PENDIENTE" : (pagadoTotal < montoOriginal ? "PARCIAL" : "PAGADO");
+
+                int? diasAtraso = null, diasAnticipo = null, diasVencidosActual = null;
+                if (fechaUltimoPago.HasValue && x.r.FechaVencimiento.HasValue)
+                {
+                    var diff = (fechaUltimoPago.Value.Date - x.r.FechaVencimiento.Value.Date).Days;
+                    if (diff > 0) diasAtraso = diff;
+                    if (diff < 0) diasAnticipo = Math.Abs(diff);
+                }
+                if (estado != "PAGADO" && x.r.FechaVencimiento.HasValue && x.r.FechaVencimiento.Value.Date < fechaHoy)
+                {
+                    diasVencidosActual = (fechaHoy - x.r.FechaVencimiento.Value.Date).Days;
+                }
+
+                items.Add(new ReportePagoItem
+                {
+                    Tipo = "Refuerzo",
+                    VentaId = x.v.VentaId,
+                    ClienteId = x.c.ClienteId,
+                    ClienteNombre = x.c.ClienteNombre ?? string.Empty,
+                    CuotaId = null,
+                    NumeroCuota = null,
+                    RefuerzoId = x.r.RefuerzoId,
+                    MontoOriginal = montoOriginal,
+                    MontoPagadoTotal = pagadoTotal,
+                    MontoPagadoEnRango = pagadoEnRango,
+                    SaldoPendiente = saldo,
+                    FechaVencimiento = x.r.FechaVencimiento,
+                    FechaPrimerPago = fechaPrimerPago,
+                    FechaUltimoPago = fechaUltimoPago,
+                    Estado = estado,
+                    DiasAtrasoAlCancelar = diasAtraso,
+                    DiasAnticipoAlCancelar = diasAnticipo,
+                    DiasVencidosActual = diasVencidosActual
+                });
+            }
+        }
+
+        // Filtrado final por rango según TipoRango
+        if (request.FechaInicio.HasValue && request.FechaFin.HasValue)
+        {
+            var ini = request.FechaInicio.Value.Date;
+            var fin = request.FechaFin.Value.Date.AddDays(1).AddTicks(-1);
+            var tipo = (request.TipoRango ?? "Todos").Trim();
+
+            if (string.Equals(tipo, "Vencimiento", StringComparison.OrdinalIgnoreCase))
+            {
+                items = items.Where(i => i.FechaVencimiento.HasValue && i.FechaVencimiento.Value >= ini && i.FechaVencimiento.Value <= fin)
+                             .ToList();
+            }
+            else if (string.Equals(tipo, "Pago", StringComparison.OrdinalIgnoreCase))
+            {
+                items = items.Where(i => i.FechaPrimerPago.HasValue || i.FechaUltimoPago.HasValue)
+                             .Where(i => i.FechaPrimerPago.GetValueOrDefault() >= ini && i.FechaPrimerPago.GetValueOrDefault() <= fin
+                                      || i.FechaUltimoPago.GetValueOrDefault() >= ini && i.FechaUltimoPago.GetValueOrDefault() <= fin)
+                             .ToList();
+            }
+            else // "Todos" => cualquier item que venza en rango o tenga pagos en rango
+            {
+                items = items.Where(i =>
+                        (i.FechaVencimiento.HasValue && i.FechaVencimiento.Value >= ini && i.FechaVencimiento.Value <= fin)
+                     || (i.FechaPrimerPago.HasValue && i.FechaPrimerPago.Value >= ini && i.FechaPrimerPago.Value <= fin)
+                     || (i.FechaUltimoPago.HasValue && i.FechaUltimoPago.Value >= ini && i.FechaUltimoPago.Value <= fin)
+                ).ToList();
+            }
+        }
+
+        // Totales
+        var response = new ReportePagosResponse
+        {
+            Items = items,
+            TotalPagadoEnRango = items.Sum(i => i.MontoPagadoEnRango),
+            TotalPendiente = items.Sum(i => i.SaldoPendiente),
+            TotalVenceEnRango = (request.FechaInicio.HasValue && request.FechaFin.HasValue)
+                ? items.Where(i => i.FechaVencimiento.HasValue && i.FechaVencimiento.Value.Date >= request.FechaInicio.Value.Date && i.FechaVencimiento.Value.Date <= request.FechaFin.Value.Date)
+                       .Sum(i => i.SaldoPendiente)
+                : 0,
+            TotalVencidoAlDia = items.Where(i => i.DiasVencidosActual.HasValue).Sum(i => i.SaldoPendiente)
+        };
+
+        return response;
     }
 }

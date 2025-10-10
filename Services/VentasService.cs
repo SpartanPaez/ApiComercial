@@ -1,4 +1,5 @@
 using ApiComercial.Models.Request;
+using ApiComercial.Models.Request.Refuerzos;
 using ApiComercial.Models.Responses;
 using ApiComercial.Models.Responses.Pagos;
 using ApiComercial.Repositories.Interfaces;
@@ -84,8 +85,13 @@ public class VentasService : IVentaService
     {
         return await _ventasRepository.InsertarCoDeudor(request);
     }
-    public async Task<int> PagarRefuerzo(int refuerzoId)
+    public async Task<int> PagarRefuerzo(PagarRefuerzoRequest parametros)
     {
-        return await _ventasRepository.PagarRefuerzo(refuerzoId);
+        return await _ventasRepository.PagarRefuerzo(parametros);
+    }
+
+    public async Task<ReportePagosResponse> ObtenerReportePagosAsync(ReportePagosRequest request)
+    {
+        return await _ventasRepository.ObtenerReportePagosAsync(request);
     }
 }

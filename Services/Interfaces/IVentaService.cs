@@ -1,6 +1,7 @@
-using ApiComercial.Models.Request;
+using ApiComercial.Models.Request.Refuerzos;
 using ApiComercial.Models.Responses;
 using ApiComercial.Models.Responses.Pagos;
+using ApiComercial.Models.Request;
 
 namespace ApiComercial.Services.Interfaces;
 
@@ -19,5 +20,6 @@ public interface IVentaService
     Task<int> CantidadCuotasAtrasadas();
     Task<List<ReporteVentaResponse>> ObtenerReporteVentasAsync(ReporteVentasRequest request);
     Task<int> InsertarCoDeudor(VentaCoDeudorRequest request);
-    Task<int> PagarRefuerzo(int refuerzoId);
+    Task<int> PagarRefuerzo(PagarRefuerzoRequest parametros);
+    Task<ReportePagosResponse> ObtenerReportePagosAsync(ReportePagosRequest request);
 }
