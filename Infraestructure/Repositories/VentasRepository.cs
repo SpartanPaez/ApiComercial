@@ -142,22 +142,43 @@ public class VentasRepository : IVentasRepository
         using var scope = _serviceScopeFactory.CreateAsyncScope();
         var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
 
-        return await (from cuotas in ctx.Cuota.AsNoTracking()
-                      join ventas in ctx.Ventas.AsNoTracking()
-                      on cuotas.VentaId equals ventas.VentaId
-                      where cuotas.VentaId == idVenta
-                      orderby cuotas.FechaVencimiento ascending, cuotas.NumeroCuota ascending
-                      select new DetalleCuotaResponse
-                      {
-                          VentaId = cuotas.VentaId,
-                          IdCuota = cuotas.CuotaId,
-                          NumeroCuota = cuotas.NumeroCuota,
-                          MontoCuota = cuotas.MontoCuota,
-                          FechaVencimiento = cuotas.FechaVencimiento,
-                          EstadoCodigo = cuotas.EstadoCodigo,
-                          EsRefuerzo = cuotas.EsRefuerzo
-                      })
-                      .ToListAsync();
+        // Traemos cuotas de la venta + pagos asociados para calcular montos derivados
+        var cuotas = await (from c in ctx.Cuota.AsNoTracking()
+                            where c.VentaId == idVenta
+                            orderby c.FechaVencimiento ascending, c.NumeroCuota ascending
+                            select c).ToListAsync();
+
+        var cuotaIds = cuotas.Select(c => c.CuotaId).ToList();
+        var pagos = await ctx.Pagos.AsNoTracking()
+            .Where(p => cuotaIds.Contains(p.CuotaId))
+            .ToListAsync();
+
+        var resultado = cuotas.Select(c => {
+            var pagosCuota = pagos.Where(p => p.CuotaId == c.CuotaId);
+            var montoPagado = pagosCuota.Sum(p => p.Monto);
+            // Regla: si MontoCuota > 0, lo tomamos como "monto original".
+            // Si MontoCuota == 0 y hay pagos (caso histórico de mutación a saldo), el original es lo pagado.
+            var montoOriginal = c.MontoCuota > 0 ? Convert.ToDecimal(c.MontoCuota) : montoPagado;
+            var saldo = Math.Max(0m, montoOriginal - montoPagado);
+            return new DetalleCuotaResponse
+            {
+                VentaId = c.VentaId,
+                IdCuota = c.CuotaId,
+                NumeroCuota = c.NumeroCuota,
+                MontoCuota = c.MontoCuota,
+                FechaVencimiento = c.FechaVencimiento,
+                EstadoCodigo = c.EstadoCodigo,
+                EsRefuerzo = c.EsRefuerzo,
+                // Nuevos campos
+                MontoOriginal = montoOriginal,
+                MontoPagado = montoPagado,
+                SaldoPendiente = saldo,
+                DiasAtraso = c.DiasAtraso,
+                MontoAtraso = c.MontoAtraso
+            };
+        }).ToList();
+
+        return resultado;
     }
 
     public async Task<IEnumerable<MediosPagoResponse>> ObtenerMediosPago()
@@ -177,37 +198,55 @@ public class VentasRepository : IVentasRepository
 
     public async Task<bool> PagarCuota(PagarCuotaRequest request)
     {
-        // 1. Arrancar el scope y el contexto
+        // 1) Contexto
         await using var scope = _serviceScopeFactory.CreateAsyncScope();
         var ctx = scope.ServiceProvider.GetRequiredService<MysqlContext>();
 
-        // 2. Cargar la cuota que vamos a pagar
-        var cuota = await ctx.Cuota
-            .FirstOrDefaultAsync(c => c.CuotaId == request.CuotaId);
+        // 2) Validaciones básicas
+        //if (request.MontoPagado <= 0)
+            ///throw new ArgumentException("El monto a pagar debe ser mayor a 0", nameof(request.MontoPagado));
+
+        // 3) Cargar cuota
+        var cuota = await ctx.Cuota.FirstOrDefaultAsync(c => c.CuotaId == request.CuotaId);
         if (cuota is null)
             throw new KeyNotFoundException($"No existe cuota con Id {request.CuotaId}");
 
-        // 3. Insertar un pago en la tabla Pagos
+        // 4) Calcular pagos previos y saldo pendiente usando la tabla Pagos
+        var pagosPrevios = await ctx.Pagos
+            .Where(p => p.CuotaId == request.CuotaId)
+            .SumAsync(p => (decimal?)p.Monto) ?? 0m;
+
+        var montoOriginal = Convert.ToDecimal(cuota.MontoCuota);
+        var saldoPendiente = montoOriginal - pagosPrevios;
+
+        if (saldoPendiente <= 0)
+            throw new InvalidOperationException("La cuota ya se encuentra totalmente pagada.");
+
+       // if (request.MontoPagado > saldoPendiente)
+            //throw new InvalidOperationException($"El monto a pagar ({request.MontoPagado:N0}) supera el saldo pendiente ({saldoPendiente:N0}).");
+
+        // 5) Registrar pago (no mutamos MontoCuota)
         var pago = new Pago
         {
             CuotaId = request.CuotaId,
             MedioPagoId = request.MedioPagoId,
             Monto = request.MontoPagado,
             Referencia = request.Referencia,
-            FechaPago = DateTime.UtcNow
+            FechaPago = request.FechaPago ?? DateTime.UtcNow
         };
         ctx.Pagos.Add(pago);
 
-        // 4. Actualizar el monto de la cuota restando el pago
-        cuota.FechaPago = request.FechaPago;
-        cuota.MontoCuota -= request.MontoPagado;
-
-        // 5. Marcar como PAGADO solo si el monto restante es 0 o negativo
-        if (cuota.MontoCuota <= 0)
+        // 6) Actualizar estado de la cuota según acumulado
+        var pagadoLuego = pagosPrevios + request.MontoPagado;
+        if (pagadoLuego >= montoOriginal)
         {
+            cuota.DiasAtraso = request.DiasAtraso;
+            cuota.MontoAtraso = request.MontoAtraso;
             cuota.EstadoCodigo = "PAGADO";
-            cuota.MontoCuota = 0;
+            if (!cuota.FechaPago.HasValue)
+                cuota.FechaPago = request.FechaPago ?? DateTime.UtcNow;
         }
+        // Si es pago parcial, no cambiamos EstadoCodigo para evitar violar la FK (dejar "PENDIENTE").
 
         var cambios = await ctx.SaveChangesAsync();
         return cambios > 0;
@@ -220,7 +259,7 @@ public class VentasRepository : IVentasRepository
 
         return await (from cuotas in ctx.Cuota.AsNoTracking()
                       where cuotas.CuotaId == idCuota
-                      && cuotas.EstadoCodigo == "PENDIENTE"
+                      && (cuotas.EstadoCodigo == "PENDIENTE" || cuotas.EstadoCodigo == "PARCIAL")
                       select cuotas.EstadoCodigo)
                       .FirstOrDefaultAsync();
     }

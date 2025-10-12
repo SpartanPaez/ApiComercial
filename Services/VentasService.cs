@@ -48,7 +48,7 @@ public class VentasService : IVentaService
     public async Task<bool> PagarCuota(PagarCuotaRequest cuota)
     {
         var validaCuota = await VerificaEstadoCuota(cuota.CuotaId);
-        if (validaCuota == "PENDIENTE")
+        if (validaCuota == "PENDIENTE" || validaCuota == "PARCIAL")
         {
             return await _ventasRepository.PagarCuota(cuota);
         }

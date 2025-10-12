@@ -28,5 +28,7 @@ public class Cuota
     public string? EstadoCodigo { get; set; }
     public bool EsRefuerzo { get; set; } 
     public DateTime? FechaPago { get; set; }
+    public int? MontoAtraso { get; set; }
+    public int? DiasAtraso { get; set; }
 }
 

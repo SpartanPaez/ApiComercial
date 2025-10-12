@@ -19,4 +19,6 @@ public class PagarCuotaRequest
     /// </summary>
     public string? Referencia { get; set; }
     public DateTime? FechaPago { get; set; }
+    public int? MontoAtraso { get; set; }
+    public int? DiasAtraso { get; set; }
 }

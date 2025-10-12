@@ -7030,6 +7030,28 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "montoOriginal": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "montoPagado": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "saldoPendiente": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "diasAtraso": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "montoAtraso": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         }
       },
@@ -7060,6 +7082,16 @@
           "fechaPago": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          },
+          "montoAtraso": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "diasAtraso": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         }
